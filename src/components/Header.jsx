@@ -3,6 +3,9 @@ import { Link, NavLink, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { DEFAULT_LANG, getLangFromUrl, setLangToUrl, setStoredLang } from "../i18n";
 
+const THEME_STORAGE_KEY = "patatos_theme";
+const THEMES = ["dark", "light"];
+
 const navItems = [
   { to: "/", key: "home" },
   { to: "/planning", key: "planning" },
@@ -13,10 +16,39 @@ const navItems = [
   { to: "/contact", key: "contact" },
 ];
 
+function getStoredTheme() {
+  if (typeof window === "undefined") {
+    return null;
+  }
+
+  const storedTheme = window.localStorage.getItem(THEME_STORAGE_KEY);
+  return THEMES.includes(storedTheme) ? storedTheme : null;
+}
+
+function getSystemTheme() {
+  if (typeof window === "undefined" || !window.matchMedia) {
+    return "dark";
+  }
+
+  return window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark";
+}
+
+function applyTheme(theme) {
+  if (typeof document === "undefined") {
+    return;
+  }
+
+  const root = document.documentElement;
+  root.classList.toggle("theme-light", theme === "light");
+  root.classList.toggle("theme-dark", theme === "dark");
+}
+
 function Header() {
   const { pathname, search } = useLocation();
   const { t, i18n } = useTranslation();
   const [openAtPath, setOpenAtPath] = useState(null);
+  const [theme, setTheme] = useState(() => getStoredTheme() || getSystemTheme());
+  const [hasThemePreference, setHasThemePreference] = useState(() => Boolean(getStoredTheme()));
   const isOpen = openAtPath === pathname;
   const currentLang = i18n.resolvedLanguage || i18n.language || DEFAULT_LANG;
 
@@ -24,6 +56,14 @@ function Header() {
     () => [
       { value: "fr", label: t("nav.lang_fr"), ariaLabel: t("nav.switch_to_fr") },
       { value: "nl", label: t("nav.lang_nl"), ariaLabel: t("nav.switch_to_nl") },
+    ],
+    [t]
+  );
+
+  const themeItems = useMemo(
+    () => [
+      { value: "dark", label: t("nav.theme_dark") },
+      { value: "light", label: t("nav.theme_light") },
     ],
     [t]
   );
@@ -57,6 +97,40 @@ function Header() {
     }
   }, [currentLang, i18n, pathname, search]);
 
+  useEffect(() => {
+    applyTheme(theme);
+
+    if (typeof window === "undefined") {
+      return;
+    }
+
+    if (hasThemePreference) {
+      window.localStorage.setItem(THEME_STORAGE_KEY, theme);
+      return;
+    }
+
+    window.localStorage.removeItem(THEME_STORAGE_KEY);
+  }, [hasThemePreference, theme]);
+
+  useEffect(() => {
+    if (hasThemePreference || typeof window === "undefined" || !window.matchMedia) {
+      return undefined;
+    }
+
+    const mediaQuery = window.matchMedia("(prefers-color-scheme: light)");
+    const onThemeChange = (event) => {
+      setTheme(event.matches ? "light" : "dark");
+    };
+
+    if (typeof mediaQuery.addEventListener === "function") {
+      mediaQuery.addEventListener("change", onThemeChange);
+      return () => mediaQuery.removeEventListener("change", onThemeChange);
+    }
+
+    mediaQuery.addListener(onThemeChange);
+    return () => mediaQuery.removeListener(onThemeChange);
+  }, [hasThemePreference]);
+
   const handleLanguageChange = (lang) => {
     if (!lang) {
       return;
@@ -68,6 +142,16 @@ function Header() {
 
     setStoredLang(lang);
     setLangToUrl(lang);
+    setOpenAtPath(null);
+  };
+
+  const handleThemeChange = (nextTheme) => {
+    if (!THEMES.includes(nextTheme)) {
+      return;
+    }
+
+    setTheme(nextTheme);
+    setHasThemePreference(true);
     setOpenAtPath(null);
   };
 
@@ -116,6 +200,20 @@ function Header() {
                 onClick={() => handleLanguageChange(language.value)}
               >
                 {language.label}
+              </button>
+            ))}
+          </div>
+
+          <div className="lang-switch" role="group" aria-label={t("nav.theme")}>
+            {themeItems.map((themeItem) => (
+              <button
+                key={themeItem.value}
+                type="button"
+                className={`lang-btn${theme === themeItem.value ? " is-active" : ""}`}
+                aria-label={`${t("nav.toggle_theme")}: ${themeItem.label}`}
+                onClick={() => handleThemeChange(themeItem.value)}
+              >
+                {themeItem.label}
               </button>
             ))}
           </div>

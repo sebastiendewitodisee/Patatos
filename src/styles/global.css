@@ -1,6 +1,7 @@
 ﻿@import url("https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Nunito:wght@400;600;700&display=swap");
 
 :root {
+  color-scheme: dark;
   --bg: #080d14;
   --bg-elev: rgba(13, 20, 33, 0.86);
   --card: rgba(255, 255, 255, 0.06);
@@ -14,6 +15,46 @@
   --danger: #ff7f8e;
   --radius: 1.1rem;
   --shadow: 0 14px 35px rgba(0, 0, 0, 0.28);
+  --bg-glow-1: rgba(101, 179, 255, 0.23);
+  --bg-glow-2: rgba(87, 223, 155, 0.22);
+  --bg-glow-3: rgba(242, 195, 112, 0.22);
+  --field-bg: rgba(255, 255, 255, 0.08);
+  --field-option-bg: rgba(20, 30, 46, 0.98);
+  --field-option-text: var(--text);
+  --field-option-active: rgba(101, 179, 255, 0.24);
+  --field-option-hover: rgba(255, 255, 255, 0.12);
+  --btn-ghost-bg: rgba(8, 13, 20, 0.2);
+  --chrome-bg: rgba(8, 13, 20, 0.78);
+  --chrome-bg-solid: rgba(8, 13, 20, 0.96);
+  --footer-bg: rgba(8, 13, 20, 0.56);
+}
+
+:root.theme-light {
+  color-scheme: light;
+  --bg: #f6f7fb;
+  --bg-elev: rgba(255, 255, 255, 0.92);
+  --card: rgba(255, 255, 255, 0.75);
+  --card-strong: rgba(255, 255, 255, 0.92);
+  --line: rgba(17, 19, 24, 0.12);
+  --text: #111318;
+  --muted: rgba(17, 19, 24, 0.66);
+  --green: #2fbe7c;
+  --blue: #3c8fe6;
+  --amber: #d9a64e;
+  --danger: #d85767;
+  --shadow: 0 14px 35px rgba(17, 19, 24, 0.1);
+  --bg-glow-1: rgba(101, 179, 255, 0.18);
+  --bg-glow-2: rgba(87, 223, 155, 0.15);
+  --bg-glow-3: rgba(242, 195, 112, 0.15);
+  --field-bg: rgba(255, 255, 255, 0.86);
+  --field-option-bg: #f6f8fc;
+  --field-option-text: #111318;
+  --field-option-active: rgba(60, 143, 230, 0.24);
+  --field-option-hover: rgba(17, 19, 24, 0.08);
+  --btn-ghost-bg: rgba(255, 255, 255, 0.86);
+  --chrome-bg: rgba(246, 247, 251, 0.9);
+  --chrome-bg-solid: rgba(246, 247, 251, 0.98);
+  --footer-bg: rgba(246, 247, 251, 0.82);
 }
 
 * {
@@ -35,9 +76,9 @@ body {
   color: var(--text);
   font-family: "Nunito", "Trebuchet MS", sans-serif;
   background:
-    radial-gradient(1200px 700px at 8% -12%, rgba(101, 179, 255, 0.23), transparent 58%),
-    radial-gradient(900px 500px at 92% 12%, rgba(87, 223, 155, 0.22), transparent 62%),
-    radial-gradient(800px 460px at 48% 102%, rgba(242, 195, 112, 0.22), transparent 62%),
+    radial-gradient(1200px 700px at 8% -12%, var(--bg-glow-1), transparent 58%),
+    radial-gradient(900px 500px at 92% 12%, var(--bg-glow-2), transparent 62%),
+    radial-gradient(800px 460px at 48% 102%, var(--bg-glow-3), transparent 62%),
     var(--bg);
   line-height: 1.55;
 }
@@ -168,7 +209,7 @@ textarea {
 }
 
 .btn-ghost {
-  background: rgba(8, 13, 20, 0.2);
+  background: var(--btn-ghost-bg);
 }
 
 .input,
@@ -176,7 +217,7 @@ textarea {
 textarea {
   width: 100%;
   border: 1px solid var(--line);
-  background: rgba(255, 255, 255, 0.08);
+  background: var(--field-bg);
   border-radius: 0.7rem;
   padding: 0.65rem 0.75rem;
 }
@@ -184,27 +225,40 @@ textarea {
 /* Dropdown menu (options) — lisible en thème sombre */
 .select option,
 .select optgroup {
-  background-color: rgba(20, 30, 46, 0.98);
-  color: var(--text);
+  background-color: var(--field-option-bg);
+  color: var(--field-option-text);
 }
 
 /* Option sélectionnée/active — sobre et lisible */
 .select option:checked {
-  background-color: rgba(101, 179, 255, 0.24);
-  color: var(--text);
+  background-color: var(--field-option-active);
+  color: var(--field-option-text);
 }
 
 .select option:hover,
 .select option:focus {
-  background-color: rgba(255, 255, 255, 0.12);
-  color: var(--text);
+  background-color: var(--field-option-hover);
+  color: var(--field-option-text);
 }
 
-/* Aide Chrome/Windows pour un menu natif cohérent en sombre */
+/* Aide Chrome/Windows pour un menu natif cohérent */
 select.select {
-  background-color: rgba(255, 255, 255, 0.08);
-  color: var(--text);
-  color-scheme: dark;
+  background-color: var(--field-bg);
+  color: var(--field-option-text);
+  color-scheme: inherit;
+}
+
+.theme-light .site-header {
+  background: var(--chrome-bg);
+  border-bottom-color: var(--line);
+}
+
+.theme-light .site-footer {
+  background: var(--footer-bg);
+}
+
+.theme-light .site-nav {
+  background: var(--chrome-bg-solid);
 }
 
 textarea {

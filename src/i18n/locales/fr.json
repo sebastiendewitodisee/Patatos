@@ -11,8 +11,12 @@
     "go_home": "Retour à l'accueil",
     "open_menu": "Ouvrir le menu",
     "language": "Langue",
+    "theme": "Thème",
     "lang_fr": "FR",
     "lang_nl": "NL",
+    "theme_light": "Clair",
+    "theme_dark": "Sombre",
+    "toggle_theme": "Basculer le thème",
     "switch_to_fr": "Passer en français",
     "switch_to_nl": "Passer en néerlandais"
   },
