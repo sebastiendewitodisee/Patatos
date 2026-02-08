@@ -152,7 +152,9 @@ function Varietes() {
           {varieties.map((item) => {
             const slug = toSlug(item.name);
             const targetId = `variete-${slug}`;
-            const showPlaceholder = !item.image || brokenImages[item.name];
+            const rawImage = item.image?.trim();
+            const imgSrc = rawImage ? `${import.meta.env.BASE_URL}${rawImage}` : "";
+            const showPlaceholder = !imgSrc || brokenImages[item.name];
 
             return (
               <div key={item.name} id={targetId} className="anchor-offset">
@@ -164,10 +166,11 @@ function Varietes() {
                       </span>
                     ) : (
                       <img
-                        src={item.image}
+                        src={imgSrc}
                         alt={`Pomme de terre ${item.name}`}
                         className="variety-thumb"
-                        onError={() => {
+                        onError={(event) => {
+                          event.currentTarget.style.display = "none";
                           setBrokenImages((prev) => ({ ...prev, [item.name]: true }));
                         }}
                       />

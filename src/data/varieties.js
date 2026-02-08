@@ -1,7 +1,7 @@
 ﻿export const varieties = [
   {
     name: "Alouette",
-    image: "/varieties/alouette.jpg",
+    image: "varieties/alouette.jpg",
     type: "conservation",
     planting: "Avril",
     harvest: "Août–Octobre",
@@ -9,7 +9,7 @@
   },
   {
     name: "Cheyenne",
-    image: "/varieties/cheyenne.jpg",
+    image: "",
     type: "conservation",
     planting: "Avril",
     harvest: "Août–Septembre",
@@ -17,7 +17,7 @@
   },
   {
     name: "Désirée",
-    image: "/varieties/desiree.jpg",
+    image: "varieties/desiree.jpg",
     type: "conservation",
     planting: "Avril",
     harvest: "Août–Septembre",
@@ -25,7 +25,7 @@
   },
   {
     name: "Première",
-    image: "/varieties/premiere.jpg",
+    image: "varieties/premiere.jpg",
     type: "précoce",
     planting: "Mars–Avril",
     harvest: "Juin–Juillet",
@@ -33,7 +33,7 @@
   },
   {
     name: "Jelly",
-    image: "/varieties/jelly.jpg",
+    image: "varieties/jelly.jpg",
     type: "conservation",
     planting: "Avril",
     harvest: "Septembre–Octobre",
@@ -41,7 +41,7 @@
   },
   {
     name: "Frieslander",
-    image: "/varieties/frieslander.jpg",
+    image: "varieties/frieslander.jpg",
     type: "précoce",
     planting: "Mars–Avril",
     harvest: "Juin–Juillet",
@@ -49,7 +49,7 @@
   },
   {
     name: "Nicola",
-    image: "/varieties/nicola.jpg",
+    image: "varieties/nicola.jpg",
     type: "précoce",
     planting: "Mars–Avril",
     harvest: "Juillet–Août",
@@ -57,7 +57,7 @@
   },
   {
     name: "Bintje",
-    image: "/varieties/bintje.jpg",
+    image: "varieties/bintje.jpg",
     type: "conservation",
     planting: "Avril",
     harvest: "Août–Octobre",
@@ -65,7 +65,7 @@
   },
   {
     name: "Melody",
-    image: "/varieties/melody.jpg",
+    image: "varieties/melody.jpg",
     type: "conservation",
     planting: "Avril",
     harvest: "Août–Septembre",
@@ -73,7 +73,7 @@
   },
   {
     name: "Zen",
-    image: "/varieties/zen.jpg",
+    image: "",
     type: "conservation",
     planting: "Avril",
     harvest: "Juillet–Septembre",
