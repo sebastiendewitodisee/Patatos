@@ -1,7 +1,7 @@
 ﻿export const varieties = [
   {
     name: "Alouette",
-    image: "varieties/alouette.jpg",
+    image: "varieties/transparent/alouette_transparent.png",
     type: "conservation",
     planting: "Avril",
     harvest: "Août–Octobre",
@@ -9,7 +9,7 @@
   },
   {
     name: "Cheyenne",
-    image: "varieties/cheyenne.jpg",
+    image: "varieties/transparent/cheyenne_transparent.png",
     type: "conservation",
     planting: "Avril",
     harvest: "Août–Septembre",
@@ -17,7 +17,7 @@
   },
   {
     name: "Désirée",
-    image: "varieties/desiree.jpg",
+    image: "varieties/transparent/desiree_transparent.png",
     type: "conservation",
     planting: "Avril",
     harvest: "Août–Septembre",
@@ -25,7 +25,7 @@
   },
   {
     name: "Première",
-    image: "varieties/premiere.jpg",
+    image: "varieties/transparent/premiere_transparent.png",
     type: "précoce",
     planting: "Mars–Avril",
     harvest: "Juin–Juillet",
@@ -33,7 +33,7 @@
   },
   {
     name: "Jelly",
-    image: "varieties/jelly.jpg",
+    image: "varieties/transparent/jelly_transparent.png",
     type: "conservation",
     planting: "Avril",
     harvest: "Septembre–Octobre",
@@ -41,7 +41,7 @@
   },
   {
     name: "Frieslander",
-    image: "varieties/frieslander.jpg",
+    image: "varieties/transparent/frieslander_transparent.png",
     type: "précoce",
     planting: "Mars–Avril",
     harvest: "Juin–Juillet",
@@ -49,7 +49,7 @@
   },
   {
     name: "Nicola",
-    image: "varieties/nicola.jpg",
+    image: "varieties/transparent/nicola_transparent.png",
     type: "précoce",
     planting: "Mars–Avril",
     harvest: "Juillet–Août",
@@ -57,7 +57,7 @@
   },
   {
     name: "Bintje",
-    image: "varieties/bintje.jpg",
+    image: "varieties/transparent/bintje_transparent.png",
     type: "conservation",
     planting: "Avril",
     harvest: "Août–Octobre",
@@ -65,7 +65,7 @@
   },
   {
     name: "Melody",
-    image: "varieties/melody.jpg",
+    image: "varieties/transparent/melody_transparent.png",
     type: "conservation",
     planting: "Avril",
     harvest: "Août–Septembre",
@@ -73,11 +73,10 @@
   },
   {
     name: "Zen",
-    image: "varieties/zen.jpg",
+    image: "varieties/transparent/zen_transparent.png",
     type: "conservation",
     planting: "Avril",
     harvest: "Juillet–Septembre",
     usage: "tenue ferme / gratins",
   },
 ];
-

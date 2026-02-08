@@ -430,21 +430,32 @@ th {
   scroll-margin-top: 90px;
 }
 
-.variety-thumb {
+.variety-thumb-wrap {
   width: 64px;
   height: 64px;
-  object-fit: cover;
+  border-radius: 14px;
+  background: radial-gradient(circle at top, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.04));
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.variety-thumb {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  padding: 6px;
   border-radius: 14px;
 }
 
 .variety-thumb-placeholder {
-  width: 64px;
-  height: 64px;
+  width: 100%;
+  height: 100%;
   display: inline-grid;
   place-items: center;
-  border-radius: 14px;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  background: rgba(255, 255, 255, 0.08);
   font-size: 28px;
 }
 
@@ -465,6 +476,11 @@ th {
   padding: 0;
   cursor: zoom-in;
   display: inline-flex;
+  width: 100%;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+  border-radius: 14px;
   pointer-events: auto;
   position: relative;
   z-index: 2;

@@ -358,27 +358,29 @@ function Varietes() {
               <div key={item.name} id={item.targetId} className="anchor-offset">
                 <Card>
                   <div className="variety-card-header">
-                    {showPlaceholder ? (
-                      <div className="variety-thumb-placeholder" aria-hidden="true">
-                        🥔
-                      </div>
-                    ) : (
-                      <button
-                        type="button"
-                        className="image-button"
-                        aria-label={`Agrandir l'image de ${item.name}`}
-                        onClick={(event) => openLightbox(event, item.index)}
-                      >
-                        <img
-                          src={item.imgSrc}
-                          alt={item.imageAlt}
-                          className="variety-thumb"
-                          onError={() => {
-                            setBrokenImages((prev) => ({ ...prev, [item.name]: true }));
-                          }}
-                        />
-                      </button>
-                    )}
+                    <div className="variety-thumb-wrap">
+                      {showPlaceholder ? (
+                        <div className="variety-thumb-placeholder" aria-hidden="true">
+                          🥔
+                        </div>
+                      ) : (
+                        <button
+                          type="button"
+                          className="image-button"
+                          aria-label={`Agrandir l'image de ${item.name}`}
+                          onClick={(event) => openLightbox(event, item.index)}
+                        >
+                          <img
+                            src={item.imgSrc}
+                            alt={item.imageAlt}
+                            className="variety-thumb"
+                            onError={() => {
+                              setBrokenImages((prev) => ({ ...prev, [item.name]: true }));
+                            }}
+                          />
+                        </button>
+                      )}
+                    </div>
                     <div>
                       <h3>{item.name}</h3>
                       <Badge tone={item.type === "précoce" ? "plantation" : "conservation"}>{item.type}</Badge>
