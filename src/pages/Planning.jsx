@@ -154,6 +154,12 @@ function Planning() {
           onReset={resetFilters}
           isResetDisabled={isResetDisabled}
         />
+        <div className="muted-text planning-results">
+          <strong>{filteredEvents.length}</strong> résultat(s) · sur {sortedEvents.length}
+          {filteredEvents.length === 0 ? (
+            <p className="muted-text">Aucun résultat: essaie de reset les filtres ou enlève un mot-clé.</p>
+          ) : null}
+        </div>
         <Timeline events={filteredEvents} />
       </section>
 

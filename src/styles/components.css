@@ -247,6 +247,11 @@
   align-items: center;
 }
 
+.planning-results {
+  margin-top: 0.4rem;
+  margin-bottom: 0.6rem;
+}
+
 .timeline-list {
   list-style: none;
   margin: 0;
