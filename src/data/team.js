@@ -1,27 +1,32 @@
 ﻿export const teamMembers = [
   {
     name: "Denis",
-    detail: "avec petite patate: Matteo devant",
-    emoji: "🥔",
+    image: "team/denis.png",
+    role: "Terrain / logistique",
+    note: "Référent terrain pour les sessions pratiques.",
   },
   {
     name: "Sébastien \"le vrai\"",
-    detail: "avec petite patate: Emma devant",
-    emoji: "🥔",
+    image: "team/sebastien1.png",
+    role: "Coordination",
+    note: "Cadre le rythme et les priorités de la team.",
   },
   {
     name: "Sébastien",
-    detail: "avec petite patate: Jayden devant, chapeau",
-    emoji: "🥔🎩",
+    image: "team/sebastien2.png",
+    role: "Suivi",
+    note: "Garde un oeil sur l'avancement des actions.",
   },
   {
     name: "Josh",
-    detail: "avec cactus dans un pot devant",
-    emoji: "🌵",
+    image: "team/josh.png",
+    role: "Support",
+    note: "Donne un coup de main sur les sessions clés.",
   },
   {
     name: "Melvin",
-    detail: "avec petite patate: Eva devant",
-    emoji: "🥔",
+    image: "team/melvin.png",
+    role: "Support",
+    note: "Renfort opérationnel pour garder le planning fluide.",
   },
 ];
