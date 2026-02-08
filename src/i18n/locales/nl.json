@@ -362,13 +362,6 @@
       "members_title": "Het team",
       "members_subtitle": "De mensen die Patatos elke week laten draaien."
     },
-    "stats": {
-      "members": "Leden",
-      "season": "Seizoen",
-      "seasonValue": "2026",
-      "motto": "Motto",
-      "mottoValue": "Simpel, fun, efficiënt"
-    },
     "member_labels": {
       "roles": "Rollen"
     },
@@ -407,7 +400,6 @@
       }
     },
     "ui": {
-      "subtitle_badge": "Seizoen {{year}}",
       "highlight": "Focus",
       "no_results": "Geen teamlid komt overeen met deze filter."
     }

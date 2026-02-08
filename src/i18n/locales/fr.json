@@ -362,13 +362,6 @@
       "members_title": "La team",
       "members_subtitle": "Les personnes qui font vivre Patatos au quotidien."
     },
-    "stats": {
-      "members": "Membres",
-      "season": "Saison",
-      "seasonValue": "2026",
-      "motto": "Motto",
-      "mottoValue": "Simple, fun, efficace"
-    },
     "member_labels": {
       "roles": "Rôles"
     },
@@ -407,7 +400,6 @@
       }
     },
     "ui": {
-      "subtitle_badge": "Saison {{year}}",
       "highlight": "Focus",
       "no_results": "Aucun membre ne correspond à ce filtre."
     }
