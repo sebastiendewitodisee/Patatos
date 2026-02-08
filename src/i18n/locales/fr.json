@@ -69,6 +69,11 @@
       "none_update": "Pas encore de mise à jour.",
       "progress_details": "{{done}} tâche(s) faite(s) · {{remaining}} restante(s)"
     },
+    "fallbacks": {
+      "date_tbc": "Date à confirmer",
+      "period_tbc": "Période à confirmer",
+      "validation": "Validation: on confirme après inspection terrain et météo."
+    },
     "timeline": {
       "title": "Timeline des événements",
       "intro": "Chaque carte affiche une période saisonnière. Les tâches indicatives incluent une règle de validation.",
@@ -160,5 +165,106 @@
       "t2": "Ne pas laver avant stockage.",
       "t3": "Trier régulièrement pour retirer les tubercules abîmés."
     }
+  },
+  "team": {
+    "title": "Équipe 🧑‍🌾",
+    "intro": "La team Patatos avance ensemble: simple, efficace et toujours dans la bonne humeur.",
+    "image_alt": "Photo de {{name}}",
+    "badge": "Team Patatos",
+    "members": {
+      "denis": {
+        "role": "Terrain / logistique",
+        "note": "Référent terrain pour les sessions pratiques."
+      },
+      "sebastien-le-vrai": {
+        "role": "Coordination",
+        "note": "Cadre le rythme et les priorités de la team."
+      },
+      "sebastien": {
+        "role": "Suivi",
+        "note": "Garde un oeil sur l'avancement des actions."
+      },
+      "josh": {
+        "role": "Support",
+        "note": "Donne un coup de main sur les sessions clés."
+      },
+      "melvin": {
+        "role": "Support",
+        "note": "Renfort opérationnel pour garder le planning fluide."
+      }
+    }
+  },
+  "organisation": {
+    "title": "Organisation 🌱",
+    "intro": "Version Patatos: souples sur les horaires, carrés sur le suivi. L'idée, c'est que ça avance sans stress.",
+    "tasks_title": "Répartition des tâches",
+    "tasks": {
+      "preparation": "Préparation du terrain",
+      "plantation": "Plantation",
+      "buttage": "Buttage",
+      "watering": "Arrosage",
+      "disease_watch": "Surveillance maladies",
+      "harvest_storage": "Récolte, tri et stockage"
+    },
+    "tasks_note": "Chacun prend une part selon ses dispos, puis on met à jour le planning central pour garder une vue propre.",
+    "highlight_questions": "N'hésitez pas à poser des questions si besoin !",
+    "highlight_join": "Qui est partant ? Même si c'est juste pour une petite part 🙂"
+  },
+  "faq": {
+    "title": "FAQ",
+    "intro": "Les questions qu'on se pose vraiment côté Patatos, avec des réponses utiles.",
+    "items": {
+      "goal": {
+        "question": "C'est quoi le but du projet ?",
+        "answer": "Faire une belle saison patates entre potes: apprendre, récolter, partager, et garder une organisation qui tient la route."
+      },
+      "attendance": {
+        "question": "On doit venir tout le temps ?",
+        "answer": "Non. Tu passes quand tu peux. Une seule session utile vaut mieux qu'un engagement flou qu'on ne tient pas."
+      },
+      "harvest": {
+        "question": "On récolte quand ?",
+        "answer": "On travaille par périodes (ex: Juin–Juillet). La date réelle se valide sur place avec feuillage, météo et test sur un pied."
+      },
+      "organization": {
+        "question": "Comment on s'organise ?",
+        "answer": "Le planning central sert de base: statuts, responsables, validation. Ensuite on cale les créneaux via le groupe."
+      },
+      "difference": {
+        "question": "Précoces vs conservation: c'est quoi la différence ?",
+        "answer": "En général, les précoces se consomment plus tôt. Les variétés de conservation sont plutôt pensées pour tenir plus longtemps après récolte."
+      }
+    }
+  },
+  "contact": {
+    "title": "Contact 📱",
+    "intro": "Point central pour partager les liens et garder le contact de la team.",
+    "whatsapp": {
+      "title": "Groupe WhatsApp",
+      "link_label": "Lien du groupe:",
+      "placeholder": "à compléter",
+      "add_link": "Ajouter le lien",
+      "alert": "Placeholder: ajoute ici le lien du groupe WhatsApp."
+    },
+    "form": {
+      "title": "Mini formulaire (local-only)",
+      "name_label": "Nom",
+      "name_placeholder": "Ton prénom",
+      "message_label": "Message",
+      "message_placeholder": "Ton message",
+      "submit": "Envoyer (UI)",
+      "note": "Formulaire local-only, à brancher plus tard.",
+      "feedback": "Formulaire local-only enregistré en UI. À brancher plus tard."
+    }
+  },
+  "legal": {
+    "title": "Mentions légales",
+    "p1": "Site interne du projet Team Patates Patatos.",
+    "p2": "Données gérées localement dans le repo, sans backend.",
+    "p3": "Si besoin, adapte cette page avec les infos légales du groupe."
+  },
+  "not_found": {
+    "message": "Cette page n'existe pas (ou plus).",
+    "back_home": "Retour à l'accueil"
   }
 }

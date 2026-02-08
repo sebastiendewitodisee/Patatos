@@ -27,6 +27,9 @@ function getResponsiblesDisplay(responsibles) {
 
 function Timeline({ events }) {
   const { t } = useTranslation();
+  const dateFallback = t("planning.fallbacks.date_tbc");
+  const periodFallback = t("planning.fallbacks.period_tbc");
+  const validationFallback = t("planning.fallbacks.validation");
 
   if (!events.length) {
     return (
@@ -47,13 +50,17 @@ function Timeline({ events }) {
 
         return (
           <li key={event.id} className="timeline-item">
-            <span className="timeline-date">{t("common.period_with_value", { value: getEventScheduleLabel(event) })}</span>
+            <span className="timeline-date">
+              {t("common.period_with_value", {
+                value: getEventScheduleLabel(event, { periodFallback, dateFallback }),
+              })}
+            </span>
             <article className={`timeline-card ${isLate ? "is-late" : ""}`.trim()}>
               <div className="timeline-head">
                 <h3>{event.title}</h3>
                 <div className="timeline-badges">
                   <Badge tone={status.tone}>{t(`status.${effectiveStatus}`)}</Badge>
-                  <Badge tone={type.tone}>{t(`planning.types.${event.type}`, { defaultValue: type.label })}</Badge>
+                  <Badge tone={type.tone}>{t(`planning.types.${event.type}`)}</Badge>
                   {isEventIndicative(event) ? <Badge tone="neutral">{t("planning.timeline.indicative")}</Badge> : null}
                   {isLate ? <Badge tone="late">{t("planning.timeline.late")}</Badge> : null}
                 </div>
@@ -62,7 +69,7 @@ function Timeline({ events }) {
               <p className={event.callout ? "timeline-callout" : undefined}>{event.description}</p>
 
               {isEventIndicative(event) ? (
-                <p className="timeline-meta">{getIndicativeValidationMessage(event)}</p>
+                <p className="timeline-meta">{getIndicativeValidationMessage(event, validationFallback)}</p>
               ) : null}
 
               {responsiblesDisplay ? (

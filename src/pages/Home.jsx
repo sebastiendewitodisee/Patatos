@@ -17,6 +17,9 @@ function Home() {
   const { t } = useTranslation();
   const latestUpdates = getLatestUpdates(planningEvents, 3);
   const upcomingEvent = getUpcomingEvent(planningEvents);
+  const dateFallback = t("planning.fallbacks.date_tbc");
+  const periodFallback = t("planning.fallbacks.period_tbc");
+  const validationFallback = t("planning.fallbacks.validation");
 
   return (
     <div className="container page-block home-page">
@@ -58,7 +61,7 @@ function Home() {
 
             return (
               <Card key={item.id} title={item.title}>
-                <p className="muted-text">{t("home.updated_at", { date: formatDateFr(item.updatedAt) })}</p>
+                <p className="muted-text">{t("home.updated_at", { date: formatDateFr(item.updatedAt, dateFallback) })}</p>
                 <Badge tone={status.tone}>{t(`status.${statusKey}`)}</Badge>
               </Card>
             );
@@ -72,9 +75,13 @@ function Home() {
           {upcomingEvent ? (
             <>
               <p className="next-event-title">{upcomingEvent.title}</p>
-              <p className="muted-text">{t("common.period_with_value", { value: getEventScheduleLabel(upcomingEvent) })}</p>
+              <p className="muted-text">
+                {t("common.period_with_value", {
+                  value: getEventScheduleLabel(upcomingEvent, { periodFallback, dateFallback }),
+                })}
+              </p>
               {isEventIndicative(upcomingEvent) ? (
-                <p className="muted-text">{getIndicativeValidationMessage(upcomingEvent)}</p>
+                <p className="muted-text">{getIndicativeValidationMessage(upcomingEvent, validationFallback)}</p>
               ) : null}
               <p>{upcomingEvent.description}</p>
             </>

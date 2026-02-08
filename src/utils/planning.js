@@ -89,10 +89,10 @@ function getEventOrder(event) {
   return datedOrder ?? Number.MAX_SAFE_INTEGER;
 }
 
-export function formatDateFr(dateValue) {
+export function formatDateFr(dateValue, fallbackLabel = "") {
   const parsed = parsePlanningDate(dateValue);
   if (!parsed) {
-    return "Date à confirmer";
+    return fallbackLabel;
   }
 
   return parsed.toLocaleDateString("fr-FR", {
@@ -102,28 +102,31 @@ export function formatDateFr(dateValue) {
   });
 }
 
-export function getEventScheduleLabel(event) {
+export function getEventScheduleLabel(
+  event,
+  { periodFallback = "", dateFallback = "" } = {}
+) {
   if (event.period) {
     return event.period;
   }
 
   if (event.date) {
-    return formatDateFr(event.date);
+    return formatDateFr(event.date, dateFallback);
   }
 
-  return "Période à confirmer";
+  return periodFallback;
 }
 
 export function isEventIndicative(event) {
   return Boolean(event.isIndicative || hasIndicativeKeyword(event.period) || hasIndicativeKeyword(event.title));
 }
 
-export function getIndicativeValidationMessage(event) {
+export function getIndicativeValidationMessage(event, fallbackMessage = "") {
   if (!isEventIndicative(event)) {
     return "";
   }
 
-  return event.validation ?? "Validation: on confirme après inspection terrain et météo.";
+  return event.validation ?? fallbackMessage;
 }
 
 export function parsePeriodRange(periodValue) {

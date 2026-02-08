@@ -1,41 +1,40 @@
-﻿import Card from "../components/Card";
+import { useTranslation } from "react-i18next";
+import Card from "../components/Card";
 
-const tasks = [
-  "Préparation du terrain",
-  "Plantation",
-  "Buttage",
-  "Arrosage",
-  "Surveillance maladies",
-  "Récolte, tri et stockage",
+const taskKeys = [
+  "organisation.tasks.preparation",
+  "organisation.tasks.plantation",
+  "organisation.tasks.buttage",
+  "organisation.tasks.watering",
+  "organisation.tasks.disease_watch",
+  "organisation.tasks.harvest_storage",
 ];
 
 function Organisation() {
+  const { t } = useTranslation();
+
   return (
     <div className="container page-block">
       <section className="section section-tight">
-        <h1>Organisation 🌱</h1>
-        <p className="section-intro">
-          Version Patatos: souples sur les horaires, carrés sur le suivi. L'idée, c'est que ça avance sans stress.
-        </p>
+        <h1>{t("organisation.title")}</h1>
+        <p className="section-intro">{t("organisation.intro")}</p>
       </section>
 
       <section className="section">
-        <Card title="Répartition des tâches">
+        <Card title={t("organisation.tasks_title")}>
           <ul className="task-list">
-            {tasks.map((task) => (
-              <li key={task}>{task}</li>
+            {taskKeys.map((taskKey) => (
+              <li key={taskKey}>{t(taskKey)}</li>
             ))}
           </ul>
-          <p className="muted-text">
-            Chacun prend une part selon ses dispos, puis on met à jour le planning central pour garder une vue propre.
-          </p>
+          <p className="muted-text">{t("organisation.tasks_note")}</p>
         </Card>
       </section>
 
       <section className="section">
         <Card className="highlight-card">
-          <p className="highlight-line">N&apos;hésitez pas à poser des questions si besoin !</p>
-          <p className="highlight-line">Qui est partant ? Même si c&apos;est juste pour une petite part 🙂</p>
+          <p className="highlight-line">{t("organisation.highlight_questions")}</p>
+          <p className="highlight-line">{t("organisation.highlight_join")}</p>
         </Card>
       </section>
     </div>

@@ -1,9 +1,11 @@
-﻿import { useState } from "react";
+import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import Badge from "../components/Badge";
 import Card from "../components/Card";
 import { teamMembers } from "../data/team";
 
 function Team() {
+  const { t } = useTranslation();
   const [imageErrors, setImageErrors] = useState({});
 
   function handleImageError(memberName) {
@@ -19,8 +21,8 @@ function Team() {
   return (
     <div className="container page-block">
       <section className="section section-tight">
-        <h1>Équipe 🧑‍🌾</h1>
-        <p className="section-intro">La team Patatos avance ensemble: simple, efficace et toujours dans la bonne humeur.</p>
+        <h1>{t("team.title")}</h1>
+        <p className="section-intro">{t("team.intro")}</p>
       </section>
 
       <section className="section">
@@ -36,7 +38,7 @@ function Team() {
                     {hasImage ? (
                       <img
                         src={imgSrc}
-                        alt={`Photo de ${member.name}`}
+                        alt={t("team.image_alt", { name: member.name })}
                         loading="lazy"
                         onError={() => handleImageError(member.name)}
                       />
@@ -49,12 +51,12 @@ function Team() {
 
                   <div className="team-card-body">
                     <h2 className="team-name">{member.name}</h2>
-                    <Badge tone="neutral">Team Patatos</Badge>
+                    <Badge tone="neutral">{t("team.badge")}</Badge>
                   </div>
                 </div>
 
-                {member.role ? <p className="muted-text">{member.role}</p> : null}
-                {member.note ? <p className="muted-text">{member.note}</p> : null}
+                <p className="muted-text">{t(`team.members.${member.id}.role`)}</p>
+                <p className="muted-text">{t(`team.members.${member.id}.note`)}</p>
               </Card>
             );
           })}

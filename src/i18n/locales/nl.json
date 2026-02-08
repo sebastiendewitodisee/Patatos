@@ -69,6 +69,11 @@
       "none_update": "Nog geen update.",
       "progress_details": "{{done}} taak/taken klaar · {{remaining}} resterend"
     },
+    "fallbacks": {
+      "date_tbc": "Datum te bevestigen",
+      "period_tbc": "Periode te bevestigen",
+      "validation": "Validatie: we bevestigen na terreincontrole en op basis van het weer."
+    },
     "timeline": {
       "title": "Tijdlijn van gebeurtenissen",
       "intro": "Elke kaart toont een seizoensperiode. Indicatieve taken bevatten een validatieregel.",
@@ -160,5 +165,106 @@
       "t2": "Niet wassen voor opslag.",
       "t3": "Regelmatig sorteren en beschadigde knollen verwijderen."
     }
+  },
+  "team": {
+    "title": "Team 🧑‍🌾",
+    "intro": "Team Patatos gaat samen vooruit: simpel, efficiënt en altijd met een goede sfeer.",
+    "image_alt": "Foto van {{name}}",
+    "badge": "Team Patatos",
+    "members": {
+      "denis": {
+        "role": "Terrein / logistiek",
+        "note": "Terreinreferent voor de praktische sessies."
+      },
+      "sebastien-le-vrai": {
+        "role": "Coördinatie",
+        "note": "Bewaakt het ritme en de prioriteiten van het team."
+      },
+      "sebastien": {
+        "role": "Opvolging",
+        "note": "Houdt de voortgang van de acties in de gaten."
+      },
+      "josh": {
+        "role": "Support",
+        "note": "Springt bij tijdens belangrijke sessies."
+      },
+      "melvin": {
+        "role": "Support",
+        "note": "Operationele versterking om de planning vlot te houden."
+      }
+    }
+  },
+  "organisation": {
+    "title": "Organisatie 🌱",
+    "intro": "Patatos-versie: flexibel in timing, strak in opvolging. Zo gaat het vooruit zonder stress.",
+    "tasks_title": "Taakverdeling",
+    "tasks": {
+      "preparation": "Voorbereiding van het terrein",
+      "plantation": "Aanplanten",
+      "buttage": "Aanaarden",
+      "watering": "Water geven",
+      "disease_watch": "Opvolging van ziektes",
+      "harvest_storage": "Oogst, sorteren en bewaren"
+    },
+    "tasks_note": "Iedereen neemt een deel op volgens beschikbaarheid, daarna updaten we de centrale planning voor een helder overzicht.",
+    "highlight_questions": "Stel gerust vragen als je iets nodig hebt!",
+    "highlight_join": "Wie doet mee? Zelfs een klein stukje hulp telt 🙂"
+  },
+  "faq": {
+    "title": "FAQ",
+    "intro": "De vragen die we bij Patatos echt hebben, met praktische antwoorden.",
+    "items": {
+      "goal": {
+        "question": "Wat is het doel van het project?",
+        "answer": "Een sterk aardappelseizoen onder vrienden: leren, oogsten, delen en tegelijk goed georganiseerd blijven."
+      },
+      "attendance": {
+        "question": "Moeten we er altijd bij zijn?",
+        "answer": "Nee. Je komt wanneer je kan. Eén nuttige sessie is beter dan een vage belofte die niet haalbaar is."
+      },
+      "harvest": {
+        "question": "Wanneer oogsten we?",
+        "answer": "We werken met periodes (bv. juni–juli). Het exacte moment bevestigen we ter plaatse via loof, weer en een test op één plant."
+      },
+      "organization": {
+        "question": "Hoe organiseren we ons?",
+        "answer": "De centrale planning is de basis: statussen, verantwoordelijken en validatie. Daarna plannen we de momenten via de groep."
+      },
+      "difference": {
+        "question": "Vroege vs bewaarrassen: wat is het verschil?",
+        "answer": "Vroege rassen eet je meestal sneller op. Bewaarrassen zijn bedoeld om langer goed te blijven na de oogst."
+      }
+    }
+  },
+  "contact": {
+    "title": "Contact 📱",
+    "intro": "Centraal punt om links te delen en contact te houden met het team.",
+    "whatsapp": {
+      "title": "WhatsApp-groep",
+      "link_label": "Groepslink:",
+      "placeholder": "nog in te vullen",
+      "add_link": "Link toevoegen",
+      "alert": "Placeholder: voeg hier de link van de WhatsApp-groep toe."
+    },
+    "form": {
+      "title": "Mini formulier (alleen lokaal)",
+      "name_label": "Naam",
+      "name_placeholder": "Je voornaam",
+      "message_label": "Bericht",
+      "message_placeholder": "Je bericht",
+      "submit": "Verzenden (UI)",
+      "note": "Lokaal formulier, later te koppelen.",
+      "feedback": "Lokaal formulier in de UI opgeslagen. Later te koppelen."
+    }
+  },
+  "legal": {
+    "title": "Juridische vermeldingen",
+    "p1": "Interne site van het project Team Patates Patatos.",
+    "p2": "Gegevens worden lokaal in de repo beheerd, zonder backend.",
+    "p3": "Pas deze pagina gerust aan met de juridische info van de groep."
+  },
+  "not_found": {
+    "message": "Deze pagina bestaat niet (meer).",
+    "back_home": "Terug naar start"
   }
 }

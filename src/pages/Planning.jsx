@@ -37,6 +37,9 @@ function Planning() {
   const [statusFilter, setStatusFilter] = useState("all");
   const [phaseFilter, setPhaseFilter] = useState("all");
   const [search, setSearch] = useState("");
+  const dateFallback = t("planning.fallbacks.date_tbc");
+  const periodFallback = t("planning.fallbacks.period_tbc");
+  const validationFallback = t("planning.fallbacks.validation");
 
   function resetFilters() {
     setPhaseFilter("all");
@@ -56,7 +59,7 @@ function Planning() {
     () =>
       STATUS_OPTIONS.map((option) => ({
         value: option.value,
-        label: t(`status.${option.value}`, { defaultValue: option.label }),
+        label: t(`status.${option.value}`),
       })),
     [t]
   );
@@ -128,7 +131,7 @@ function Planning() {
         <p className="section-intro">{t("planning.intro")}</p>
         <p className="muted-text">{t("planning.season")}</p>
 
-        <Card title={t("planning.rules_title") }>
+        <Card title={t("planning.rules_title")}>
           <ul className="tips-list">
             <li>{t("planning.rules.r1")}</li>
             <li>{t("planning.rules.r2")}</li>
@@ -142,9 +145,13 @@ function Planning() {
             {upcomingEvent ? (
               <>
                 <p className="summary-title">{upcomingEvent.title}</p>
-                <p className="muted-text">{t("common.period_with_value", { value: getEventScheduleLabel(upcomingEvent) })}</p>
+                <p className="muted-text">
+                  {t("common.period_with_value", {
+                    value: getEventScheduleLabel(upcomingEvent, { periodFallback, dateFallback }),
+                  })}
+                </p>
                 {isEventIndicative(upcomingEvent) ? (
-                  <p className="muted-text">{getIndicativeValidationMessage(upcomingEvent)}</p>
+                  <p className="muted-text">{getIndicativeValidationMessage(upcomingEvent, validationFallback)}</p>
                 ) : null}
               </>
             ) : (
@@ -156,7 +163,7 @@ function Planning() {
             {lastUpdate ? (
               <>
                 <p className="summary-title">{lastUpdate.title}</p>
-                <p className="muted-text">{formatDateFr(lastUpdate.updatedAt)}</p>
+                <p className="muted-text">{formatDateFr(lastUpdate.updatedAt, dateFallback)}</p>
               </>
             ) : (
               <p>{t("planning.summary.none_update")}</p>
@@ -245,9 +252,13 @@ function Planning() {
                             {isEventIndicative(task) ? <Badge tone="neutral">{t("planning.timeline.indicative")}</Badge> : null}
                             {isLate ? <Badge tone="late">{t("planning.timeline.late")}</Badge> : null}
                           </div>
-                          <p className="muted-text">{t("common.period_with_value", { value: task.period ?? "-" })}</p>
+                          <p className="muted-text">
+                            {t("common.period_with_value", {
+                              value: task.period ?? periodFallback,
+                            })}
+                          </p>
                           {isEventIndicative(task) ? (
-                            <p className="muted-text">{getIndicativeValidationMessage(task)}</p>
+                            <p className="muted-text">{getIndicativeValidationMessage(task, validationFallback)}</p>
                           ) : null}
                         </div>
                       </li>

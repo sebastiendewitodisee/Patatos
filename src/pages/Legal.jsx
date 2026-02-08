@@ -1,17 +1,20 @@
-﻿import Card from "../components/Card";
+import { useTranslation } from "react-i18next";
+import Card from "../components/Card";
 
 function Legal() {
+  const { t } = useTranslation();
+
   return (
     <div className="container page-block">
       <section className="section section-tight">
-        <h1>Mentions légales</h1>
+        <h1>{t("legal.title")}</h1>
       </section>
 
       <section className="section">
         <Card>
-          <p>Site interne du projet Team Patates Patatos.</p>
-          <p>Données gérées localement dans le repo, sans backend.</p>
-          <p>Si besoin, adapte cette page avec les infos légales du groupe.</p>
+          <p>{t("legal.p1")}</p>
+          <p>{t("legal.p2")}</p>
+          <p>{t("legal.p3")}</p>
         </Card>
       </section>
     </div>
