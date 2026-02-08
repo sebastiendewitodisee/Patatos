@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link, NavLink, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { DEFAULT_LANG, setLangToUrl, setStoredLang } from "../i18n";
@@ -54,15 +54,10 @@ function Header() {
   const [logoFailed, setLogoFailed] = useState(false);
   const isOpen = openAtPath === pathname;
   const currentLang = i18n.resolvedLanguage || i18n.language || DEFAULT_LANG;
+  const currentLangCode = currentLang.toLowerCase().startsWith("nl") ? "nl" : "fr";
+  const nextLang = currentLangCode === "fr" ? "nl" : "fr";
+  const nextLangAriaLabel = nextLang === "fr" ? t("nav.lang_to_fr") : t("nav.lang_to_nl");
   const logoSrc = `${import.meta.env.BASE_URL}brand/logo-team-patates-patatos.svg`;
-
-  const languageItems = useMemo(
-    () => [
-      { value: "fr", label: t("nav.lang_fr"), ariaLabel: t("nav.switch_to_fr") },
-      { value: "nl", label: t("nav.lang_nl"), ariaLabel: t("nav.switch_to_nl") },
-    ],
-    [t]
-  );
 
   const isDarkTheme = theme === "dark";
   const nextTheme = isDarkTheme ? "light" : "dark";
@@ -179,7 +174,7 @@ function Header() {
       return;
     }
 
-    if (lang !== currentLang) {
+    if (lang !== currentLangCode) {
       i18n.changeLanguage(lang);
     }
 
@@ -238,7 +233,7 @@ function Header() {
           <div className="lang-switch theme-switch header-theme-switch" role="group" aria-label={t("nav.theme")}>
             <button
               type="button"
-              className={`lang-btn theme-toggle-btn${nextTheme === "dark" ? " is-active" : ""}`}
+              className={`lang-btn theme-toggle-btn ${isDarkTheme ? "is-style-dark" : "is-style-light"}`}
               aria-label={nextThemeAriaLabel}
               aria-pressed={isDarkTheme}
               title={nextThemeAriaLabel}
@@ -251,17 +246,15 @@ function Header() {
           </div>
 
           <div className="lang-switch header-language-switch" role="group" aria-label={t("nav.language")}>
-            {languageItems.map((language) => (
-              <button
-                key={language.value}
-                type="button"
-                className={`lang-btn${currentLang === language.value ? " is-active" : ""}`}
-                aria-label={language.ariaLabel}
-                onClick={() => handleLanguageChange(language.value)}
-              >
-                {language.label}
-              </button>
-            ))}
+            <button
+              type="button"
+              className="lang-btn lang-toggle-btn"
+              aria-label={nextLangAriaLabel}
+              title={nextLangAriaLabel}
+              onClick={() => handleLanguageChange(nextLang)}
+            >
+              {nextLang.toUpperCase()}
+            </button>
           </div>
         </div>
 

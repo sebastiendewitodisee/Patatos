@@ -24,7 +24,9 @@
     "switch_to_light": "Passer en mode clair",
     "switch_to_dark": "Passer en mode sombre",
     "switch_to_fr": "Passer en français",
-    "switch_to_nl": "Passer en néerlandais"
+    "switch_to_nl": "Passer en néerlandais",
+    "lang_to_fr": "Passer en français",
+    "lang_to_nl": "Passer en néerlandais"
   },
   "footer": {
     "copyright": "© {{year}} Team Patates Patatos · Opération Récolte 🥔",

@@ -148,6 +148,25 @@
   background: rgba(87, 223, 155, 0.18);
 }
 
+.theme-toggle-btn.is-style-light {
+  color: var(--muted);
+  border-color: var(--line);
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.theme-toggle-btn.is-style-light:hover {
+  color: var(--text);
+  border-color: rgba(255, 255, 255, 0.18);
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.theme-toggle-btn.is-style-dark,
+.theme-toggle-btn.is-style-dark:hover {
+  color: var(--text);
+  border-color: rgba(87, 223, 155, 0.42);
+  background: rgba(87, 223, 155, 0.18);
+}
+
 .header-theme-switch .lang-btn,
 .header-language-switch .lang-btn {
   width: 2.625rem;

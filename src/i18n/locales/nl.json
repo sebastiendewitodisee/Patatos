@@ -24,7 +24,9 @@
     "switch_to_light": "Schakel naar lichte modus",
     "switch_to_dark": "Schakel naar donkere modus",
     "switch_to_fr": "Schakel naar Frans",
-    "switch_to_nl": "Schakel naar Nederlands"
+    "switch_to_nl": "Schakel naar Nederlands",
+    "lang_to_fr": "Overschakelen naar Frans",
+    "lang_to_nl": "Overschakelen naar Nederlands"
   },
   "footer": {
     "copyright": "© {{year}} Team Patates Patatos · Oogstoperatie 🥔",
