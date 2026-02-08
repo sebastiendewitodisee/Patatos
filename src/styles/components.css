@@ -452,6 +452,7 @@ th {
   display: flex;
   gap: 12px;
   align-items: center;
+  position: relative;
 }
 
 .variety-meta {
@@ -464,6 +465,13 @@ th {
   padding: 0;
   cursor: zoom-in;
   display: inline-flex;
+  pointer-events: auto;
+  position: relative;
+  z-index: 2;
+}
+
+.image-button img {
+  display: block;
 }
 
 .lightbox-overlay {

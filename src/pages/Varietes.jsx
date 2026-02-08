@@ -190,15 +190,19 @@ function Varietes() {
                 <Card>
                   <div className="variety-card-header">
                     {showPlaceholder ? (
-                      <span className="variety-thumb-placeholder" aria-label={`Placeholder pour ${item.name}`}>
+                      <div className="variety-thumb-placeholder" aria-hidden="true">
                         🥔
-                      </span>
+                      </div>
                     ) : (
                       <button
                         type="button"
                         className="image-button"
                         aria-label={`Agrandir l'image de ${item.name}`}
-                        onClick={() => setLightbox({ src: imgSrc, alt: imageAlt, title: item.name })}
+                        onClick={(event) => {
+                          event.preventDefault();
+                          event.stopPropagation();
+                          setLightbox({ src: imgSrc, alt: imageAlt, title: item.name });
+                        }}
                       >
                         <img
                           src={imgSrc}
