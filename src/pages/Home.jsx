@@ -27,7 +27,8 @@ function getEventText(event, keyName, fallbackKeyName, t) {
 function getEventPeriodLabel(event, t, locale, periodFallback, dateFallback) {
   const fallbackLabel = getEventScheduleLabel(event, {
     periodFallback,
-    dateFallback: event?.date ? formatDateLocale(event.date, locale, dateFallback) : dateFallback,
+    dateFallback,
+    locale,
   });
 
   if (!event?.periodKey) {
@@ -49,7 +50,7 @@ function Home() {
   const dateFallback = t("planning.fallbacks.date_tbc");
   const periodFallback = t("planning.fallbacks.period_tbc");
   const validationFallback = t("planning.fallbacks.validation");
-  const locale = i18n.resolvedLanguage === "nl" ? "nl-BE" : "fr-FR";
+  const locale = i18n.resolvedLanguage?.startsWith("nl") ? "nl-BE" : "fr-BE";
 
   return (
     <div className="container page-block home-page">

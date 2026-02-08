@@ -89,13 +89,13 @@ function getEventOrder(event) {
   return datedOrder ?? Number.MAX_SAFE_INTEGER;
 }
 
-export function formatDateLocale(dateValue, locale = "fr-FR", fallbackLabel = "") {
+export function formatDateLocale(dateValue, locale = "fr-BE", fallbackLabel = "") {
   const parsed = parsePlanningDate(dateValue);
   if (!parsed) {
     return fallbackLabel;
   }
 
-  const resolvedLocale = typeof locale === "string" && locale.trim().length > 0 ? locale : "fr-FR";
+  const resolvedLocale = typeof locale === "string" && locale.trim().length > 0 ? locale : "fr-BE";
 
   return parsed.toLocaleDateString(resolvedLocale, {
     day: "2-digit",
@@ -105,19 +105,19 @@ export function formatDateLocale(dateValue, locale = "fr-FR", fallbackLabel = ""
 }
 
 export function formatDateFr(dateValue, fallbackLabel = "") {
-  return formatDateLocale(dateValue, "fr-FR", fallbackLabel);
+  return formatDateLocale(dateValue, "fr-BE", fallbackLabel);
 }
 
 export function getEventScheduleLabel(
   event,
-  { periodFallback = "", dateFallback = "" } = {}
+  { periodFallback = "", dateFallback = "", locale = "fr-BE" } = {}
 ) {
   if (event.period) {
     return event.period;
   }
 
   if (event.date) {
-    return formatDateFr(event.date, dateFallback);
+    return formatDateLocale(event.date, locale, dateFallback);
   }
 
   return periodFallback;
