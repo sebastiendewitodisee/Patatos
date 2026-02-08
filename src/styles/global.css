@@ -181,6 +181,24 @@ textarea {
   padding: 0.65rem 0.75rem;
 }
 
+/* Dropdown menu (options) — lisible en thème sombre */
+.select option,
+.select optgroup {
+  background-color: #111;
+  color: #f2f2f2;
+}
+
+/* Option sélectionnée (support variable selon navigateur/OS) */
+.select option:checked {
+  background-color: rgba(87, 223, 155, 0.25);
+  color: #fff;
+}
+
+/* Aide Chrome/Windows pour un menu natif cohérent en sombre */
+select.select {
+  color-scheme: dark;
+}
+
 textarea {
   resize: vertical;
 }

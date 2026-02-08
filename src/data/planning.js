@@ -36,7 +36,7 @@ export const planningEvents = [
     type: "preparation",
     status: "done",
     phase: "Préparation",
-    description: "Achat finalisé pour lancer la saison: 27 sacs de 1,5 kg déjà récupérés.",
+    description: "Achat finalisé pour lancer la saison : 40,5 kg de plants (calibre 28/35) déjà récupérés (~1 570 plants).",
     responsibles: ["Sébastien \"le vrai\"", "À définir"],
   },
   {
@@ -70,7 +70,7 @@ export const planningEvents = [
   {
     id: "passage-fermier-tracteur",
     order: 4,
-    period: "15–28 février 2026 (indicatif)",
+    period: "15–28 février 2026",
     updatedAt: "2026-02-08",
     title: "Passage fermier (tracteur)",
     type: "preparation",
@@ -84,7 +84,7 @@ export const planningEvents = [
   {
     id: "preparation-terrain-team-avant-plantation",
     order: 5,
-    period: "1–14 mars 2026 (indicatif)",
+    period: "1–14 mars 2026",
     updatedAt: "2026-02-08",
     title: "Préparation terrain par la team (avant plantation)",
     type: "preparation",
@@ -99,7 +99,7 @@ export const planningEvents = [
   {
     id: "checkpoint-01-organisation-parcelle-materiel",
     order: 6,
-    period: "15–31 mars 2026 (indicatif)",
+    period: "15–31 mars 2026",
     updatedAt: "2026-02-08",
     title: "Checkpoint 1 — Organisation parcelle + matériel",
     type: "preparation",
@@ -113,7 +113,7 @@ export const planningEvents = [
   {
     id: "checkpoint-02-plantation-session-a",
     order: 7,
-    period: "1–14 avril 2026 (indicatif)",
+    period: "1–14 avril 2026",
     updatedAt: "2026-02-08",
     title: "Checkpoint 2 — Plantation session A",
     type: "plantation",
@@ -127,7 +127,7 @@ export const planningEvents = [
   {
     id: "checkpoint-03-plantation-session-b",
     order: 8,
-    period: "15–30 avril 2026 (indicatif)",
+    period: "15–30 avril 2026",
     updatedAt: "2026-02-08",
     title: "Checkpoint 3 — Plantation session B",
     type: "plantation",
@@ -141,7 +141,7 @@ export const planningEvents = [
   {
     id: "checkpoint-04-plantation-session-c",
     order: 9,
-    period: "1–14 mai 2026 (indicatif)",
+    period: "1–14 mai 2026",
     updatedAt: "2026-02-08",
     title: "Checkpoint 4 — Plantation session C",
     type: "plantation",
@@ -156,7 +156,7 @@ export const planningEvents = [
   {
     id: "checkpoint-05-buttage-1-reprise-rangs",
     order: 10,
-    period: "15–31 mai 2026 (indicatif)",
+    period: "15–31 mai 2026",
     updatedAt: "2026-02-08",
     title: "Checkpoint 5 — Buttage 1 + reprise des rangs",
     type: "suivi",
@@ -170,7 +170,7 @@ export const planningEvents = [
   {
     id: "checkpoint-06-arrosage-cible-check-feuillage",
     order: 11,
-    period: "1–14 juin 2026 (indicatif)",
+    period: "1–14 juin 2026",
     updatedAt: "2026-02-08",
     title: "Checkpoint 6 — Arrosage ciblé + check feuillage",
     type: "suivi",
@@ -185,7 +185,7 @@ export const planningEvents = [
   {
     id: "checkpoint-07-tour-mildiou-buttage-2",
     order: 12,
-    period: "15–30 juin 2026 (indicatif)",
+    period: "15–30 juin 2026",
     updatedAt: "2026-02-08",
     title: "Checkpoint 7 — Tour mildiou + buttage 2 si nécessaire",
     type: "suivi",
@@ -200,7 +200,7 @@ export const planningEvents = [
   {
     id: "checkpoint-08-suivi-ete-eau-feuillage",
     order: 13,
-    period: "1–14 juillet 2026 (indicatif)",
+    period: "1–14 juillet 2026",
     updatedAt: "2026-02-08",
     title: "Checkpoint 8 — Suivi été: eau + feuillage",
     type: "suivi",
@@ -215,7 +215,7 @@ export const planningEvents = [
   {
     id: "checkpoint-09-test-recolte-precoces",
     order: 14,
-    period: "15–31 juillet 2026 (indicatif)",
+    period: "15–31 juillet 2026",
     updatedAt: "2026-02-08",
     title: "Checkpoint 9 — Test récolte des précoces",
     type: "recolte",
@@ -230,7 +230,7 @@ export const planningEvents = [
   {
     id: "checkpoint-10-recolte-precoces-collective",
     order: 15,
-    period: "1–14 août 2026 (indicatif)",
+    period: "1–14 août 2026",
     updatedAt: "2026-02-08",
     title: "Checkpoint 10 — Récolte précoces (session collective)",
     type: "recolte",
@@ -244,7 +244,7 @@ export const planningEvents = [
   {
     id: "checkpoint-11-prepa-recolte-principale",
     order: 16,
-    period: "15–31 août 2026 (indicatif)",
+    period: "15–31 août 2026",
     updatedAt: "2026-02-08",
     title: "Checkpoint 11 — Préparation récolte principale",
     type: "recolte",
@@ -259,7 +259,7 @@ export const planningEvents = [
   {
     id: "checkpoint-12-recolte-principale-vague-1",
     order: 17,
-    period: "1–14 septembre 2026 (indicatif)",
+    period: "1–14 septembre 2026",
     updatedAt: "2026-02-08",
     title: "Checkpoint 12 — Récolte principale vague 1",
     type: "recolte",
@@ -273,7 +273,7 @@ export const planningEvents = [
   {
     id: "checkpoint-13-recolte-principale-vague-2",
     order: 18,
-    period: "15–30 septembre 2026 (indicatif)",
+    period: "15–30 septembre 2026",
     updatedAt: "2026-02-08",
     title: "Checkpoint 13 — Récolte principale vague 2",
     type: "recolte",
@@ -288,7 +288,7 @@ export const planningEvents = [
   {
     id: "checkpoint-14-tri-cagettes-stockage",
     order: 19,
-    period: "1–14 octobre 2026 (indicatif)",
+    period: "1–14 octobre 2026",
     updatedAt: "2026-02-08",
     title: "Checkpoint 14 — Tri + mise en cagettes",
     type: "conservation",
@@ -303,7 +303,7 @@ export const planningEvents = [
   {
     id: "checkpoint-15-point-stockage-controle-1",
     order: 20,
-    period: "15–31 octobre 2026 (indicatif)",
+    period: "15–31 octobre 2026",
     updatedAt: "2026-02-08",
     title: "Checkpoint 15 — Point stockage (contrôle 1)",
     type: "conservation",
@@ -315,3 +315,4 @@ export const planningEvents = [
     responsibles: ["Sébastien \"le vrai\"", "À définir"],
   },
 ];
+
