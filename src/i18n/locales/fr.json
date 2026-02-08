@@ -29,6 +29,19 @@
     "lang_to_nl": "Passer en néerlandais",
     "brand_wordmark_alt": "Team Patates Patatos"
   },
+  "welcome": {
+    "title": "Bonjour 👋",
+    "title_other": "Hallo 👋",
+    "subtitle": "Bienvenue sur Patatos ! Choisis ta langue pour continuer.",
+    "subtitle_other": "Welkom bij Patatos! Kies je taal om verder te gaan.",
+    "choose_fr": "Français",
+    "choose_nl": "Nederlands",
+    "choose_fr_aria": "Choisir le français",
+    "choose_nl_aria": "Choisir le néerlandais",
+    "actions_aria": "Choix de la langue",
+    "close": "Fermer la fenêtre de bienvenue",
+    "image_alt": "Team Patates Patatos WEEKEND"
+  },
   "footer": {
     "copyright": "© {{year}} Team Patates Patatos · Opération Récolte 🥔",
     "legal": "Mentions légales"
