@@ -1,4 +1,4 @@
-﻿{
+{
   "nav": {
     "brand": "Team Patates Patatos",
     "home": "Start",
@@ -35,7 +35,8 @@
   },
   "common": {
     "period": "Periode",
-    "period_with_value": "Periode: {{value}}"
+    "period_with_value": "Periode: {{value}}",
+    "to_define": "Te bepalen"
   },
   "home": {
     "eyebrow": "Team Patates Patatos",
@@ -116,7 +117,7 @@
       "instruction_prefix": "Pas gewoon",
       "instruction_suffix": "aan. Eén object = één gebeurtenis (volgorde, periode, status, type, fase, beschrijving).",
       "rule": "Kleine regel: als een taak indicatief is, voeg altijd een veld `validation` toe.",
-      "example": "{\n  id: \"nieuwe-taak\",\n  order: 4,\n  period: \"April–Mei 2026\",\n  title: \"Nieuwe actie\",\n  type: \"suivi\",\n  status: \"todo\",\n  phase: \"Suivi\",\n  isIndicative: true,\n  validation: \"Validatie: we bevestigen na terreincontrole.\",\n  description: \"Beschrijf wat we doen\"\n}"
+      "example": "{\n  id: \"nieuwe-taak\",\n  order: 4,\n  period: \"April-Mei 2026\",\n  title: \"Nieuwe actie\",\n  type: \"suivi\",\n  phaseId: \"suivi\",\n  status: \"todo\",\n  isIndicative: true,\n  validation: \"Validatie: we bevestigen na terreincontrole.\",\n  description: \"Beschrijf wat we doen\"\n}"
     },
     "phases": {
       "preparation": "Voorbereiding",

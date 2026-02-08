@@ -1,6 +1,6 @@
 import { useTranslation } from "react-i18next";
 import Badge from "./Badge";
-import { STATUS_META, TYPE_META } from "../data/planning";
+import { RESPONSIBLE_TBD_TOKEN, STATUS_META, TYPE_META } from "../data/planning";
 import {
   getEffectiveStatus,
   getEventScheduleLabel,
@@ -24,6 +24,14 @@ function getResponsiblesDisplay(event) {
     principal: responsibles[0],
     extra: Math.max(responsibles.length - 1, 0),
   };
+}
+
+function getResponsibleLabel(responsible, t) {
+  if (responsible === RESPONSIBLE_TBD_TOKEN) {
+    return t("common.to_define");
+  }
+
+  return responsible;
 }
 
 function getEventText(event, keyName, fallbackKeyName, t) {
@@ -101,7 +109,7 @@ function Timeline({ events }) {
                     t("planning.timeline.team_all")
                   ) : (
                     <>
-                      <strong>{responsiblesDisplay.principal}</strong>
+                      <strong>{getResponsibleLabel(responsiblesDisplay.principal, t)}</strong>
                       {responsiblesDisplay.extra > 0 ? ` (+${responsiblesDisplay.extra})` : ""}
                     </>
                   )}

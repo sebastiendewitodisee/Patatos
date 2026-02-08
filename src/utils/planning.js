@@ -22,6 +22,14 @@ const MONTH_INDEX_BY_NAME = {
   decembre: 11,
 };
 
+const PHASE_ID_BY_LEGACY_NAME = {
+  preparation: "preparation",
+  plantation: "plantation",
+  suivi: "suivi",
+  recolte: "recolte",
+  conservation: "conservation",
+};
+
 function stripAccents(value) {
   return value.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
 }
@@ -77,7 +85,12 @@ function normalizeReferenceDate(dateValue) {
 }
 
 function hasIndicativeKeyword(value) {
-  return typeof value === "string" && value.toLowerCase().includes("indicatif");
+  if (typeof value !== "string") {
+    return false;
+  }
+
+  const normalized = stripAccents(value.toLowerCase());
+  return normalized.includes("indicatif") || normalized.includes("indicatief");
 }
 
 function getEventOrder(event) {
@@ -125,6 +138,16 @@ export function getEventScheduleLabel(
 
 export function isEventIndicative(event) {
   return Boolean(event.isIndicative || hasIndicativeKeyword(event.period) || hasIndicativeKeyword(event.title));
+}
+
+export function getEventPhaseId(event) {
+  const rawPhase = event?.phaseId ?? event?.phase ?? "";
+  if (!rawPhase) {
+    return "";
+  }
+
+  const normalized = stripAccents(String(rawPhase).toLowerCase().trim());
+  return PHASE_ID_BY_LEGACY_NAME[normalized] ?? normalized;
 }
 
 export function getIndicativeValidationMessage(event, fallbackMessage = "") {
@@ -328,9 +351,9 @@ export function getPlanningProgress(events) {
 }
 
 export function getChecklistByPhase(events, phaseOrder = []) {
-  return phaseOrder.map((phaseName) => ({
-    phase: phaseName,
-    tasks: sortEventsByDate(events.filter((event) => event.phase === phaseName)),
+  return phaseOrder.map((phaseId) => ({
+    phase: phaseId,
+    tasks: sortEventsByDate(events.filter((event) => getEventPhaseId(event) === phaseId)),
   }));
 }
 

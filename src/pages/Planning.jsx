@@ -4,11 +4,12 @@ import Badge from "../components/Badge";
 import Card from "../components/Card";
 import Filters from "../components/Filters";
 import Timeline from "../components/Timeline";
-import { PHASE_ORDER, STATUS_META, STATUS_OPTIONS, planningEvents } from "../data/planning";
+import { PHASE_ORDER, RESPONSIBLE_TBD_TOKEN, STATUS_META, STATUS_OPTIONS, planningEvents } from "../data/planning";
 import {
-  formatDateFr,
+  formatDateLocale,
   getChecklistByPhase,
   getEffectiveStatus,
+  getEventPhaseId,
   getEventScheduleLabel,
   getIndicativeValidationMessage,
   getLastUpdatedEvent,
@@ -19,17 +20,12 @@ import {
   sortEventsByDate,
 } from "../utils/planning";
 
-const PHASE_TRANSLATION_KEYS = {
-  Préparation: "preparation",
-  Plantation: "plantation",
-  Suivi: "suivi",
-  Récolte: "recolte",
-  Conservation: "conservation",
-};
+function getPhaseLabel(phaseId, t) {
+  if (!phaseId) {
+    return "";
+  }
 
-function getPhaseLabel(phase, t) {
-  const key = PHASE_TRANSLATION_KEYS[phase];
-  return key ? t(`planning.phases.${key}`) : phase;
+  return t(`planning.phases.${phaseId}`, { defaultValue: phaseId });
 }
 
 function getEventText(event, keyName, fallbackKeyName, t) {
@@ -53,11 +49,27 @@ function getEventValidationText(event, t, validationFallback) {
   return event?.validationKey ? t(event.validationKey, { defaultValue: fallbackLabel }) : fallbackLabel;
 }
 
+function getResponsiblesSearchText(event, t) {
+  if (event?.isTeam) {
+    return t("planning.timeline.team_all");
+  }
+
+  const responsibles = event?.responsibles;
+  if (!responsibles?.length) {
+    return "";
+  }
+
+  return responsibles
+    .map((responsible) => (responsible === RESPONSIBLE_TBD_TOKEN ? t("common.to_define") : responsible))
+    .join(" ");
+}
+
 function Planning() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const [statusFilter, setStatusFilter] = useState("all");
   const [phaseFilter, setPhaseFilter] = useState("all");
   const [search, setSearch] = useState("");
+  const locale = i18n.resolvedLanguage?.startsWith("nl") ? "nl-BE" : "fr-BE";
   const dateFallback = t("planning.fallbacks.date_tbc");
   const periodFallback = t("planning.fallbacks.period_tbc");
   const validationFallback = t("planning.fallbacks.validation");
@@ -88,7 +100,7 @@ function Planning() {
   const phaseOptions = useMemo(
     () => [
       { value: "all", label: t("planning.filters.all_phases") },
-      ...PHASE_ORDER.map((phase) => ({ value: phase, label: getPhaseLabel(phase, t) })),
+      ...PHASE_ORDER.map((phaseId) => ({ value: phaseId, label: getPhaseLabel(phaseId, t) })),
     ],
     [t]
   );
@@ -98,13 +110,14 @@ function Planning() {
 
     return sortedEvents.filter((event) => {
       const effectiveStatus = getEffectiveStatus(event);
+      const eventPhaseId = getEventPhaseId(event);
       const matchesStatus =
         statusFilter === "all" ||
         (statusFilter === "done" && event.status === "done") ||
         (statusFilter === "doing" && event.status === "doing") ||
         (statusFilter === "todo" && effectiveStatus === "todo") ||
         (statusFilter === "upcoming" && effectiveStatus === "upcoming");
-      const matchesPhase = phaseFilter === "all" || event.phase === phaseFilter;
+      const matchesPhase = phaseFilter === "all" || eventPhaseId === phaseFilter;
       const matchesSearch =
         loweredSearch.length === 0 ||
         [
@@ -112,8 +125,8 @@ function Planning() {
           getEventText(event, "descriptionKey", "description", t),
           getEventPeriodLabel(event, t, periodFallback, dateFallback),
           getEventValidationText(event, t, validationFallback),
-          event.phaseKey ? t(event.phaseKey, { defaultValue: getPhaseLabel(event.phase, t) }) : getPhaseLabel(event.phase, t),
-          event.isTeam ? t("planning.timeline.team_all") : event.responsibles?.join(" "),
+          event.phaseKey ? t(event.phaseKey, { defaultValue: getPhaseLabel(eventPhaseId, t) }) : getPhaseLabel(eventPhaseId, t),
+          getResponsiblesSearchText(event, t),
         ]
           .filter(Boolean)
           .join(" ")
@@ -191,7 +204,7 @@ function Planning() {
             {lastUpdate ? (
               <>
                 <p className="summary-title">{getEventText(lastUpdate, "titleKey", "title", t)}</p>
-                <p className="muted-text">{formatDateFr(lastUpdate.updatedAt, dateFallback)}</p>
+                <p className="muted-text">{formatDateLocale(lastUpdate.updatedAt, locale, dateFallback)}</p>
               </>
             ) : (
               <p>{t("planning.summary.none_update")}</p>

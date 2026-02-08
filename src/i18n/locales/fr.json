@@ -1,4 +1,4 @@
-﻿{
+{
   "nav": {
     "brand": "Team Patates Patatos",
     "home": "Accueil",
@@ -35,7 +35,8 @@
   },
   "common": {
     "period": "Période",
-    "period_with_value": "Période: {{value}}"
+    "period_with_value": "Période: {{value}}",
+    "to_define": "À définir"
   },
   "home": {
     "eyebrow": "Team Patates Patatos",
@@ -116,7 +117,7 @@
       "instruction_prefix": "Modifie simplement",
       "instruction_suffix": "Un objet = un événement (ordre, période, statut, type, phase, description).",
       "rule": "Mini règle: si une tâche est indicative, ajoute toujours un champ `validation`.",
-      "example": "{\n  id: \"nouvelle-tache\",\n  order: 4,\n  period: \"Avril–Mai 2026\",\n  title: \"Nouvelle action\",\n  type: \"suivi\",\n  status: \"todo\",\n  phase: \"Suivi\",\n  isIndicative: true,\n  validation: \"Validation: on confirme après inspection terrain.\",\n  description: \"Décrire ce qu'on fait\"\n}"
+      "example": "{\n  id: \"nouvelle-tache\",\n  order: 4,\n  period: \"Avril-Mai 2026\",\n  title: \"Nouvelle action\",\n  type: \"suivi\",\n  phaseId: \"suivi\",\n  status: \"todo\",\n  isIndicative: true,\n  validation: \"Validation: on confirme apres inspection terrain.\",\n  description: \"Decrire ce qu'on fait\"\n}"
     },
     "phases": {
       "preparation": "Préparation",
