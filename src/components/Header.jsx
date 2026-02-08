@@ -1,7 +1,7 @@
 ﻿import { useEffect, useMemo, useState } from "react";
 import { Link, NavLink, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { DEFAULT_LANG, getLangFromUrl, setLangToUrl, setStoredLang } from "../i18n";
+import { DEFAULT_LANG, setLangToUrl, setStoredLang } from "../i18n";
 
 const THEME_STORAGE_KEY = "patatos_theme";
 const THEMES = ["dark", "light"];
@@ -44,13 +44,17 @@ function applyTheme(theme) {
 }
 
 function Header() {
-  const { pathname, search } = useLocation();
+  const { pathname } = useLocation();
   const { t, i18n } = useTranslation();
   const [openAtPath, setOpenAtPath] = useState(null);
   const [theme, setTheme] = useState(() => getStoredTheme() || getSystemTheme());
   const [hasThemePreference, setHasThemePreference] = useState(() => Boolean(getStoredTheme()));
   const isOpen = openAtPath === pathname;
   const currentLang = i18n.resolvedLanguage || i18n.language || DEFAULT_LANG;
+
+  if (import.meta.env.DEV) {
+    console.log("HEADER_RENDER_VERSION_2026-02-08_A", { isOpen });
+  }
 
   const languageItems = useMemo(
     () => [
@@ -82,20 +86,6 @@ function Header() {
     window.addEventListener("keydown", onKeyDown);
     return () => window.removeEventListener("keydown", onKeyDown);
   }, [isOpen]);
-
-  useEffect(() => {
-    const langFromUrl = getLangFromUrl();
-
-    if (langFromUrl && langFromUrl !== currentLang) {
-      i18n.changeLanguage(langFromUrl);
-      setStoredLang(langFromUrl);
-      return;
-    }
-
-    if (!langFromUrl) {
-      setLangToUrl(currentLang);
-    }
-  }, [currentLang, i18n, pathname, search]);
 
   useEffect(() => {
     applyTheme(theme);
@@ -162,8 +152,65 @@ function Header() {
           <span className="brand-mark" aria-hidden="true">
             🥔
           </span>
-          <span>{t("nav.brand")}</span>
+          <span className="brand-label">{t("nav.brand")}</span>
         </Link>
+
+        {import.meta.env.DEV ? (
+          <span
+            className="muted-text"
+            style={{ fontSize: "0.62rem", lineHeight: 1, whiteSpace: "nowrap" }}
+            data-dev-header-version="HEADER_VERSION_2026-02-08_A"
+          >
+            HEADER_VERSION_2026-02-08_A
+          </span>
+        ) : null}
+
+        <nav id="main-navigation" className={`site-nav${isOpen ? " is-open" : ""}`}>
+          {navItems.map((item) => (
+            <NavLink
+              key={item.to}
+              to={item.to}
+              className={({ isActive }) => `nav-link${isActive ? " is-active" : ""}`}
+              onClick={() => setOpenAtPath(null)}
+            >
+              {t(`nav.${item.key}`)}
+            </NavLink>
+          ))}
+        </nav>
+
+        <div className="header-controls">
+          <div className="lang-switch theme-switch header-theme-switch" role="group" aria-label={t("nav.theme")}>
+            {themeItems.map((themeItem) => (
+              <button
+                key={themeItem.value}
+                type="button"
+                className={`lang-btn${theme === themeItem.value ? " is-active" : ""}`}
+                aria-label={themeItem.ariaLabel}
+                aria-pressed={theme === themeItem.value}
+                onClick={() => handleThemeChange(themeItem.value)}
+              >
+                <span className="theme-label-desktop">{themeItem.label}</span>
+                <span className="theme-label-mobile" aria-hidden="true">
+                  {themeItem.value === "dark" ? "🌙" : "☀️"}
+                </span>
+              </button>
+            ))}
+          </div>
+
+          <div className="lang-switch header-language-switch" role="group" aria-label={t("nav.language")}>
+            {languageItems.map((language) => (
+              <button
+                key={language.value}
+                type="button"
+                className={`lang-btn${currentLang === language.value ? " is-active" : ""}`}
+                aria-label={language.ariaLabel}
+                onClick={() => handleLanguageChange(language.value)}
+              >
+                {language.label}
+              </button>
+            ))}
+          </div>
+        </div>
 
         <button
           type="button"
@@ -177,48 +224,6 @@ function Header() {
           <span />
           <span />
         </button>
-
-        <nav id="main-navigation" className={`site-nav${isOpen ? " is-open" : ""}`}>
-          {navItems.map((item) => (
-            <NavLink
-              key={item.to}
-              to={item.to}
-              className={({ isActive }) => `nav-link${isActive ? " is-active" : ""}`}
-              onClick={() => setOpenAtPath(null)}
-            >
-              {t(`nav.${item.key}`)}
-            </NavLink>
-          ))}
-
-          <div className="lang-switch" role="group" aria-label={t("nav.language")}>
-            {languageItems.map((language) => (
-              <button
-                key={language.value}
-                type="button"
-                className={`lang-btn${currentLang === language.value ? " is-active" : ""}`}
-                aria-label={language.ariaLabel}
-                onClick={() => handleLanguageChange(language.value)}
-              >
-                {language.label}
-              </button>
-            ))}
-          </div>
-
-          <div className="lang-switch theme-switch" role="group" aria-label={t("nav.theme")}>
-            {themeItems.map((themeItem) => (
-              <button
-                key={themeItem.value}
-                type="button"
-                className={`lang-btn${theme === themeItem.value ? " is-active" : ""}`}
-                aria-label={themeItem.ariaLabel}
-                aria-pressed={theme === themeItem.value}
-                onClick={() => handleThemeChange(themeItem.value)}
-              >
-                {themeItem.label}
-              </button>
-            ))}
-          </div>
-        </nav>
       </div>
     </header>
   );
