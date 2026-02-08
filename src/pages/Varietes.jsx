@@ -7,8 +7,14 @@ function Varietes() {
       <section className="section section-tight">
         <h1>Variétés 🥔</h1>
         <p className="section-intro">
-          Liste Patatos 2026: aperçu simple des variétés, périodes indicatives et usages.
+          Liste Patatos 2026: aperçu simple des variétés, périodes de saison et usages pratiques.
         </p>
+      </section>
+
+      <section className="section">
+        <Card title="Repères de saison">
+          <p>Toutes les périodes et rendements sont des repères (météo/sol/variété).</p>
+        </Card>
       </section>
 
       <section className="section">
@@ -30,8 +36,11 @@ function Varietes() {
               <tr>
                 <th>Variété</th>
                 <th>Type</th>
+                <th>Plantation</th>
                 <th>Récolte</th>
                 <th>Usage</th>
+                <th>Rendement (m²)</th>
+                <th>Rendement (1 kg plants)</th>
               </tr>
             </thead>
             <tbody>
@@ -41,8 +50,11 @@ function Varietes() {
                   <td>
                     <strong>{item.type}</strong>
                   </td>
+                  <td>{item.planting}</td>
                   <td>{item.harvest}</td>
                   <td>{item.usage}</td>
+                  <td>{item.yieldM2}</td>
+                  <td>{item.yieldPerKgSeed}</td>
                 </tr>
               ))}
             </tbody>
