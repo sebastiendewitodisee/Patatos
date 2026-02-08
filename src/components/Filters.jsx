@@ -3,13 +3,10 @@
   onStatusChange,
   phaseFilter,
   onPhaseChange,
-  typeFilter,
-  onTypeChange,
   search,
   onSearchChange,
   statusOptions,
   phaseOptions,
-  typeOptions,
   onReset,
   isResetDisabled,
 }) {
@@ -39,22 +36,6 @@
           onChange={(event) => onPhaseChange(event.target.value)}
         >
           {phaseOptions.map((option) => (
-            <option key={option.value} value={option.value}>
-              {option.label}
-            </option>
-          ))}
-        </select>
-
-        <label htmlFor="type-filter" className="sr-only">
-          Filtrer par type
-        </label>
-        <select
-          id="type-filter"
-          className="select"
-          value={typeFilter}
-          onChange={(event) => onTypeChange(event.target.value)}
-        >
-          {typeOptions.map((option) => (
             <option key={option.value} value={option.value}>
               {option.label}
             </option>

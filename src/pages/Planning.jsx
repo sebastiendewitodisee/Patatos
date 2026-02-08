@@ -8,7 +8,6 @@ import {
   PLANNING_SEASON,
   STATUS_META,
   STATUS_OPTIONS,
-  TYPE_META,
   planningEvents,
 } from "../data/planning";
 import {
@@ -28,35 +27,21 @@ import {
 function Planning() {
   const [statusFilter, setStatusFilter] = useState("all");
   const [phaseFilter, setPhaseFilter] = useState("all");
-  const [typeFilter, setTypeFilter] = useState("all");
   const [search, setSearch] = useState("");
 
   function resetFilters() {
     setPhaseFilter("all");
-    setTypeFilter("all");
     setStatusFilter("all");
     setSearch("");
   }
 
-  const isResetDisabled =
-    phaseFilter === "all" && typeFilter === "all" && statusFilter === "all" && search.trim().length === 0;
+  const isResetDisabled = phaseFilter === "all" && statusFilter === "all" && search.trim().length === 0;
 
   const sortedEvents = useMemo(() => sortEventsByDate(planningEvents), []);
   const progress = useMemo(() => getPlanningProgress(planningEvents), []);
   const upcomingEvent = useMemo(() => getUpcomingEvent(planningEvents), []);
   const lastUpdate = useMemo(() => getLastUpdatedEvent(planningEvents), []);
   const checklist = useMemo(() => getChecklistByPhase(planningEvents, PHASE_ORDER), []);
-
-  const typeOptions = useMemo(() => {
-    const uniqueTypes = [...new Set(planningEvents.map((event) => event.type))];
-    return [
-      { value: "all", label: "Tous les types" },
-      ...uniqueTypes.map((typeKey) => ({
-        value: typeKey,
-        label: TYPE_META[typeKey]?.label ?? typeKey,
-      })),
-    ];
-  }, []);
 
   const phaseOptions = useMemo(
     () => [{ value: "all", label: "Toutes les phases" }, ...PHASE_ORDER.map((phase) => ({ value: phase, label: phase }))],
@@ -75,7 +60,6 @@ function Planning() {
         (statusFilter === "todo" && effectiveStatus === "todo") ||
         (statusFilter === "upcoming" && effectiveStatus === "upcoming");
       const matchesPhase = phaseFilter === "all" || event.phase === phaseFilter;
-      const matchesType = typeFilter === "all" || event.type === typeFilter;
       const matchesSearch =
         loweredSearch.length === 0 ||
         [event.title, event.description, event.responsibles?.join(" "), event.period, event.validation]
@@ -84,9 +68,9 @@ function Planning() {
           .toLowerCase()
           .includes(loweredSearch);
 
-      return matchesStatus && matchesPhase && matchesType && matchesSearch;
+      return matchesStatus && matchesPhase && matchesSearch;
     });
-  }, [phaseFilter, search, sortedEvents, statusFilter, typeFilter]);
+  }, [phaseFilter, search, sortedEvents, statusFilter]);
 
   const ratio = sortedEvents.length ? Math.round((filteredEvents.length / sortedEvents.length) * 100) : 0;
   const trimmedSearch = search.trim();
@@ -97,14 +81,6 @@ function Planning() {
       key: `status-${statusFilter}`,
       label: `Statut: ${STATUS_META[statusFilter]?.label ?? statusFilter}`,
       onClear: () => setStatusFilter("all"),
-    });
-  }
-
-  if (typeFilter !== "all") {
-    activeChips.push({
-      key: `type-${typeFilter}`,
-      label: `Type: ${TYPE_META[typeFilter]?.label ?? typeFilter}`,
-      onClear: () => setTypeFilter("all"),
     });
   }
 
@@ -188,13 +164,10 @@ function Planning() {
           onStatusChange={setStatusFilter}
           phaseFilter={phaseFilter}
           onPhaseChange={setPhaseFilter}
-          typeFilter={typeFilter}
-          onTypeChange={setTypeFilter}
           search={search}
           onSearchChange={setSearch}
           statusOptions={STATUS_OPTIONS}
           phaseOptions={phaseOptions}
-          typeOptions={typeOptions}
           onReset={resetFilters}
           isResetDisabled={isResetDisabled}
         />
