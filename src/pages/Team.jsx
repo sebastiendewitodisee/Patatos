@@ -109,12 +109,6 @@ function Team() {
   const hasActiveFilters = roleFilter !== "all" || normalizedQuery.length > 0;
   const ratio = TEAM_MEMBERS.length ? Math.round((filteredMembers.length / TEAM_MEMBERS.length) * 100) : 0;
 
-  const heroStats = [
-    { key: "members", icon: "\uD83E\uDDD1\u200D\uD83C\uDF3E", value: String(TEAM_MEMBERS.length) },
-    { key: "season", icon: "\uD83D\uDCC5", value: t("team.stats.seasonValue") },
-    { key: "motto", icon: "\uD83E\uDD54", value: t("team.stats.mottoValue") },
-  ];
-
   function handleImageError(memberId) {
     setImageErrors((current) => {
       if (current[memberId]) {
@@ -134,40 +128,27 @@ function Team() {
     <div className="container page-block team-page">
       <section className="section section-tight team-hero">
         <div className="team-hero-inner">
-          <span className="team-hero-badge">{t("team.hero.badge")}</span>
-          <h1 className="team-hero-title">{t("team.title")}</h1>
-          <p className="team-hero-sub">{t("team.intro")}</p>
-          <p className="team-hero-season">{t("team.ui.subtitle_badge", { year: t("team.stats.seasonValue") })}</p>
+          <div className="team-hero-layout">
+            <div className="team-hero-copy">
+              <span className="team-hero-badge">{t("team.hero.badge")}</span>
+              <h1 className="team-hero-title">{t("team.title")}</h1>
+              <p className="team-hero-sub">{t("team.intro")}</p>
 
-          <div className="team-chip-row" aria-label={t("team.hero.chips_aria")}>
-            {HERO_CHIP_KEYS.map((chipKey) => (
-              <span key={chipKey} className="team-hero-chip">
-                {t(chipKey)}
-              </span>
-            ))}
-          </div>
-
-          <div className="team-hero-meta">
-            {heroStats.map((stat) => (
-              <div key={stat.key} className="team-hero-stat">
-                <span className="team-hero-stat-icon" aria-hidden="true">
-                  {stat.icon}
-                </span>
-                <div className="team-hero-stat-copy">
-                  <p className="muted-text">{t(`team.stats.${stat.key}`)}</p>
-                  <p className="team-hero-stat-value">{stat.value}</p>
-                </div>
+              <div className="team-chip-row" aria-label={t("team.hero.chips_aria")}>
+                {HERO_CHIP_KEYS.map((chipKey) => (
+                  <span key={chipKey} className="team-hero-chip">
+                    {t(chipKey)}
+                  </span>
+                ))}
               </div>
-            ))}
+            </div>
+
+            <figure className="group-photo team-group-photo team-hero-photo">
+              <img src={groupPhotoSrc} alt={t("team.group_photo_alt")} loading="lazy" />
+              <figcaption>{t("team.group_photo_caption")}</figcaption>
+            </figure>
           </div>
         </div>
-      </section>
-
-      <section className="section section-tight">
-        <figure className="group-photo team-group-photo">
-          <img src={groupPhotoSrc} alt={t("team.group_photo_alt")} loading="lazy" />
-          <figcaption>{t("team.group_photo_caption")}</figcaption>
-        </figure>
       </section>
 
       <section className="section">
