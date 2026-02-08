@@ -426,6 +426,38 @@ th {
   font-weight: 700;
 }
 
+.anchor-offset {
+  scroll-margin-top: 90px;
+}
+
+.variety-thumb {
+  width: 64px;
+  height: 64px;
+  object-fit: cover;
+  border-radius: 14px;
+}
+
+.variety-thumb-placeholder {
+  width: 64px;
+  height: 64px;
+  display: inline-grid;
+  place-items: center;
+  border-radius: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.08);
+  font-size: 28px;
+}
+
+.variety-card-header {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.variety-meta {
+  margin-top: 8px;
+}
+
 .empty-state {
   border: 1px dashed var(--line);
   border-radius: 0.8rem;

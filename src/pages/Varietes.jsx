@@ -1,9 +1,31 @@
 ﻿import { useState } from "react";
+import Badge from "../components/Badge";
 import Card from "../components/Card";
 import { varieties } from "../data/varieties";
 
+function toSlug(value) {
+  return value
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/(^-|-$)/g, "");
+}
+
 function Varietes() {
   const [brokenImages, setBrokenImages] = useState({});
+
+  const scrollToAnchor = (event, targetId) => {
+    event.preventDefault();
+
+    const target = document.getElementById(targetId);
+    if (!target) {
+      return;
+    }
+
+    target.scrollIntoView({ behavior: "smooth", block: "start" });
+    window.history.replaceState(null, "", `#${targetId}`);
+  };
 
   return (
     <div className="container page-block">
@@ -20,24 +42,12 @@ function Varietes() {
         </Card>
       </section>
 
-      <section className="section">
-        <div className="grid two-columns">
-          <Card title="Précoces">
-            <p>En général, elles se récoltent plus tôt pour une conso rapide.</p>
-          </Card>
-          <Card title="Conservation">
-            <p>En général, elles restent plus longtemps en terre et se stockent mieux.</p>
-          </Card>
-        </div>
-      </section>
-
-      <section className="section">
-        <h2>Listing des variétés</h2>
+      <section className="section anchor-offset" id="recap-varietes">
+        <h2>Récapitulatif</h2>
         <div className="table-wrap">
           <table>
             <thead>
               <tr>
-                <th>Image</th>
                 <th>Variété</th>
                 <th>Type</th>
                 <th>Plantation</th>
@@ -47,39 +57,16 @@ function Varietes() {
             </thead>
             <tbody>
               {varieties.map((item) => {
-                const showPlaceholder = !item.image || brokenImages[item.name];
+                const slug = toSlug(item.name);
+                const targetId = `variete-${slug}`;
 
                 return (
                   <tr key={item.name}>
                     <td>
-                      {showPlaceholder ? (
-                        <span
-                          aria-label={`Placeholder pour ${item.name}`}
-                          style={{
-                            width: 48,
-                            height: 48,
-                            display: "inline-grid",
-                            placeItems: "center",
-                            borderRadius: 12,
-                            border: "1px solid rgba(255, 255, 255, 0.2)",
-                            background: "rgba(255, 255, 255, 0.08)",
-                            fontSize: 22,
-                          }}
-                        >
-                          🥔
-                        </span>
-                      ) : (
-                        <img
-                          src={item.image}
-                          alt={`Pomme de terre ${item.name}`}
-                          style={{ width: 48, height: 48, objectFit: "cover", borderRadius: 12 }}
-                          onError={() => {
-                            setBrokenImages((prev) => ({ ...prev, [item.name]: true }));
-                          }}
-                        />
-                      )}
+                      <a href={`#${targetId}`} onClick={(event) => scrollToAnchor(event, targetId)}>
+                        {item.name} <span aria-hidden="true">→</span>
+                      </a>
                     </td>
-                    <td>{item.name}</td>
                     <td>
                       <strong>{item.type}</strong>
                     </td>
@@ -91,6 +78,60 @@ function Varietes() {
               })}
             </tbody>
           </table>
+        </div>
+      </section>
+
+      <section className="section">
+        <h2>Détails des variétés</h2>
+        <div className="grid three-columns">
+          {varieties.map((item) => {
+            const slug = toSlug(item.name);
+            const targetId = `variete-${slug}`;
+            const showPlaceholder = !item.image || brokenImages[item.name];
+
+            return (
+              <div key={item.name} id={targetId} className="anchor-offset">
+                <Card>
+                  <div className="variety-card-header">
+                    {showPlaceholder ? (
+                      <span className="variety-thumb-placeholder" aria-label={`Placeholder pour ${item.name}`}>
+                        🥔
+                      </span>
+                    ) : (
+                      <img
+                        src={item.image}
+                        alt={`Pomme de terre ${item.name}`}
+                        className="variety-thumb"
+                        onError={() => {
+                          setBrokenImages((prev) => ({ ...prev, [item.name]: true }));
+                        }}
+                      />
+                    )}
+                    <div>
+                      <h3>{item.name}</h3>
+                      <Badge tone={item.type === "précoce" ? "plantation" : "conservation"}>{item.type}</Badge>
+                    </div>
+                  </div>
+
+                  <div className="variety-meta">
+                    <p>
+                      <strong>Plantation:</strong> {item.planting}
+                    </p>
+                    <p>
+                      <strong>Récolte:</strong> {item.harvest}
+                    </p>
+                    <p>
+                      <strong>Usage:</strong> {item.usage}
+                    </p>
+                  </div>
+
+                  <a href="#recap-varietes" onClick={(event) => scrollToAnchor(event, "recap-varietes")}>
+                    Retour au récap ↑
+                  </a>
+                </Card>
+              </div>
+            );
+          })}
         </div>
       </section>
 
