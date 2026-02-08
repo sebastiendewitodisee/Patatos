@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1228 120" role="img" aria-label="Team Patates Patatos">
+  <defs>
+    <linearGradient id="patatoSkinA" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#f3be73"/>
+      <stop offset="1" stop-color="#c98643"/>
+    </linearGradient>
+    <linearGradient id="patatoSkinB" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#f7cb8a"/>
+      <stop offset="1" stop-color="#b97839"/>
+    </linearGradient>
+    <linearGradient id="letterStroke" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ffe4a2"/>
+      <stop offset="1" stop-color="#f5b852"/>
+    </linearGradient>
+    <filter id="brandShadow" x="-6%" y="-25%" width="112%" height="170%">
+      <feDropShadow dx="0" dy="2.2" stdDeviation="1.2" flood-color="#1f1308" flood-opacity="0.38"/>
+    </filter>
+  </defs>
+
+  <g filter="url(#brandShadow)">
+    <ellipse cx="56" cy="62" rx="27" ry="32" fill="url(#patatoSkinA)" stroke="#67401e" stroke-width="3"/>
+    <ellipse cx="108" cy="69" rx="21" ry="25" fill="url(#patatoSkinB)" stroke="#67401e" stroke-width="3"/>
+    <ellipse cx="47" cy="51" rx="8" ry="11" fill="#fff" fill-opacity="0.16"/>
+    <ellipse cx="101" cy="58" rx="6" ry="8" fill="#fff" fill-opacity="0.14"/>
+    <circle cx="48" cy="60" r="2.4" fill="#352012"/>
+    <circle cx="64" cy="60" r="2.4" fill="#352012"/>
+    <path d="M 47 72 Q 56 78 65 72" fill="none" stroke="#352012" stroke-width="2.8" stroke-linecap="round"/>
+    <circle cx="101" cy="68" r="2" fill="#352012"/>
+    <circle cx="113" cy="68" r="2" fill="#352012"/>
+    <path d="M 101 78 Q 107 82 113 78" fill="none" stroke="#352012" stroke-width="2.2" stroke-linecap="round"/>
+
+    <path d="M 180 28 L 222 28 M 201 28 L 201 90 M 276 28 L 234 28 L 234 90 L 276 90 M 234 59 L 264 59 M 288 90 L 309 28 L 330 90 M 296 63 L 322 63 M 342 90 L 342 28 L 363 64 L 384 28 L 384 90 M 420 90 L 420 28 L 452 28 L 462 40 L 462 54 L 452 63 L 420 63 M 474 90 L 495 28 L 516 90 M 482 63 L 508 63 M 528 28 L 570 28 M 549 28 L 549 90 M 582 90 L 603 28 L 624 90 M 590 63 L 616 63 M 636 28 L 678 28 M 657 28 L 657 90 M 732 28 L 690 28 L 690 90 L 732 90 M 690 59 L 720 59 M 786 32 L 751 32 L 744 40 L 744 54 L 780 54 L 786 64 L 786 79 L 779 88 L 744 88 M 822 90 L 822 28 L 854 28 L 864 40 L 864 54 L 854 63 L 822 63 M 876 90 L 897 28 L 918 90 M 884 63 L 910 63 M 930 28 L 972 28 M 951 28 L 951 90 M 984 90 L 1005 28 L 1026 90 M 992 63 L 1018 63 M 1038 28 L 1080 28 M 1059 28 L 1059 90 M 1100 32 L 1126 32 L 1134 42 L 1134 76 L 1126 88 L 1100 88 L 1092 76 L 1092 42 L 1100 32 M 1188 32 L 1153 32 L 1146 40 L 1146 54 L 1182 54 L 1188 64 L 1188 79 L 1181 88 L 1146 88" fill="none" stroke="#4f2a0f" stroke-width="18" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M 180 28 L 222 28 M 201 28 L 201 90 M 276 28 L 234 28 L 234 90 L 276 90 M 234 59 L 264 59 M 288 90 L 309 28 L 330 90 M 296 63 L 322 63 M 342 90 L 342 28 L 363 64 L 384 28 L 384 90 M 420 90 L 420 28 L 452 28 L 462 40 L 462 54 L 452 63 L 420 63 M 474 90 L 495 28 L 516 90 M 482 63 L 508 63 M 528 28 L 570 28 M 549 28 L 549 90 M 582 90 L 603 28 L 624 90 M 590 63 L 616 63 M 636 28 L 678 28 M 657 28 L 657 90 M 732 28 L 690 28 L 690 90 L 732 90 M 690 59 L 720 59 M 786 32 L 751 32 L 744 40 L 744 54 L 780 54 L 786 64 L 786 79 L 779 88 L 744 88 M 822 90 L 822 28 L 854 28 L 864 40 L 864 54 L 854 63 L 822 63 M 876 90 L 897 28 L 918 90 M 884 63 L 910 63 M 930 28 L 972 28 M 951 28 L 951 90 M 984 90 L 1005 28 L 1026 90 M 992 63 L 1018 63 M 1038 28 L 1080 28 M 1059 28 L 1059 90 M 1100 32 L 1126 32 L 1134 42 L 1134 76 L 1126 88 L 1100 88 L 1092 76 L 1092 42 L 1100 32 M 1188 32 L 1153 32 L 1146 40 L 1146 54 L 1182 54 L 1188 64 L 1188 79 L 1181 88 L 1146 88" fill="none" stroke="url(#letterStroke)" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M 180 28 L 222 28 M 201 28 L 201 90 M 276 28 L 234 28 L 234 90 L 276 90 M 234 59 L 264 59 M 288 90 L 309 28 L 330 90 M 296 63 L 322 63 M 342 90 L 342 28 L 363 64 L 384 28 L 384 90 M 420 90 L 420 28 L 452 28 L 462 40 L 462 54 L 452 63 L 420 63 M 474 90 L 495 28 L 516 90 M 482 63 L 508 63 M 528 28 L 570 28 M 549 28 L 549 90 M 582 90 L 603 28 L 624 90 M 590 63 L 616 63 M 636 28 L 678 28 M 657 28 L 657 90 M 732 28 L 690 28 L 690 90 L 732 90 M 690 59 L 720 59 M 786 32 L 751 32 L 744 40 L 744 54 L 780 54 L 786 64 L 786 79 L 779 88 L 744 88 M 822 90 L 822 28 L 854 28 L 864 40 L 864 54 L 854 63 L 822 63 M 876 90 L 897 28 L 918 90 M 884 63 L 910 63 M 930 28 L 972 28 M 951 28 L 951 90 M 984 90 L 1005 28 L 1026 90 M 992 63 L 1018 63 M 1038 28 L 1080 28 M 1059 28 L 1059 90 M 1100 32 L 1126 32 L 1134 42 L 1134 76 L 1126 88 L 1100 88 L 1092 76 L 1092 42 L 1100 32 M 1188 32 L 1153 32 L 1146 40 L 1146 54 L 1182 54 L 1188 64 L 1188 79 L 1181 88 L 1146 88" fill="none" stroke="#fff6de" stroke-opacity="0.25" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+</svg>
