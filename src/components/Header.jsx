@@ -64,8 +64,8 @@ function Header() {
 
   const themeItems = useMemo(
     () => [
-      { value: "dark", label: t("nav.theme_dark"), ariaLabel: t("nav.switch_to_dark") },
-      { value: "light", label: t("nav.theme_light"), ariaLabel: t("nav.switch_to_light") },
+      { value: "dark", icon: "\u{1F319}", ariaLabel: t("nav.theme_dark") },
+      { value: "light", icon: "\u2600\uFE0F", ariaLabel: t("nav.theme_light") },
     ],
     [t]
   );
@@ -231,11 +231,11 @@ function Header() {
                 className={`lang-btn${theme === themeItem.value ? " is-active" : ""}`}
                 aria-label={themeItem.ariaLabel}
                 aria-pressed={theme === themeItem.value}
+                title={themeItem.ariaLabel}
                 onClick={() => handleThemeChange(themeItem.value)}
               >
-                <span className="theme-label-desktop">{themeItem.label}</span>
-                <span className="theme-label-mobile" aria-hidden="true">
-                  {themeItem.value === "dark" ? "\u{1F319}" : "\u2600\uFE0F"}
+                <span className="theme-icon" aria-hidden="true">
+                  {themeItem.icon}
                 </span>
               </button>
             ))}
