@@ -9,7 +9,7 @@
   },
   {
     name: "Cheyenne",
-    image: "",
+    image: "varieties/cheyenne.jpg",
     type: "conservation",
     planting: "Avril",
     harvest: "Août–Septembre",
@@ -73,10 +73,11 @@
   },
   {
     name: "Zen",
-    image: "",
+    image: "varieties/zen.jpg",
     type: "conservation",
     planting: "Avril",
     harvest: "Juillet–Septembre",
     usage: "tenue ferme / gratins",
   },
 ];
+
