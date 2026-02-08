@@ -25,6 +25,7 @@ import {
 
 function Planning() {
   const [statusFilter, setStatusFilter] = useState("all");
+  const [phaseFilter, setPhaseFilter] = useState("all");
   const [typeFilter, setTypeFilter] = useState("all");
   const [search, setSearch] = useState("");
 
@@ -45,11 +46,17 @@ function Planning() {
     ];
   }, []);
 
+  const phaseOptions = useMemo(
+    () => [{ value: "all", label: "Toutes les phases" }, ...PHASE_ORDER.map((phase) => ({ value: phase, label: phase }))],
+    []
+  );
+
   const filteredEvents = useMemo(() => {
     const loweredSearch = search.trim().toLowerCase();
 
     return sortedEvents.filter((event) => {
       const matchesStatus = statusFilter === "all" || event.status === statusFilter;
+      const matchesPhase = phaseFilter === "all" || event.phase === phaseFilter;
       const matchesType = typeFilter === "all" || event.type === typeFilter;
       const matchesSearch =
         loweredSearch.length === 0 ||
@@ -59,9 +66,9 @@ function Planning() {
           .toLowerCase()
           .includes(loweredSearch);
 
-      return matchesStatus && matchesType && matchesSearch;
+      return matchesStatus && matchesPhase && matchesType && matchesSearch;
     });
-  }, [search, sortedEvents, statusFilter, typeFilter]);
+  }, [phaseFilter, search, sortedEvents, statusFilter, typeFilter]);
 
   return (
     <div className="container page-block planning-page">
@@ -125,11 +132,14 @@ function Planning() {
         <Filters
           statusFilter={statusFilter}
           onStatusChange={setStatusFilter}
+          phaseFilter={phaseFilter}
+          onPhaseChange={setPhaseFilter}
           typeFilter={typeFilter}
           onTypeChange={setTypeFilter}
           search={search}
           onSearchChange={setSearch}
           statusOptions={STATUS_OPTIONS}
+          phaseOptions={phaseOptions}
           typeOptions={typeOptions}
         />
         <Timeline events={filteredEvents} />

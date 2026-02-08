@@ -1,11 +1,14 @@
 ﻿function Filters({
   statusFilter,
   onStatusChange,
+  phaseFilter,
+  onPhaseChange,
   typeFilter,
   onTypeChange,
   search,
   onSearchChange,
   statusOptions,
+  phaseOptions,
   typeOptions,
 }) {
   return (
@@ -24,6 +27,22 @@
       </div>
 
       <div className="filter-fields">
+        <label htmlFor="phase-filter" className="sr-only">
+          Filtrer par phase
+        </label>
+        <select
+          id="phase-filter"
+          className="select"
+          value={phaseFilter}
+          onChange={(event) => onPhaseChange(event.target.value)}
+        >
+          {phaseOptions.map((option) => (
+            <option key={option.value} value={option.value}>
+              {option.label}
+            </option>
+          ))}
+        </select>
+
         <label htmlFor="type-filter" className="sr-only">
           Filtrer par type
         </label>
