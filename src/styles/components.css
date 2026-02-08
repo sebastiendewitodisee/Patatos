@@ -465,11 +465,49 @@
   grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
+.team-stats-card {
+  border-color: rgba(101, 179, 255, 0.34);
+}
+
+.team-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.7rem;
+}
+
+.team-stat {
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 0.85rem;
+  background: rgba(255, 255, 255, 0.06);
+  padding: 0.65rem 0.72rem;
+  min-height: 82px;
+  display: grid;
+  align-content: space-between;
+  gap: 0.35rem;
+}
+
+.team-stat-value {
+  margin: 0;
+  font-family: "Sora", "Gill Sans", sans-serif;
+  font-size: 1.1rem;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.team-card-shell {
+  border-radius: var(--radius);
+}
+
+.team-card-shell:focus-visible {
+  outline: 3px solid rgba(87, 223, 155, 0.72);
+  outline-offset: 2px;
+}
+
 .team-card {
   height: 100%;
 }
 
-.team-card-header {
+.team-card-head {
   display: flex;
   gap: 12px;
   align-items: center;
@@ -487,25 +525,30 @@
 .team-avatar {
   width: 72px;
   height: 72px;
-  border-radius: 18px;
+  border-radius: 999px;
   border: 1px solid rgba(255, 255, 255, 0.14);
   background: radial-gradient(circle at top, rgba(255, 255, 255, 0.11), rgba(255, 255, 255, 0.05));
-  display: flex;
-  align-items: center;
-  justify-content: center;
   overflow: hidden;
   flex-shrink: 0;
-}
-
-.team-avatar img {
-  width: 100%;
-  height: 100%;
   object-fit: cover;
 }
 
-.team-avatar-placeholder {
+.team-avatar-fallback {
+  width: 72px;
+  height: 72px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: radial-gradient(circle at top, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.06));
   font-size: 28px;
-  opacity: 0.9;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.team-focus-line {
+  margin-top: auto;
 }
 
 .table-wrap {
@@ -815,6 +858,10 @@ th {
   .team-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
+
+  .team-stats-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
 }
 
 @media (max-width: 880px) {
@@ -861,6 +908,10 @@ th {
   }
 
   .team-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .team-stats-grid {
     grid-template-columns: 1fr;
   }
 

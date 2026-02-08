@@ -168,30 +168,31 @@
   },
   "team": {
     "title": "Équipe 🧑‍🌾",
-    "intro": "La team Patatos avance ensemble: simple, efficace et toujours dans la bonne humeur.",
-    "image_alt": "Photo de {{name}}",
-    "badge": "Team Patatos",
-    "members": {
-      "denis": {
-        "role": "Terrain / logistique",
-        "note": "Référent terrain pour les sessions pratiques."
-      },
-      "sebastien-le-vrai": {
-        "role": "Coordination",
-        "note": "Cadre le rythme et les priorités de la team."
-      },
-      "sebastien": {
-        "role": "Suivi",
-        "note": "Garde un oeil sur l'avancement des actions."
-      },
-      "josh": {
-        "role": "Support",
-        "note": "Donne un coup de main sur les sessions clés."
-      },
-      "melvin": {
-        "role": "Support",
-        "note": "Renfort opérationnel pour garder le planning fluide."
-      }
+    "intro": "La team Patatos avance ensemble: simple, fun et organisée.",
+    "stats": {
+      "members": "Membres",
+      "season": "Saison",
+      "seasonValue": "2026",
+      "motto": "Motto",
+      "mottoValue": "Simple, fun, efficace"
+    },
+    "roles": {
+      "lead": "Coordination",
+      "coordinator": "Terrain",
+      "support": "Support",
+      "logistics": "Logistique",
+      "plants": "Suivi plants"
+    },
+    "taglines": {
+      "denis": "Le calme qui fait avancer.",
+      "sebastien1": "Coordination + coup de main partout.",
+      "sebastien2": "Polyvalent, toujours partant.",
+      "josh": "Logistique et bonne humeur.",
+      "melvin": "Focus plants et suivi."
+    },
+    "focus": {
+      "label": "Cette semaine",
+      "value": "On se cale sur les priorités du planning."
     }
   },
   "organisation": {

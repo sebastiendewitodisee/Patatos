@@ -8,13 +8,19 @@ function Team() {
   const { t } = useTranslation();
   const [imageErrors, setImageErrors] = useState({});
 
-  function handleImageError(memberName) {
+  const statsItems = [
+    { key: "members", value: String(teamMembers.length) },
+    { key: "season", value: t("team.stats.seasonValue") },
+    { key: "motto", value: t("team.stats.mottoValue") },
+  ];
+
+  function handleImageError(memberId) {
     setImageErrors((current) => {
-      if (current[memberName]) {
+      if (current[memberId]) {
         return current;
       }
 
-      return { ...current, [memberName]: true };
+      return { ...current, [memberId]: true };
     });
   }
 
@@ -26,38 +32,54 @@ function Team() {
       </section>
 
       <section className="section">
+        <Card className="team-stats-card">
+          <div className="team-stats-grid">
+            {statsItems.map((item) => (
+              <div key={item.key} className="team-stat">
+                <p className="muted-text">{t(`team.stats.${item.key}`)}</p>
+                <p className="team-stat-value">{item.value}</p>
+              </div>
+            ))}
+          </div>
+        </Card>
+      </section>
+
+      <section className="section">
         <div className="team-grid">
           {teamMembers.map((member) => {
-            const imgSrc = member.image ? `${import.meta.env.BASE_URL}${member.image}` : "";
-            const hasImage = Boolean(imgSrc) && !imageErrors[member.name];
+            const imgSrc = member.avatar ? `${import.meta.env.BASE_URL}${member.avatar}` : "";
+            const hasImage = Boolean(imgSrc) && !imageErrors[member.id];
 
             return (
-              <Card key={member.name} className="team-card">
-                <div className="team-card-header">
-                  <div className="team-avatar">
+              <div key={member.id} className="team-card-shell" tabIndex={0}>
+                <Card className="team-card">
+                  <div className="team-card-head">
                     {hasImage ? (
                       <img
                         src={imgSrc}
-                        alt={t("team.image_alt", { name: member.name })}
+                        alt={member.name}
+                        className="team-avatar"
                         loading="lazy"
-                        onError={() => handleImageError(member.name)}
+                        onError={() => handleImageError(member.id)}
                       />
                     ) : (
-                      <span className="team-avatar-placeholder" aria-hidden="true">
+                      <span className="team-avatar-fallback" aria-hidden="true">
                         🥔
                       </span>
                     )}
+
+                    <div className="team-card-body">
+                      <h2 className="team-name">{member.name}</h2>
+                      <Badge tone="neutral">{t(member.roleKey)}</Badge>
+                    </div>
                   </div>
 
-                  <div className="team-card-body">
-                    <h2 className="team-name">{member.name}</h2>
-                    <Badge tone="neutral">{t("team.badge")}</Badge>
-                  </div>
-                </div>
-
-                <p className="muted-text">{t(`team.members.${member.id}.role`)}</p>
-                <p className="muted-text">{t(`team.members.${member.id}.note`)}</p>
-              </Card>
+                  <p className="muted-text">{t(member.taglineKey)}</p>
+                  <p className="muted-text team-focus-line">
+                    <strong>{t("team.focus.label")}:</strong> {t("team.focus.value")}
+                  </p>
+                </Card>
+              </div>
             );
           })}
         </div>

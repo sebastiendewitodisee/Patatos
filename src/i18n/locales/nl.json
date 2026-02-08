@@ -168,30 +168,31 @@
   },
   "team": {
     "title": "Team 🧑‍🌾",
-    "intro": "Team Patatos gaat samen vooruit: simpel, efficiënt en altijd met een goede sfeer.",
-    "image_alt": "Foto van {{name}}",
-    "badge": "Team Patatos",
-    "members": {
-      "denis": {
-        "role": "Terrein / logistiek",
-        "note": "Terreinreferent voor de praktische sessies."
-      },
-      "sebastien-le-vrai": {
-        "role": "Coördinatie",
-        "note": "Bewaakt het ritme en de prioriteiten van het team."
-      },
-      "sebastien": {
-        "role": "Opvolging",
-        "note": "Houdt de voortgang van de acties in de gaten."
-      },
-      "josh": {
-        "role": "Support",
-        "note": "Springt bij tijdens belangrijke sessies."
-      },
-      "melvin": {
-        "role": "Support",
-        "note": "Operationele versterking om de planning vlot te houden."
-      }
+    "intro": "Team Patatos gaat samen vooruit: simpel, fun en georganiseerd.",
+    "stats": {
+      "members": "Leden",
+      "season": "Seizoen",
+      "seasonValue": "2026",
+      "motto": "Motto",
+      "mottoValue": "Simpel, fun, efficiënt"
+    },
+    "roles": {
+      "lead": "Coördinatie",
+      "coordinator": "Terrein",
+      "support": "Support",
+      "logistics": "Logistiek",
+      "plants": "Opvolging pootgoed"
+    },
+    "taglines": {
+      "denis": "Rustig, maar altijd vooruit.",
+      "sebastien1": "Coördinatie + overal een handje.",
+      "sebastien2": "Allround en altijd klaar.",
+      "josh": "Logistiek en goeie vibes.",
+      "melvin": "Focus op pootgoed en opvolging."
+    },
+    "focus": {
+      "label": "Deze week",
+      "value": "We stemmen af op de prioriteiten in de planning."
     }
   },
   "organisation": {
