@@ -2,82 +2,116 @@
 import { useTranslation } from "react-i18next";
 import Badge from "../components/Badge";
 
-const avatarFocusByMemberId = {
-  denis: "12%",
-  sebastien1: "18%",
-  sebastien2: "20%",
-  josh: "16%",
-  melvin: "18%",
-};
+const ROLE_ORDER = ["lead", "coordinator", "logistics", "support", "plants"];
+const HERO_CHIP_KEYS = ["team.hero.chip1", "team.hero.chip2", "team.hero.chip3"];
 
-const teamMembers = [
+const TEAM_MEMBERS = [
   {
     id: "denis",
     name: "Denis",
-    image: "team/denis.png",
-    roles: ["team.roles.coordinator", "team.roles.logistics"],
+    avatar: "team/denis.png",
+    roleKey: "coordinator",
+    secondaryRoles: ["logistics"],
     taglineKey: "team.taglines.denis",
     focusKey: "team.focus.items.denis",
+    focusY: "12%",
     featured: true,
   },
   {
     id: "sebastien1",
     name: "S\u00E9bastien \"le vrai\"",
-    image: "team/sebastien1.png",
-    roles: ["team.roles.lead", "team.roles.support"],
+    avatar: "team/sebastien1.png",
+    roleKey: "lead",
+    secondaryRoles: ["support"],
     taglineKey: "team.taglines.sebastien1",
     focusKey: "team.focus.items.sebastien1",
+    focusY: "18%",
   },
   {
     id: "sebastien2",
     name: "S\u00E9bastien",
-    image: "team/sebastien2.png",
-    roles: ["team.roles.support"],
+    avatar: "team/sebastien2.png",
+    roleKey: "support",
+    secondaryRoles: [],
     taglineKey: "team.taglines.sebastien2",
     focusKey: "team.focus.items.sebastien2",
+    focusY: "20%",
   },
   {
     id: "josh",
     name: "Josh",
-    image: "team/josh.png",
-    roles: ["team.roles.logistics"],
+    avatar: "team/josh.png",
+    roleKey: "logistics",
+    secondaryRoles: [],
     taglineKey: "team.taglines.josh",
     focusKey: "team.focus.items.josh",
+    focusY: "16%",
   },
   {
     id: "melvin",
     name: "Melvin",
-    image: "team/melvin.png",
-    roles: ["team.roles.plants"],
+    avatar: "team/melvin.png",
+    roleKey: "plants",
+    secondaryRoles: [],
     taglineKey: "team.taglines.melvin",
     focusKey: "team.focus.items.melvin",
+    focusY: "18%",
   },
 ];
-
-const heroChipKeys = ["team.hero.chip1", "team.hero.chip2", "team.hero.chip3"];
 
 function Team() {
   const { t } = useTranslation();
   const [imageErrors, setImageErrors] = useState({});
   const [roleFilter, setRoleFilter] = useState("all");
+  const [query, setQuery] = useState("");
 
   const roleOptions = useMemo(() => {
-    const roleSet = new Set(teamMembers.flatMap((member) => member.roles));
-    return Array.from(roleSet);
+    const roleSet = new Set();
+
+    TEAM_MEMBERS.forEach((member) => {
+      roleSet.add(member.roleKey);
+      member.secondaryRoles.forEach((role) => roleSet.add(role));
+    });
+
+    return Array.from(roleSet).sort((left, right) => {
+      const leftIndex = ROLE_ORDER.indexOf(left);
+      const rightIndex = ROLE_ORDER.indexOf(right);
+
+      if (leftIndex === -1 && rightIndex === -1) {
+        return left.localeCompare(right);
+      }
+
+      if (leftIndex === -1) {
+        return 1;
+      }
+
+      if (rightIndex === -1) {
+        return -1;
+      }
+
+      return leftIndex - rightIndex;
+    });
   }, []);
 
+  const normalizedQuery = query.trim().toLocaleLowerCase();
+
   const filteredMembers = useMemo(() => {
-    if (roleFilter === "all") {
-      return teamMembers;
-    }
+    return TEAM_MEMBERS.filter((member) => {
+      const roleMatch =
+        roleFilter === "all" || member.roleKey === roleFilter || member.secondaryRoles.includes(roleFilter);
 
-    return teamMembers.filter((member) => member.roles.includes(roleFilter));
-  }, [roleFilter]);
+      const queryMatch = !normalizedQuery || member.name.toLocaleLowerCase().includes(normalizedQuery);
+      return roleMatch && queryMatch;
+    });
+  }, [normalizedQuery, roleFilter]);
 
-  const statsItems = [
-    { key: "members", value: String(teamMembers.length) },
-    { key: "season", value: t("team.stats.seasonValue") },
-    { key: "motto", value: t("team.stats.mottoValue") },
+  const hasActiveFilters = roleFilter !== "all" || normalizedQuery.length > 0;
+  const ratio = TEAM_MEMBERS.length ? Math.round((filteredMembers.length / TEAM_MEMBERS.length) * 100) : 0;
+
+  const heroStats = [
+    { key: "members", icon: "\uD83E\uDDD1\u200D\uD83C\uDF3E", value: String(TEAM_MEMBERS.length) },
+    { key: "season", icon: "\uD83D\uDCC5", value: t("team.stats.seasonValue") },
+    { key: "motto", icon: "\uD83E\uDD54", value: t("team.stats.mottoValue") },
   ];
 
   function handleImageError(memberId) {
@@ -90,31 +124,41 @@ function Team() {
     });
   }
 
+  function resetFilters() {
+    setRoleFilter("all");
+    setQuery("");
+  }
+
   return (
     <div className="container page-block team-page">
       <section className="section section-tight team-hero">
-        <div className="team-hero-copy">
+        <div className="team-hero-inner">
           <span className="team-hero-badge">{t("team.hero.badge")}</span>
-          <h1>{t("team.title")}</h1>
-          <p className="section-intro">{t("team.intro")}</p>
+          <h1 className="team-hero-title">{t("team.title")}</h1>
+          <p className="team-hero-sub">{t("team.intro")}</p>
+          <p className="team-hero-season">{t("team.ui.subtitle_badge", { year: t("team.stats.seasonValue") })}</p>
+
           <div className="team-chip-row" aria-label={t("team.hero.chips_aria")}>
-            {heroChipKeys.map((chipKey) => (
+            {HERO_CHIP_KEYS.map((chipKey) => (
               <span key={chipKey} className="team-hero-chip">
                 {t(chipKey)}
               </span>
             ))}
           </div>
-        </div>
-      </section>
 
-      <section className="section">
-        <div className="team-stats-premium">
-          {statsItems.map((item) => (
-            <div key={item.key} className="team-stat-card">
-              <p className="muted-text">{t(`team.stats.${item.key}`)}</p>
-              <p className="team-stat-value">{item.value}</p>
-            </div>
-          ))}
+          <div className="team-hero-meta">
+            {heroStats.map((stat) => (
+              <div key={stat.key} className="team-hero-stat">
+                <span className="team-hero-stat-icon" aria-hidden="true">
+                  {stat.icon}
+                </span>
+                <div className="team-hero-stat-copy">
+                  <p className="muted-text">{t(`team.stats.${stat.key}`)}</p>
+                  <p className="team-hero-stat-value">{stat.value}</p>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 
@@ -127,70 +171,107 @@ function Team() {
         <div className="team-filters" aria-label={t("team.filters.title")}>
           <p className="team-filters-label">{t("team.filters.title")}</p>
 
-          <div className="team-filter-chips" role="group" aria-label={t("team.filters.title")}>
-            <button
-              type="button"
-              className={`filter-chip team-filter-chip${roleFilter === "all" ? " is-active" : ""}`}
-              onClick={() => setRoleFilter("all")}
-            >
-              {t("team.filters.all_roles")}
-            </button>
-
-            {roleOptions.map((roleKey) => (
+          <div className="team-filter-tools">
+            <div className="team-filter-chips" role="group" aria-label={t("team.filters.title")}>
               <button
-                key={roleKey}
                 type="button"
-                className={`filter-chip team-filter-chip${roleFilter === roleKey ? " is-active" : ""}`}
-                onClick={() => setRoleFilter(roleKey)}
+                className={`filter-chip team-filter-chip${roleFilter === "all" ? " is-active" : ""}`}
+                onClick={() => setRoleFilter("all")}
               >
-                {t(roleKey)}
+                {t("team.filters.all")}
               </button>
-            ))}
+
+              {roleOptions.map((roleKey) => (
+                <button
+                  key={roleKey}
+                  type="button"
+                  className={`filter-chip team-filter-chip${roleFilter === roleKey ? " is-active" : ""}`}
+                  onClick={() => setRoleFilter(roleKey)}
+                >
+                  {t(`team.roles.${roleKey}`)}
+                </button>
+              ))}
+            </div>
+
+            <div className="team-search-wrap">
+              <label className="sr-only" htmlFor="team-search">
+                {t("team.filters.search_placeholder")}
+              </label>
+              <input
+                id="team-search"
+                type="text"
+                className="input team-search-input"
+                placeholder={t("team.filters.search_placeholder")}
+                value={query}
+                onChange={(event) => setQuery(event.target.value)}
+              />
+
+              {hasActiveFilters ? (
+                <button type="button" className="filter-chip team-chip-reset" onClick={resetFilters}>
+                  {t("team.filters.reset")}
+                </button>
+              ) : null}
+            </div>
           </div>
 
-          <p className="muted-text team-filters-count">{t("team.filters.count", { count: filteredMembers.length })}</p>
+          <div className="team-results" aria-live="polite">
+            <p className="muted-text">{t("team.filters.results", { count: filteredMembers.length, total: TEAM_MEMBERS.length })}</p>
+            <div className="team-results-track" aria-hidden="true">
+              <span style={{ width: `${ratio}%` }} />
+            </div>
+          </div>
         </div>
 
-        <div className="team-grid">
-          {filteredMembers.map((member, index) => {
-            const imgSrc = member.image ? `${import.meta.env.BASE_URL}${member.image}` : "";
-            const hasImage = Boolean(imgSrc) && !imageErrors[member.id];
-            const cardClassName = member.featured ? "team-card is-featured" : "team-card";
+        {filteredMembers.length === 0 ? (
+          <p className="empty-state team-empty">{t("team.ui.no_results")}</p>
+        ) : (
+          <div className="team-grid">
+            {filteredMembers.map((member, index) => {
+              const imgSrc = member.avatar ? `${import.meta.env.BASE_URL}${member.avatar}` : "";
+              const hasImage = Boolean(imgSrc) && !imageErrors[member.id];
+              const allRoles = [member.roleKey, ...member.secondaryRoles];
+              const cardClassName = member.featured ? "team-card is-featured" : "team-card";
 
-            return (
-              <article key={member.id} className={cardClassName} tabIndex={0} style={{ "--delay": `${index * 60}ms` }}>
-                <div className="team-card-head">
-                  <div className="team-avatar" style={{ "--avatar-focus-y": avatarFocusByMemberId[member.id] ?? "18%" }}>
-                    {hasImage ? (
-                      <img src={imgSrc} alt={member.name} loading="lazy" onError={() => handleImageError(member.id)} />
-                    ) : (
-                      <span className="team-avatar-fallback" aria-hidden="true">
-                        {"\uD83E\uDD54"}
-                      </span>
-                    )}
+              return (
+                <article
+                  key={member.id}
+                  className={cardClassName}
+                  tabIndex={0}
+                  style={{ "--delay": `${index * 50}ms`, "--avatar-focus-y": member.focusY ?? "18%" }}
+                >
+                  <div className="team-card-head">
+                    <div className="team-avatar">
+                      {hasImage ? (
+                        <img src={imgSrc} alt={member.name} loading="lazy" onError={() => handleImageError(member.id)} />
+                      ) : (
+                        <span className="team-avatar-fallback" aria-hidden="true">
+                          {"\uD83E\uDD54"}
+                        </span>
+                      )}
+                    </div>
+
+                    <div className="team-card-body">
+                      <h3 className="team-name">{member.name}</h3>
+                      <p className="muted-text team-tagline">{t(member.taglineKey)}</p>
+                    </div>
                   </div>
 
-                  <div className="team-card-body">
-                    <h3 className="team-name">{member.name}</h3>
-                    <p className="muted-text team-tagline">{t(member.taglineKey)}</p>
+                  <div className="team-role-row" aria-label={t("team.member_labels.roles")}>
+                    {allRoles.map((role, roleIndex) => (
+                      <Badge key={`${member.id}-${role}`} tone={roleIndex === 0 ? "neutral" : "progress"}>
+                        {t(`team.roles.${role}`)}
+                      </Badge>
+                    ))}
                   </div>
-                </div>
 
-                <div className="team-role-row" aria-label={t("team.member_labels.roles")}>
-                  {member.roles.map((roleKey) => (
-                    <Badge key={`${member.id}-${roleKey}`} tone="neutral">
-                      {t(roleKey)}
-                    </Badge>
-                  ))}
-                </div>
-
-                <p className="muted-text team-focus-line">
-                  <strong>{t("team.focus.label")}:</strong> {t(member.focusKey)}
-                </p>
-              </article>
-            );
-          })}
-        </div>
+                  <p className="muted-text team-focus-line">
+                    <strong>{t("team.ui.highlight")}:</strong> {t(member.focusKey)}
+                  </p>
+                </article>
+              );
+            })}
+          </div>
+        )}
       </section>
     </div>
   );

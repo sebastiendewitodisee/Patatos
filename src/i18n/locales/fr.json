@@ -319,7 +319,11 @@
     "filters": {
       "title": "Filtrer par rôle",
       "all_roles": "Tous les rôles",
-      "count": "{{count}} membre(s)"
+      "count": "{{count}} membre(s)",
+      "all": "Tous",
+      "reset": "Reset",
+      "results": "{{count}} / {{total}} membres",
+      "search_placeholder": "Rechercher un prénom..."
     },
     "roles": {
       "lead": "Coordination",
@@ -345,6 +349,11 @@
         "josh": "On vérifie que le matos est prêt avant la session.",
         "melvin": "On garde un suivi propre des plants sur la période."
       }
+    },
+    "ui": {
+      "subtitle_badge": "Saison {{year}}",
+      "highlight": "Focus",
+      "no_results": "Aucun membre ne correspond à ce filtre."
     }
   },
   "organisation": {

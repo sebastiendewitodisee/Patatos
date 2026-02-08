@@ -319,7 +319,11 @@
     "filters": {
       "title": "Filter op rol",
       "all_roles": "Alle rollen",
-      "count": "{{count}} lid/leden"
+      "count": "{{count}} lid/leden",
+      "all": "Alles",
+      "reset": "Reset",
+      "results": "{{count}} / {{total}} leden",
+      "search_placeholder": "Zoek op voornaam..."
     },
     "roles": {
       "lead": "Coördinatie",
@@ -345,6 +349,11 @@
         "josh": "We checken dat al het materiaal klaarstaat voor de sessie.",
         "melvin": "We houden de opvolging van de planten strak op schema."
       }
+    },
+    "ui": {
+      "subtitle_badge": "Seizoen {{year}}",
+      "highlight": "Focus",
+      "no_results": "Geen teamlid komt overeen met deze filter."
     }
   },
   "organisation": {
