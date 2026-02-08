@@ -1,4 +1,4 @@
-﻿import { useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import Badge from "../components/Badge";
 import Card from "../components/Card";
@@ -30,6 +30,27 @@ const PHASE_TRANSLATION_KEYS = {
 function getPhaseLabel(phase, t) {
   const key = PHASE_TRANSLATION_KEYS[phase];
   return key ? t(`planning.phases.${key}`) : phase;
+}
+
+function getEventText(event, keyName, fallbackKeyName, t) {
+  const translationKey = event?.[keyName];
+  const fallbackValue = fallbackKeyName ? event?.[fallbackKeyName] : "";
+
+  if (!translationKey) {
+    return fallbackValue ?? "";
+  }
+
+  return t(translationKey, { defaultValue: fallbackValue ?? "" });
+}
+
+function getEventPeriodLabel(event, t, periodFallback, dateFallback) {
+  const fallbackLabel = getEventScheduleLabel(event, { periodFallback, dateFallback });
+  return event?.periodKey ? t(event.periodKey, { defaultValue: fallbackLabel }) : fallbackLabel;
+}
+
+function getEventValidationText(event, t, validationFallback) {
+  const fallbackLabel = getIndicativeValidationMessage(event, validationFallback);
+  return event?.validationKey ? t(event.validationKey, { defaultValue: fallbackLabel }) : fallbackLabel;
 }
 
 function Planning() {
@@ -86,7 +107,14 @@ function Planning() {
       const matchesPhase = phaseFilter === "all" || event.phase === phaseFilter;
       const matchesSearch =
         loweredSearch.length === 0 ||
-        [event.title, event.description, event.responsibles?.join(" "), event.period, event.validation]
+        [
+          getEventText(event, "titleKey", "title", t),
+          getEventText(event, "descriptionKey", "description", t),
+          getEventPeriodLabel(event, t, periodFallback, dateFallback),
+          getEventValidationText(event, t, validationFallback),
+          event.phaseKey ? t(event.phaseKey, { defaultValue: getPhaseLabel(event.phase, t) }) : getPhaseLabel(event.phase, t),
+          event.isTeam ? t("planning.timeline.team_all") : event.responsibles?.join(" "),
+        ]
           .filter(Boolean)
           .join(" ")
           .toLowerCase()
@@ -94,7 +122,7 @@ function Planning() {
 
       return matchesStatus && matchesPhase && matchesSearch;
     });
-  }, [phaseFilter, search, sortedEvents, statusFilter]);
+  }, [dateFallback, periodFallback, phaseFilter, search, sortedEvents, statusFilter, t, validationFallback]);
 
   const ratio = sortedEvents.length ? Math.round((filteredEvents.length / sortedEvents.length) * 100) : 0;
   const trimmedSearch = search.trim();
@@ -144,14 +172,14 @@ function Planning() {
           <Card title={t("planning.summary.next")}>
             {upcomingEvent ? (
               <>
-                <p className="summary-title">{upcomingEvent.title}</p>
+                <p className="summary-title">{getEventText(upcomingEvent, "titleKey", "title", t)}</p>
                 <p className="muted-text">
                   {t("common.period_with_value", {
-                    value: getEventScheduleLabel(upcomingEvent, { periodFallback, dateFallback }),
+                    value: getEventPeriodLabel(upcomingEvent, t, periodFallback, dateFallback),
                   })}
                 </p>
                 {isEventIndicative(upcomingEvent) ? (
-                  <p className="muted-text">{getIndicativeValidationMessage(upcomingEvent, validationFallback)}</p>
+                  <p className="muted-text">{getEventValidationText(upcomingEvent, t, validationFallback)}</p>
                 ) : null}
               </>
             ) : (
@@ -162,7 +190,7 @@ function Planning() {
           <Card title={t("planning.summary.last_update")}>
             {lastUpdate ? (
               <>
-                <p className="summary-title">{lastUpdate.title}</p>
+                <p className="summary-title">{getEventText(lastUpdate, "titleKey", "title", t)}</p>
                 <p className="muted-text">{formatDateFr(lastUpdate.updatedAt, dateFallback)}</p>
               </>
             ) : (
@@ -246,7 +274,7 @@ function Planning() {
                       <li key={task.id} className="checklist-item">
                         <span className={`checkbox ${task.status === "done" ? "is-checked" : ""}`} aria-hidden="true" />
                         <div>
-                          <p>{task.title}</p>
+                          <p>{getEventText(task, "titleKey", "title", t)}</p>
                           <div className="timeline-badges">
                             <Badge tone={status.tone}>{t(`status.${effectiveStatus}`)}</Badge>
                             {isEventIndicative(task) ? <Badge tone="neutral">{t("planning.timeline.indicative")}</Badge> : null}
@@ -254,11 +282,11 @@ function Planning() {
                           </div>
                           <p className="muted-text">
                             {t("common.period_with_value", {
-                              value: task.period ?? periodFallback,
+                              value: getEventPeriodLabel(task, t, periodFallback, dateFallback),
                             })}
                           </p>
                           {isEventIndicative(task) ? (
-                            <p className="muted-text">{getIndicativeValidationMessage(task, validationFallback)}</p>
+                            <p className="muted-text">{getEventValidationText(task, t, validationFallback)}</p>
                           ) : null}
                         </div>
                       </li>

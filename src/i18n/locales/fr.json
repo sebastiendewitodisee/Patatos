@@ -125,6 +125,126 @@
       "suivi": "Suivi",
       "recolte": "Récolte",
       "conservation": "Conservation"
+    },
+    "events": {
+      "achat-plants-fait": {
+        "title": "Achat des plants",
+        "description": "Achat finalisé pour lancer la saison : 40,5 kg de plants (calibre 28/35) déjà récupérés (~1 570 plants).",
+        "period": "1–14 février 2026"
+      },
+      "remboursement-achat-plants": {
+        "title": "Remboursement achat des plants",
+        "description": "On boucle la répartition des coûts entre participants pour repartir clair.",
+        "period": "1–14 février 2026"
+      },
+      "tri-germination-plants-27-sacs": {
+        "title": "Tri + germination des plants (27 sacs)",
+        "description": "On doit trier + lancer la germination proprement (40,5 kg / calibre 28/35).\n⚡ J’aurais besoin d’un coup de main : ceux qui veulent venir aider sont les bienvenus 🙌",
+        "validation": "Validation: on confirme après contrôle des cagettes, de la lumière et de la tenue des germes.",
+        "period": "1–14 février 2026"
+      },
+      "passage-fermier-tracteur": {
+        "title": "Passage fermier (tracteur)",
+        "description": "Passage mécanique pour ouvrir la parcelle avant préparation fine. Si pas fait: report au checkpoint suivant.",
+        "validation": "Validation: on confirme sur place selon météo, sol non détrempé et dispo fermier.",
+        "period": "15–28 février 2026"
+      },
+      "preparation-terrain-team-avant-plantation": {
+        "title": "Préparation terrain par la team (avant plantation)",
+        "description": "Nettoyage, piquetage et repérage des rangs avant les sessions de plantation. Si pas fait: report au checkpoint suivant.",
+        "validation": "Validation: on confirme sur place selon météo, sol ressuyé et parcelle praticable.",
+        "period": "1–14 mars 2026"
+      },
+      "checkpoint-01-organisation-parcelle-materiel": {
+        "title": "Checkpoint 1 — Organisation parcelle + matériel",
+        "description": "On valide le plan des rangs, les zones de passage et le matériel d'arrosage. Si pas fait: report au checkpoint suivant.",
+        "validation": "Validation: on confirme sur place selon météo, état du sol et matériel disponible.",
+        "period": "15–31 mars 2026"
+      },
+      "checkpoint-02-plantation-session-a": {
+        "title": "Checkpoint 2 — Plantation session A",
+        "description": "Première session collective de mise en terre avec espacement propre des rangs. Si pas fait: report au checkpoint suivant.",
+        "validation": "Validation: on confirme sur place selon météo et état du sol (ni gelé, ni détrempé).",
+        "period": "1–14 avril 2026"
+      },
+      "checkpoint-03-plantation-session-b": {
+        "title": "Checkpoint 3 — Plantation session B",
+        "description": "Session de rattrapage pour les zones non plantées et ajustement des lignes. Si pas fait: report au checkpoint suivant.",
+        "validation": "Validation: on confirme sur place selon météo et état du sol (ni gelé, ni détrempé).",
+        "period": "15–30 avril 2026"
+      },
+      "checkpoint-04-plantation-session-c": {
+        "title": "Checkpoint 4 — Plantation session C",
+        "description": "Session finale de plantation pour clôturer la mise en terre et homogénéiser la parcelle. Si pas fait: report au checkpoint suivant.",
+        "validation": "Validation: on confirme sur place selon météo et état du sol (ni gelé, ni détrempé).",
+        "period": "1–14 mai 2026"
+      },
+      "checkpoint-05-buttage-1-reprise-rangs": {
+        "title": "Checkpoint 5 — Buttage 1 + reprise des rangs",
+        "description": "Premier buttage pour protéger les tubercules et consolider les lignes. Si pas fait: report au checkpoint suivant.",
+        "validation": "Validation: on confirme sur place selon hauteur des plants et état de la terre.",
+        "period": "15–31 mai 2026"
+      },
+      "checkpoint-06-arrosage-cible-check-feuillage": {
+        "title": "Checkpoint 6 — Arrosage ciblé + check feuillage",
+        "description": "Arrosage uniquement si nécessaire et contrôle visuel global du feuillage. Si pas fait: report au checkpoint suivant.",
+        "validation": "Validation: on confirme sur place selon pluies récentes, humidité du sol et état des plants.",
+        "period": "1–14 juin 2026"
+      },
+      "checkpoint-07-tour-mildiou-buttage-2": {
+        "title": "Checkpoint 7 — Tour mildiou + buttage 2 si nécessaire",
+        "description": "Tour sanitaire ciblé mildiou et deuxième buttage si des tubercules apparaissent en surface. Si pas fait: report au checkpoint suivant.",
+        "validation": "Validation: on confirme sur place selon feuillage, humidité et tubercules exposés.",
+        "period": "15–30 juin 2026"
+      },
+      "checkpoint-08-suivi-ete-eau-feuillage": {
+        "title": "Checkpoint 8 — Suivi été: eau + feuillage",
+        "description": "Point de routine pour garder le suivi sanitaire et l'arrosage alignés avant les premières récoltes. Si pas fait: report au checkpoint suivant.",
+        "validation": "Validation: on confirme sur place selon météo locale, feuillage et besoin réel en eau.",
+        "period": "1–14 juillet 2026"
+      },
+      "checkpoint-09-test-recolte-precoces": {
+        "title": "Checkpoint 9 — Test récolte des précoces",
+        "description": "Test sur quelques pieds pour vérifier la maturité des précoces avant session élargie. Si pas fait: report au checkpoint suivant.",
+        "validation": "Validation: on confirme sur place selon feuillage, tenue de peau et état du sol.",
+        "period": "15–31 juillet 2026"
+      },
+      "checkpoint-10-recolte-precoces-collective": {
+        "title": "Checkpoint 10 — Récolte précoces (session collective)",
+        "description": "Session collective de récolte des précoces avec tri rapide sur place. Si pas fait: report au checkpoint suivant.",
+        "validation": "Validation: on confirme sur place selon maturité observée et météo de la quinzaine.",
+        "period": "1–14 août 2026"
+      },
+      "checkpoint-11-prepa-recolte-principale": {
+        "title": "Checkpoint 11 — Préparation récolte principale",
+        "description": "On prépare les créneaux, zones de tri et cagettes pour lancer les récoltes tardives. Si pas fait: report au checkpoint suivant.",
+        "validation": "Validation: on confirme sur place selon feuillage, accès parcelle et créneaux de la team.",
+        "period": "15–31 août 2026"
+      },
+      "checkpoint-12-recolte-principale-vague-1": {
+        "title": "Checkpoint 12 — Récolte principale vague 1",
+        "description": "Première vague de récolte des variétés de conservation selon la maturité réelle. Si pas fait: report au checkpoint suivant.",
+        "validation": "Validation: on confirme sur place selon feuillage sec, sol praticable et météo.",
+        "period": "1–14 septembre 2026"
+      },
+      "checkpoint-13-recolte-principale-vague-2": {
+        "title": "Checkpoint 13 — Récolte principale vague 2",
+        "description": "Deuxième vague pour finir les zones restantes et limiter l'attente des tubercules en terre. Si pas fait: report au checkpoint suivant.",
+        "validation": "Validation: on confirme sur place selon météo, état du sol et volumes restants.",
+        "period": "15–30 septembre 2026"
+      },
+      "checkpoint-14-tri-cagettes-stockage": {
+        "title": "Checkpoint 14 — Tri + mise en cagettes",
+        "description": "Tri par état et usage puis mise en cagettes aérées pour entrer en stockage proprement. Si pas fait: report au checkpoint suivant.",
+        "validation": "Validation: on confirme sur place selon état des lots, humidité et température du local.",
+        "period": "1–14 octobre 2026"
+      },
+      "checkpoint-15-point-stockage-controle-1": {
+        "title": "Checkpoint 15 — Point stockage (contrôle 1)",
+        "description": "Contrôle des lots stockés et retrait des tubercules fragiles pour stabiliser le stockage. Si pas fait: report au checkpoint suivant.",
+        "validation": "Validation: on confirme sur place selon humidité, température et état visuel des cagettes.",
+        "period": "15–31 octobre 2026"
+      }
     }
   },
   "varieties": {

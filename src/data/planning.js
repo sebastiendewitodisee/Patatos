@@ -1,4 +1,4 @@
-﻿export const PLANNING_SEASON = "Saison 2026 (Belgique)";
+export const PLANNING_SEASON = "Saison 2026 (Belgique)";
 
 export const STATUS_META = {
   upcoming: { label: "À venir", tone: "neutral" },
@@ -25,9 +25,33 @@ export const TYPE_META = {
 
 export const PHASE_ORDER = ["Préparation", "Plantation", "Suivi", "Récolte", "Conservation"];
 
+const PHASE_KEY_BY_NAME = {
+  Préparation: "planning.phases.preparation",
+  Plantation: "planning.phases.plantation",
+  Suivi: "planning.phases.suivi",
+  Récolte: "planning.phases.recolte",
+  Conservation: "planning.phases.conservation",
+};
+
+function createPlanningEvent(event) {
+  const eventWithKeys = {
+    ...event,
+    titleKey: `planning.events.${event.id}.title`,
+    descriptionKey: `planning.events.${event.id}.description`,
+    periodKey: `planning.events.${event.id}.period`,
+    phaseKey: PHASE_KEY_BY_NAME[event.phase],
+  };
+
+  if (event.isIndicative) {
+    eventWithKeys.validationKey = `planning.events.${event.id}.validation`;
+  }
+
+  return eventWithKeys;
+}
+
 // Source unique à éditer pour faire évoluer le planning.
 export const planningEvents = [
-  {
+  createPlanningEvent({
     id: "achat-plants-fait",
     order: 1,
     period: "1–14 février 2026",
@@ -37,9 +61,9 @@ export const planningEvents = [
     status: "done",
     phase: "Préparation",
     description: "Achat finalisé pour lancer la saison : 40,5 kg de plants (calibre 28/35) déjà récupérés (~1 570 plants).",
-    responsibles: ["Sébastien \"le vrai\"", "À définir"],
-  },
-  {
+    responsibles: ['Sébastien "le vrai"', "À définir"],
+  }),
+  createPlanningEvent({
     id: "remboursement-achat-plants",
     order: 2,
     period: "1–14 février 2026",
@@ -49,9 +73,10 @@ export const planningEvents = [
     status: "todo",
     phase: "Préparation",
     description: "On boucle la répartition des coûts entre participants pour repartir clair.",
-    responsibles: ["Toute la team"],
-  },
-  {
+    isTeam: true,
+    responsibles: [],
+  }),
+  createPlanningEvent({
     id: "tri-germination-plants-27-sacs",
     order: 3,
     period: "1–14 février 2026",
@@ -65,9 +90,9 @@ export const planningEvents = [
     callout: true,
     description:
       "On doit trier + lancer la germination proprement (40,5 kg / calibre 28/35).\n⚡ J’aurais besoin d’un coup de main : ceux qui veulent venir aider sont les bienvenus 🙌",
-    responsibles: ["Sébastien \"le vrai\"", "À définir"],
-  },
-  {
+    responsibles: ['Sébastien "le vrai"', "À définir"],
+  }),
+  createPlanningEvent({
     id: "passage-fermier-tracteur",
     order: 4,
     period: "15–28 février 2026",
@@ -79,9 +104,9 @@ export const planningEvents = [
     isIndicative: true,
     validation: "Validation: on confirme sur place selon météo, sol non détrempé et dispo fermier.",
     description: "Passage mécanique pour ouvrir la parcelle avant préparation fine. Si pas fait: report au checkpoint suivant.",
-    responsibles: ["Sébastien \"le vrai\"", "À définir"],
-  },
-  {
+    responsibles: ['Sébastien "le vrai"', "À définir"],
+  }),
+  createPlanningEvent({
     id: "preparation-terrain-team-avant-plantation",
     order: 5,
     period: "1–14 mars 2026",
@@ -94,9 +119,9 @@ export const planningEvents = [
     validation: "Validation: on confirme sur place selon météo, sol ressuyé et parcelle praticable.",
     description:
       "Nettoyage, piquetage et repérage des rangs avant les sessions de plantation. Si pas fait: report au checkpoint suivant.",
-    responsibles: ["Sébastien \"le vrai\"", "À définir"],
-  },
-  {
+    responsibles: ['Sébastien "le vrai"', "À définir"],
+  }),
+  createPlanningEvent({
     id: "checkpoint-01-organisation-parcelle-materiel",
     order: 6,
     period: "15–31 mars 2026",
@@ -108,9 +133,9 @@ export const planningEvents = [
     isIndicative: true,
     validation: "Validation: on confirme sur place selon météo, état du sol et matériel disponible.",
     description: "On valide le plan des rangs, les zones de passage et le matériel d'arrosage. Si pas fait: report au checkpoint suivant.",
-    responsibles: ["Sébastien \"le vrai\"", "À définir"],
-  },
-  {
+    responsibles: ['Sébastien "le vrai"', "À définir"],
+  }),
+  createPlanningEvent({
     id: "checkpoint-02-plantation-session-a",
     order: 7,
     period: "1–14 avril 2026",
@@ -122,9 +147,10 @@ export const planningEvents = [
     isIndicative: true,
     validation: "Validation: on confirme sur place selon météo et état du sol (ni gelé, ni détrempé).",
     description: "Première session collective de mise en terre avec espacement propre des rangs. Si pas fait: report au checkpoint suivant.",
-    responsibles: ["Toute la team"],
-  },
-  {
+    isTeam: true,
+    responsibles: [],
+  }),
+  createPlanningEvent({
     id: "checkpoint-03-plantation-session-b",
     order: 8,
     period: "15–30 avril 2026",
@@ -136,9 +162,10 @@ export const planningEvents = [
     isIndicative: true,
     validation: "Validation: on confirme sur place selon météo et état du sol (ni gelé, ni détrempé).",
     description: "Session de rattrapage pour les zones non plantées et ajustement des lignes. Si pas fait: report au checkpoint suivant.",
-    responsibles: ["Toute la team"],
-  },
-  {
+    isTeam: true,
+    responsibles: [],
+  }),
+  createPlanningEvent({
     id: "checkpoint-04-plantation-session-c",
     order: 9,
     period: "1–14 mai 2026",
@@ -151,9 +178,10 @@ export const planningEvents = [
     validation: "Validation: on confirme sur place selon météo et état du sol (ni gelé, ni détrempé).",
     description:
       "Session finale de plantation pour clôturer la mise en terre et homogénéiser la parcelle. Si pas fait: report au checkpoint suivant.",
-    responsibles: ["Toute la team"],
-  },
-  {
+    isTeam: true,
+    responsibles: [],
+  }),
+  createPlanningEvent({
     id: "checkpoint-05-buttage-1-reprise-rangs",
     order: 10,
     period: "15–31 mai 2026",
@@ -165,9 +193,9 @@ export const planningEvents = [
     isIndicative: true,
     validation: "Validation: on confirme sur place selon hauteur des plants et état de la terre.",
     description: "Premier buttage pour protéger les tubercules et consolider les lignes. Si pas fait: report au checkpoint suivant.",
-    responsibles: ["Sébastien \"le vrai\"", "À définir"],
-  },
-  {
+    responsibles: ['Sébastien "le vrai"', "À définir"],
+  }),
+  createPlanningEvent({
     id: "checkpoint-06-arrosage-cible-check-feuillage",
     order: 11,
     period: "1–14 juin 2026",
@@ -180,9 +208,9 @@ export const planningEvents = [
     validation: "Validation: on confirme sur place selon pluies récentes, humidité du sol et état des plants.",
     description:
       "Arrosage uniquement si nécessaire et contrôle visuel global du feuillage. Si pas fait: report au checkpoint suivant.",
-    responsibles: ["Sébastien \"le vrai\"", "À définir"],
-  },
-  {
+    responsibles: ['Sébastien "le vrai"', "À définir"],
+  }),
+  createPlanningEvent({
     id: "checkpoint-07-tour-mildiou-buttage-2",
     order: 12,
     period: "15–30 juin 2026",
@@ -195,9 +223,9 @@ export const planningEvents = [
     validation: "Validation: on confirme sur place selon feuillage, humidité et tubercules exposés.",
     description:
       "Tour sanitaire ciblé mildiou et deuxième buttage si des tubercules apparaissent en surface. Si pas fait: report au checkpoint suivant.",
-    responsibles: ["Sébastien \"le vrai\"", "À définir"],
-  },
-  {
+    responsibles: ['Sébastien "le vrai"', "À définir"],
+  }),
+  createPlanningEvent({
     id: "checkpoint-08-suivi-ete-eau-feuillage",
     order: 13,
     period: "1–14 juillet 2026",
@@ -210,9 +238,9 @@ export const planningEvents = [
     validation: "Validation: on confirme sur place selon météo locale, feuillage et besoin réel en eau.",
     description:
       "Point de routine pour garder le suivi sanitaire et l'arrosage alignés avant les premières récoltes. Si pas fait: report au checkpoint suivant.",
-    responsibles: ["Sébastien \"le vrai\"", "À définir"],
-  },
-  {
+    responsibles: ['Sébastien "le vrai"', "À définir"],
+  }),
+  createPlanningEvent({
     id: "checkpoint-09-test-recolte-precoces",
     order: 14,
     period: "15–31 juillet 2026",
@@ -225,9 +253,9 @@ export const planningEvents = [
     validation: "Validation: on confirme sur place selon feuillage, tenue de peau et état du sol.",
     description:
       "Test sur quelques pieds pour vérifier la maturité des précoces avant session élargie. Si pas fait: report au checkpoint suivant.",
-    responsibles: ["Sébastien \"le vrai\"", "À définir"],
-  },
-  {
+    responsibles: ['Sébastien "le vrai"', "À définir"],
+  }),
+  createPlanningEvent({
     id: "checkpoint-10-recolte-precoces-collective",
     order: 15,
     period: "1–14 août 2026",
@@ -239,9 +267,10 @@ export const planningEvents = [
     isIndicative: true,
     validation: "Validation: on confirme sur place selon maturité observée et météo de la quinzaine.",
     description: "Session collective de récolte des précoces avec tri rapide sur place. Si pas fait: report au checkpoint suivant.",
-    responsibles: ["Toute la team"],
-  },
-  {
+    isTeam: true,
+    responsibles: [],
+  }),
+  createPlanningEvent({
     id: "checkpoint-11-prepa-recolte-principale",
     order: 16,
     period: "15–31 août 2026",
@@ -254,9 +283,10 @@ export const planningEvents = [
     validation: "Validation: on confirme sur place selon feuillage, accès parcelle et créneaux de la team.",
     description:
       "On prépare les créneaux, zones de tri et cagettes pour lancer les récoltes tardives. Si pas fait: report au checkpoint suivant.",
-    responsibles: ["Toute la team"],
-  },
-  {
+    isTeam: true,
+    responsibles: [],
+  }),
+  createPlanningEvent({
     id: "checkpoint-12-recolte-principale-vague-1",
     order: 17,
     period: "1–14 septembre 2026",
@@ -268,9 +298,10 @@ export const planningEvents = [
     isIndicative: true,
     validation: "Validation: on confirme sur place selon feuillage sec, sol praticable et météo.",
     description: "Première vague de récolte des variétés de conservation selon la maturité réelle. Si pas fait: report au checkpoint suivant.",
-    responsibles: ["Toute la team"],
-  },
-  {
+    isTeam: true,
+    responsibles: [],
+  }),
+  createPlanningEvent({
     id: "checkpoint-13-recolte-principale-vague-2",
     order: 18,
     period: "15–30 septembre 2026",
@@ -283,9 +314,10 @@ export const planningEvents = [
     validation: "Validation: on confirme sur place selon météo, état du sol et volumes restants.",
     description:
       "Deuxième vague pour finir les zones restantes et limiter l'attente des tubercules en terre. Si pas fait: report au checkpoint suivant.",
-    responsibles: ["Toute la team"],
-  },
-  {
+    isTeam: true,
+    responsibles: [],
+  }),
+  createPlanningEvent({
     id: "checkpoint-14-tri-cagettes-stockage",
     order: 19,
     period: "1–14 octobre 2026",
@@ -298,9 +330,10 @@ export const planningEvents = [
     validation: "Validation: on confirme sur place selon état des lots, humidité et température du local.",
     description:
       "Tri par état et usage puis mise en cagettes aérées pour entrer en stockage proprement. Si pas fait: report au checkpoint suivant.",
-    responsibles: ["Toute la team"],
-  },
-  {
+    isTeam: true,
+    responsibles: [],
+  }),
+  createPlanningEvent({
     id: "checkpoint-15-point-stockage-controle-1",
     order: 20,
     period: "15–31 octobre 2026",
@@ -312,7 +345,6 @@ export const planningEvents = [
     isIndicative: true,
     validation: "Validation: on confirme sur place selon humidité, température et état visuel des cagettes.",
     description: "Contrôle des lots stockés et retrait des tubercules fragiles pour stabiliser le stockage. Si pas fait: report au checkpoint suivant.",
-    responsibles: ["Sébastien \"le vrai\"", "À définir"],
-  },
+    responsibles: ['Sébastien "le vrai"', "À définir"],
+  }),
 ];
-

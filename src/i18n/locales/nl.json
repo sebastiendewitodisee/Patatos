@@ -125,6 +125,126 @@
       "suivi": "Opvolging",
       "recolte": "Oogst",
       "conservation": "Bewaring"
+    },
+    "events": {
+      "achat-plants-fait": {
+        "title": "Aankoop van pootgoed",
+        "description": "Aankoop afgerond om het seizoen te starten: 40,5 kg pootgoed (maat 28/35) al opgehaald (~1 570 stuks).",
+        "period": "1–14 februari 2026"
+      },
+      "remboursement-achat-plants": {
+        "title": "Terugbetaling aankoop pootgoed",
+        "description": "We ronden de kostenverdeling tussen deelnemers af zodat alles duidelijk blijft.",
+        "period": "1–14 februari 2026"
+      },
+      "tri-germination-plants-27-sacs": {
+        "title": "Sorteren + voorkiemen van pootgoed (27 zakken)",
+        "description": "We moeten correct sorteren + voorkiemen opstarten (40,5 kg / maat 28/35).\n⚡ Ik kan een extra hand gebruiken: wie wil helpen is meer dan welkom 🙌",
+        "validation": "Validatie: we bevestigen na controle van de kistjes, het licht en stevige kiemen.",
+        "period": "1–14 februari 2026"
+      },
+      "passage-fermier-tracteur": {
+        "title": "Passage boer (tractor)",
+        "description": "Mechanische voorbereiding om het perceel open te trekken voor de fijne afwerking. Als het niet lukt: doorschuiven naar de volgende checkpoint.",
+        "validation": "Validatie: we bevestigen ter plaatse op basis van weer, niet te natte bodem en beschikbaarheid van de boer.",
+        "period": "15–28 februari 2026"
+      },
+      "preparation-terrain-team-avant-plantation": {
+        "title": "Terreinvoorbereiding door het team (voor aanplanten)",
+        "description": "Opruimen, uitzetten en rijen markeren voor de aanplantsessies. Als het niet lukt: doorschuiven naar de volgende checkpoint.",
+        "validation": "Validatie: we bevestigen ter plaatse op basis van weer, opgedroogde bodem en een werkbaar perceel.",
+        "period": "1–14 maart 2026"
+      },
+      "checkpoint-01-organisation-parcelle-materiel": {
+        "title": "Checkpoint 1 — Indeling perceel + materiaal",
+        "description": "We bevestigen het rijenplan, de doorgangen en het materiaal voor watergeven. Als het niet lukt: doorschuiven naar de volgende checkpoint.",
+        "validation": "Validatie: we bevestigen ter plaatse op basis van weer, bodemtoestand en beschikbaar materiaal.",
+        "period": "15–31 maart 2026"
+      },
+      "checkpoint-02-plantation-session-a": {
+        "title": "Checkpoint 2 — Aanplantsessie A",
+        "description": "Eerste gezamenlijke sessie om te planten met nette rij-afstanden. Als het niet lukt: doorschuiven naar de volgende checkpoint.",
+        "validation": "Validatie: we bevestigen ter plaatse op basis van weer en bodemtoestand (niet bevroren, niet drassig).",
+        "period": "1–14 april 2026"
+      },
+      "checkpoint-03-plantation-session-b": {
+        "title": "Checkpoint 3 — Aanplantsessie B",
+        "description": "Inhaalsessie voor zones die nog niet geplant zijn en bijsturing van de lijnen. Als het niet lukt: doorschuiven naar de volgende checkpoint.",
+        "validation": "Validatie: we bevestigen ter plaatse op basis van weer en bodemtoestand (niet bevroren, niet drassig).",
+        "period": "15–30 april 2026"
+      },
+      "checkpoint-04-plantation-session-c": {
+        "title": "Checkpoint 4 — Aanplantsessie C",
+        "description": "Laatste plantsessie om de aanplant af te ronden en het perceel homogeen te maken. Als het niet lukt: doorschuiven naar de volgende checkpoint.",
+        "validation": "Validatie: we bevestigen ter plaatse op basis van weer en bodemtoestand (niet bevroren, niet drassig).",
+        "period": "1–14 mei 2026"
+      },
+      "checkpoint-05-buttage-1-reprise-rangs": {
+        "title": "Checkpoint 5 — Aanaarden 1 + rijen bijwerken",
+        "description": "Eerste aanaarding om knollen te beschermen en de rijen te versterken. Als het niet lukt: doorschuiven naar de volgende checkpoint.",
+        "validation": "Validatie: we bevestigen ter plaatse op basis van planthoogte en bodemtoestand.",
+        "period": "15–31 mei 2026"
+      },
+      "checkpoint-06-arrosage-cible-check-feuillage": {
+        "title": "Checkpoint 6 — Gericht watergeven + loofcheck",
+        "description": "Alleen water geven indien nodig en een algemene visuele controle van het loof. Als het niet lukt: doorschuiven naar de volgende checkpoint.",
+        "validation": "Validatie: we bevestigen ter plaatse op basis van recente regen, bodemvocht en planttoestand.",
+        "period": "1–14 juni 2026"
+      },
+      "checkpoint-07-tour-mildiou-buttage-2": {
+        "title": "Checkpoint 7 — Rondgang meeldauw + aanaarden 2 indien nodig",
+        "description": "Gerichte gezondheidscontrole en tweede aanaarding als knollen bovenkomen. Als het niet lukt: doorschuiven naar de volgende checkpoint.",
+        "validation": "Validatie: we bevestigen ter plaatse op basis van loof, vocht en zichtbare knollen.",
+        "period": "15–30 juni 2026"
+      },
+      "checkpoint-08-suivi-ete-eau-feuillage": {
+        "title": "Checkpoint 8 — Zomeropvolging: water + loof",
+        "description": "Routinepunt om gezondheidsopvolging en watergift op koers te houden voor de eerste oogst. Als het niet lukt: doorschuiven naar de volgende checkpoint.",
+        "validation": "Validatie: we bevestigen ter plaatse op basis van lokaal weer, loof en echte waterbehoefte.",
+        "period": "1–14 juli 2026"
+      },
+      "checkpoint-09-test-recolte-precoces": {
+        "title": "Checkpoint 9 — Oogsttest vroege rassen",
+        "description": "Test op enkele planten om rijpheid te checken vóór een bredere sessie. Als het niet lukt: doorschuiven naar de volgende checkpoint.",
+        "validation": "Validatie: we bevestigen ter plaatse op basis van loof, schilvastheid en bodemtoestand.",
+        "period": "15–31 juli 2026"
+      },
+      "checkpoint-10-recolte-precoces-collective": {
+        "title": "Checkpoint 10 — Oogst vroege rassen (teamsessie)",
+        "description": "Gezamenlijke oogstsessie voor de vroege rassen met snelle triage op het veld. Als het niet lukt: doorschuiven naar de volgende checkpoint.",
+        "validation": "Validatie: we bevestigen ter plaatse op basis van waargenomen rijpheid en het weer van de periode.",
+        "period": "1–14 augustus 2026"
+      },
+      "checkpoint-11-prepa-recolte-principale": {
+        "title": "Checkpoint 11 — Voorbereiding hoofdoogst",
+        "description": "We plannen tijdsloten, triagezones en kistjes om de latere oogst op te starten. Als het niet lukt: doorschuiven naar de volgende checkpoint.",
+        "validation": "Validatie: we bevestigen ter plaatse op basis van loof, toegang tot het perceel en teambeschikbaarheid.",
+        "period": "15–31 augustus 2026"
+      },
+      "checkpoint-12-recolte-principale-vague-1": {
+        "title": "Checkpoint 12 — Hoofdoogst golf 1",
+        "description": "Eerste golf van de oogst van bewaarrassen volgens de echte rijpheid. Als het niet lukt: doorschuiven naar de volgende checkpoint.",
+        "validation": "Validatie: we bevestigen ter plaatse op basis van droog loof, werkbare bodem en weer.",
+        "period": "1–14 september 2026"
+      },
+      "checkpoint-13-recolte-principale-vague-2": {
+        "title": "Checkpoint 13 — Hoofdoogst golf 2",
+        "description": "Tweede golf om resterende zones af te werken en knollen niet te lang in de grond te laten. Als het niet lukt: doorschuiven naar de volgende checkpoint.",
+        "validation": "Validatie: we bevestigen ter plaatse op basis van weer, bodemtoestand en resterende volumes.",
+        "period": "15–30 september 2026"
+      },
+      "checkpoint-14-tri-cagettes-stockage": {
+        "title": "Checkpoint 14 — Sorteren + in kistjes",
+        "description": "Sorteren op staat en gebruik, daarna in geventileerde kistjes voor nette opslag. Als het niet lukt: doorschuiven naar de volgende checkpoint.",
+        "validation": "Validatie: we bevestigen ter plaatse op basis van partijtoestand, vochtigheid en temperatuur van de opslagruimte.",
+        "period": "1–14 oktober 2026"
+      },
+      "checkpoint-15-point-stockage-controle-1": {
+        "title": "Checkpoint 15 — Opslagpunt (controle 1)",
+        "description": "Controle van de opgeslagen partijen en verwijderen van kwetsbare knollen om de opslag stabiel te houden. Als het niet lukt: doorschuiven naar de volgende checkpoint.",
+        "validation": "Validatie: we bevestigen ter plaatse op basis van vochtigheid, temperatuur en visuele staat van de kistjes.",
+        "period": "15–31 oktober 2026"
+      }
     }
   },
   "varieties": {

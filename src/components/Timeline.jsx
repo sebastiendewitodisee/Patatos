@@ -1,4 +1,4 @@
-﻿import { useTranslation } from "react-i18next";
+import { useTranslation } from "react-i18next";
 import Badge from "./Badge";
 import { STATUS_META, TYPE_META } from "../data/planning";
 import {
@@ -9,13 +9,14 @@ import {
   isEventLate,
 } from "../utils/planning";
 
-function getResponsiblesDisplay(responsibles) {
-  if (!responsibles?.length) {
-    return null;
+function getResponsiblesDisplay(event) {
+  if (event?.isTeam) {
+    return { isTeam: true, principal: "", extra: 0 };
   }
 
-  if (responsibles[0] === "Toute la team") {
-    return { isTeam: true, principal: "Toute la team", extra: 0 };
+  const responsibles = event?.responsibles;
+  if (!responsibles?.length) {
+    return null;
   }
 
   return {
@@ -23,6 +24,27 @@ function getResponsiblesDisplay(responsibles) {
     principal: responsibles[0],
     extra: Math.max(responsibles.length - 1, 0),
   };
+}
+
+function getEventText(event, keyName, fallbackKeyName, t) {
+  const translationKey = event?.[keyName];
+  const fallbackValue = fallbackKeyName ? event?.[fallbackKeyName] : "";
+
+  if (!translationKey) {
+    return fallbackValue ?? "";
+  }
+
+  return t(translationKey, { defaultValue: fallbackValue ?? "" });
+}
+
+function getEventPeriodLabel(event, t, periodFallback, dateFallback) {
+  const fallbackLabel = getEventScheduleLabel(event, { periodFallback, dateFallback });
+  return event?.periodKey ? t(event.periodKey, { defaultValue: fallbackLabel }) : fallbackLabel;
+}
+
+function getEventValidationText(event, t, validationFallback) {
+  const fallbackLabel = getIndicativeValidationMessage(event, validationFallback);
+  return event?.validationKey ? t(event.validationKey, { defaultValue: fallbackLabel }) : fallbackLabel;
 }
 
 function Timeline({ events }) {
@@ -45,19 +67,19 @@ function Timeline({ events }) {
         const effectiveStatus = getEffectiveStatus(event);
         const status = STATUS_META[effectiveStatus] ?? STATUS_META.todo;
         const type = TYPE_META[event.type] ?? TYPE_META.preparation;
-        const responsiblesDisplay = getResponsiblesDisplay(event.responsibles);
+        const responsiblesDisplay = getResponsiblesDisplay(event);
         const isLate = isEventLate(event);
 
         return (
           <li key={event.id} className="timeline-item">
             <span className="timeline-date">
               {t("common.period_with_value", {
-                value: getEventScheduleLabel(event, { periodFallback, dateFallback }),
+                value: getEventPeriodLabel(event, t, periodFallback, dateFallback),
               })}
             </span>
             <article className={`timeline-card ${isLate ? "is-late" : ""}`.trim()}>
               <div className="timeline-head">
-                <h3>{event.title}</h3>
+                <h3>{getEventText(event, "titleKey", "title", t)}</h3>
                 <div className="timeline-badges">
                   <Badge tone={status.tone}>{t(`status.${effectiveStatus}`)}</Badge>
                   <Badge tone={type.tone}>{t(`planning.types.${event.type}`)}</Badge>
@@ -66,10 +88,10 @@ function Timeline({ events }) {
                 </div>
               </div>
 
-              <p className={event.callout ? "timeline-callout" : undefined}>{event.description}</p>
+              <p className={event.callout ? "timeline-callout" : undefined}>{getEventText(event, "descriptionKey", "description", t)}</p>
 
               {isEventIndicative(event) ? (
-                <p className="timeline-meta">{getIndicativeValidationMessage(event, validationFallback)}</p>
+                <p className="timeline-meta">{getEventValidationText(event, t, validationFallback)}</p>
               ) : null}
 
               {responsiblesDisplay ? (
