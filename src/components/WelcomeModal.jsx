@@ -15,6 +15,8 @@ function WelcomeModal({ openNonce = 0 }) {
   const dialogRef = useRef(null);
   const primaryActionRef = useRef(null);
   const previousFocusRef = useRef(null);
+  const isOpenRef = useRef(false);
+  const lastHandledOpenNonceRef = useRef(0);
   const [isOpen, setIsOpen] = useState(() => {
     if (typeof window === "undefined") {
       return false;
@@ -31,6 +33,15 @@ function WelcomeModal({ openNonce = 0 }) {
     setIsOpen(false);
     markWelcomeSeen();
   }, []);
+
+  const handleOverlayPointer = useCallback(
+    (event) => {
+      if (event.target === event.currentTarget) {
+        closeModal();
+      }
+    },
+    [closeModal]
+  );
 
   const handleLanguageSelect = useCallback(
     (lang) => {
@@ -53,9 +64,24 @@ function WelcomeModal({ openNonce = 0 }) {
       return undefined;
     }
 
+    const body = document.body;
     previousFocusRef.current = document.activeElement instanceof HTMLElement ? document.activeElement : null;
-    const previousOverflow = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
+    const scrollY = window.scrollY || window.pageYOffset || 0;
+    const previousBodyStyles = {
+      overflow: body.style.overflow,
+      position: body.style.position,
+      top: body.style.top,
+      width: body.style.width,
+      left: body.style.left,
+      right: body.style.right,
+    };
+
+    body.style.overflow = "hidden";
+    body.style.position = "fixed";
+    body.style.top = `-${scrollY}px`;
+    body.style.width = "100%";
+    body.style.left = "0";
+    body.style.right = "0";
 
     const focusFrame = window.requestAnimationFrame(() => {
       primaryActionRef.current?.focus();
@@ -113,13 +139,38 @@ function WelcomeModal({ openNonce = 0 }) {
     return () => {
       document.removeEventListener("keydown", onKeyDown);
       window.cancelAnimationFrame(focusFrame);
-      document.body.style.overflow = previousOverflow;
+
+      const topValue = body.style.top || `-${scrollY}px`;
+      const parsedTop = Number.parseInt(topValue, 10);
+      const restoredScrollY = Number.isNaN(parsedTop) ? scrollY : Math.abs(parsedTop);
+
+      body.style.overflow = previousBodyStyles.overflow;
+      body.style.position = previousBodyStyles.position;
+      body.style.top = previousBodyStyles.top;
+      body.style.width = previousBodyStyles.width;
+      body.style.left = previousBodyStyles.left;
+      body.style.right = previousBodyStyles.right;
+
+      window.scrollTo(0, restoredScrollY);
       previousFocusRef.current?.focus();
     };
   }, [closeModal, isOpen]);
 
   useEffect(() => {
+    isOpenRef.current = isOpen;
+  }, [isOpen]);
+
+  useEffect(() => {
     if (openNonce <= 0 || typeof window === "undefined") {
+      return undefined;
+    }
+
+    if (openNonce === lastHandledOpenNonceRef.current) {
+      return undefined;
+    }
+    lastHandledOpenNonceRef.current = openNonce;
+
+    if (isOpenRef.current) {
       return undefined;
     }
 
@@ -137,7 +188,12 @@ function WelcomeModal({ openNonce = 0 }) {
   }
 
   return (
-    <div className="welcome-modal-overlay" role="presentation">
+    <div
+      className="welcome-modal-overlay"
+      role="presentation"
+      onMouseDown={handleOverlayPointer}
+      onClick={handleOverlayPointer}
+    >
       <section
         ref={dialogRef}
         className="welcome-modal"
