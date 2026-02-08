@@ -8,10 +8,10 @@ function Team() {
   const { t } = useTranslation();
   const [imageErrors, setImageErrors] = useState({});
   const avatarFocusByMemberId = {
-    denis: "18%",
-    sebastien1: "16%",
-    sebastien2: "18%",
-    josh: "20%",
+    denis: "12%",
+    sebastien1: "18%",
+    sebastien2: "20%",
+    josh: "16%",
     melvin: "18%",
   };
 
@@ -63,15 +63,10 @@ function Team() {
                   <div className="team-card-head">
                     <div className="team-avatar" style={{ "--avatar-focus-y": avatarFocusByMemberId[member.id] ?? "20%" }}>
                       {hasImage ? (
-                        <img
-                          src={imgSrc}
-                          alt={member.name}
-                          loading="lazy"
-                          onError={() => handleImageError(member.id)}
-                        />
+                        <img src={imgSrc} alt={member.name} loading="lazy" onError={() => handleImageError(member.id)} />
                       ) : (
                         <span className="team-avatar-fallback" aria-hidden="true">
-                          🥔
+                          {"\uD83E\uDD54"}
                         </span>
                       )}
                     </div>
