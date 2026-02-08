@@ -7,6 +7,13 @@ import { teamMembers } from "../data/team";
 function Team() {
   const { t } = useTranslation();
   const [imageErrors, setImageErrors] = useState({});
+  const avatarFocusByMemberId = {
+    denis: "18%",
+    sebastien1: "16%",
+    sebastien2: "18%",
+    josh: "20%",
+    melvin: "18%",
+  };
 
   const statsItems = [
     { key: "members", value: String(teamMembers.length) },
@@ -54,7 +61,7 @@ function Team() {
               <div key={member.id} className="team-card-shell" tabIndex={0}>
                 <Card className="team-card">
                   <div className="team-card-head">
-                    <div className="team-avatar">
+                    <div className="team-avatar" style={{ "--avatar-focus-y": avatarFocusByMemberId[member.id] ?? "20%" }}>
                       {hasImage ? (
                         <img
                           src={imgSrc}

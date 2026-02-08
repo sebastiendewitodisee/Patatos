@@ -543,7 +543,7 @@
   height: 100%;
   display: block;
   object-fit: cover;
-  object-position: 50% 20%;
+  object-position: 50% var(--avatar-focus-y, 20%);
 }
 
 .team-page .team-avatar-fallback {
