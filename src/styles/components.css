@@ -1178,13 +1178,6 @@ th {
   font-size: 0.93rem;
 }
 
-.build-stamp {
-  font-size: 0.78rem;
-  color: var(--muted);
-  opacity: 0.95;
-  white-space: nowrap;
-}
-
 .footer-link {
   color: var(--text);
   border-bottom: 1px dashed rgba(255, 255, 255, 0.28);
