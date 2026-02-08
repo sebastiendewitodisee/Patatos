@@ -56,6 +56,7 @@ function Header() {
   const currentLang = i18n.resolvedLanguage || i18n.language || DEFAULT_LANG;
   const currentLangCode = currentLang.toLowerCase().startsWith("nl") ? "nl" : "fr";
   const nextLang = currentLangCode === "fr" ? "nl" : "fr";
+  const nextLangFlag = nextLang === "fr" ? "\u{1F1EB}\u{1F1F7}" : "\u{1F1F3}\u{1F1F1}";
   const nextLangAriaLabel = nextLang === "fr" ? t("nav.lang_to_fr") : t("nav.lang_to_nl");
   const logoSrc = `${import.meta.env.BASE_URL}brand/logo-team-patates-patatos.svg`;
 
@@ -253,7 +254,9 @@ function Header() {
               title={nextLangAriaLabel}
               onClick={() => handleLanguageChange(nextLang)}
             >
-              {nextLang.toUpperCase()}
+              <span className="lang-flag" aria-hidden="true">
+                {nextLangFlag}
+              </span>
             </button>
           </div>
         </div>

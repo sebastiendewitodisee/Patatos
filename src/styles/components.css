@@ -126,6 +126,14 @@
   line-height: 1;
 }
 
+.lang-flag {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: inherit;
+  line-height: 1;
+}
+
 .lang-btn {
   border-radius: 0.62rem;
   border: 1px solid var(--line);
