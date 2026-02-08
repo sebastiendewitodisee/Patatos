@@ -10,6 +10,8 @@
   statusOptions,
   phaseOptions,
   typeOptions,
+  onReset,
+  isResetDisabled,
 }) {
   return (
     <section className="filters" aria-label="Filtres du planning">
@@ -70,6 +72,10 @@
           value={search}
           onChange={(event) => onSearchChange(event.target.value)}
         />
+
+        <button type="button" className="filter-chip" onClick={onReset} disabled={isResetDisabled}>
+          Reset
+        </button>
       </div>
     </section>
   );

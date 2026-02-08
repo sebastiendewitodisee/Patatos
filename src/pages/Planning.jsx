@@ -29,6 +29,16 @@ function Planning() {
   const [typeFilter, setTypeFilter] = useState("all");
   const [search, setSearch] = useState("");
 
+  function resetFilters() {
+    setPhaseFilter("all");
+    setTypeFilter("all");
+    setStatusFilter("all");
+    setSearch("");
+  }
+
+  const isResetDisabled =
+    phaseFilter === "all" && typeFilter === "all" && statusFilter === "all" && search.trim().length === 0;
+
   const sortedEvents = useMemo(() => sortEventsByDate(planningEvents), []);
   const progress = useMemo(() => getPlanningProgress(planningEvents), []);
   const upcomingEvent = useMemo(() => getUpcomingEvent(planningEvents), []);
@@ -141,6 +151,8 @@ function Planning() {
           statusOptions={STATUS_OPTIONS}
           phaseOptions={phaseOptions}
           typeOptions={typeOptions}
+          onReset={resetFilters}
+          isResetDisabled={isResetDisabled}
         />
         <Timeline events={filteredEvents} />
       </section>
