@@ -59,6 +59,7 @@ function updateFocusParam(focus) {
 
 function Varietes() {
   const [brokenImages, setBrokenImages] = useState({});
+  const [lightbox, setLightbox] = useState(null);
 
   useEffect(() => {
     const focus = getFocusParamFromUrl();
@@ -76,6 +77,33 @@ function Varietes() {
 
     return () => window.clearTimeout(timeoutId);
   }, []);
+
+  useEffect(() => {
+    function onKeyDown(event) {
+      if (event.key === "Escape") {
+        setLightbox(null);
+      }
+    }
+
+    if (lightbox) {
+      window.addEventListener("keydown", onKeyDown);
+    }
+
+    return () => window.removeEventListener("keydown", onKeyDown);
+  }, [lightbox]);
+
+  useEffect(() => {
+    if (!lightbox) {
+      return undefined;
+    }
+
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+
+    return () => {
+      document.body.style.overflow = previousOverflow;
+    };
+  }, [lightbox]);
 
   const scrollToAnchor = (event, targetId, focus) => {
     event.preventDefault();
@@ -154,6 +182,7 @@ function Varietes() {
             const targetId = `variete-${slug}`;
             const rawImage = item.image?.trim();
             const imgSrc = rawImage ? `${import.meta.env.BASE_URL}${rawImage}` : "";
+            const imageAlt = `Pomme de terre ${item.name}`;
             const showPlaceholder = !imgSrc || brokenImages[item.name];
 
             return (
@@ -165,15 +194,22 @@ function Varietes() {
                         🥔
                       </span>
                     ) : (
-                      <img
-                        src={imgSrc}
-                        alt={`Pomme de terre ${item.name}`}
-                        className="variety-thumb"
-                        onError={(event) => {
-                          event.currentTarget.style.display = "none";
-                          setBrokenImages((prev) => ({ ...prev, [item.name]: true }));
-                        }}
-                      />
+                      <button
+                        type="button"
+                        className="image-button"
+                        aria-label={`Agrandir l'image de ${item.name}`}
+                        onClick={() => setLightbox({ src: imgSrc, alt: imageAlt, title: item.name })}
+                      >
+                        <img
+                          src={imgSrc}
+                          alt={imageAlt}
+                          className="variety-thumb"
+                          onError={(event) => {
+                            event.currentTarget.style.display = "none";
+                            setBrokenImages((prev) => ({ ...prev, [item.name]: true }));
+                          }}
+                        />
+                      </button>
                     )}
                     <div>
                       <h3>{item.name}</h3>
@@ -227,6 +263,33 @@ function Varietes() {
           </ul>
         </Card>
       </section>
+
+      {lightbox ? (
+        <div
+          className="lightbox-overlay"
+          role="dialog"
+          aria-modal="true"
+          aria-label={`Image ${lightbox.title}`}
+          onMouseDown={(event) => {
+            if (event.target === event.currentTarget) {
+              setLightbox(null);
+            }
+          }}
+        >
+          <div className="lightbox-content">
+            <button
+              type="button"
+              className="lightbox-close"
+              onClick={() => setLightbox(null)}
+              aria-label="Fermer"
+            >
+              ✕
+            </button>
+            <img className="lightbox-image" src={lightbox.src} alt={lightbox.alt} />
+            <p className="lightbox-caption">{lightbox.title}</p>
+          </div>
+        </div>
+      ) : null}
     </div>
   );
 }
