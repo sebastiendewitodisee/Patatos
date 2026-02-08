@@ -7,31 +7,28 @@ function Varietes() {
       <section className="section section-tight">
         <h1>Variétés 🥔</h1>
         <p className="section-intro">
-          On garde ici une vue claire de la liste. Les infos non vérifiées restent marquées "à confirmer".
+          Liste Patatos 2026: on garde le cap, mais on valide les infos techniques uniquement avec des sources vérifiées.
         </p>
       </section>
 
       <section className="section">
         <div className="grid two-columns">
           <Card title="Précoces">
-            <p>
-              Les variétés précoces servent en général à récolter plus tôt pour une conso rapide.
-            </p>
+            <p>En général, elles se récoltent plus tôt pour une conso rapide.</p>
           </Card>
           <Card title="Conservation">
-            <p>
-              Les variétés de conservation sont plutôt prévues pour une récolte plus tardive et un stockage plus long.
-            </p>
+            <p>En général, elles restent plus longtemps en terre et se stockent mieux.</p>
           </Card>
         </div>
       </section>
 
       <section className="section">
-        <Card>
-          <p>
-            Important: on n'invente pas les détails. Tant que le type ou la période n'est pas vérifié, on laisse
-            "à confirmer".
-          </p>
+        <Card title="Comment on confirme les infos ?">
+          <ul className="tips-list">
+            <li>On note la source pour chaque variété (fiche fournisseur, magasin, ou à vérifier).</li>
+            <li>On complète le type et l'usage seulement quand la source est fiable.</li>
+            <li>On croise avec l'observation terrain pendant la saison (vigueur, maturité, tenue en stockage).</li>
+          </ul>
         </Card>
       </section>
 
@@ -44,6 +41,8 @@ function Varietes() {
                 <th>Variété</th>
                 <th>Type</th>
                 <th>Récolte</th>
+                <th>Source</th>
+                <th>Usage (confirmé)</th>
                 <th>Notes</th>
               </tr>
             </thead>
@@ -53,6 +52,8 @@ function Varietes() {
                   <td>{item.name}</td>
                   <td>{item.type}</td>
                   <td>{item.harvest}</td>
+                  <td>{item.source}</td>
+                  <td>{item.usage}</td>
                   <td>{item.notes}</td>
                 </tr>
               ))}

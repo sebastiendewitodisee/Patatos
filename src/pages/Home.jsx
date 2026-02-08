@@ -5,6 +5,7 @@ import { planningEvents, STATUS_META } from "../data/planning";
 import {
   formatDateFr,
   getEventScheduleLabel,
+  getIndicativeValidationMessage,
   getLatestUpdates,
   getUpcomingEvent,
   isEventIndicative,
@@ -22,7 +23,7 @@ function Home() {
           Opération Récolte <span aria-hidden="true">🥔</span>
         </h1>
         <p className="hero-copy">
-          Projet entre potes, cadré sans prise de tête: on suit les étapes, on ajuste ensemble et on avance proprement.
+          Base camp Patatos: on garde l'ambiance entre potes, mais avec un planning clair pour éviter les oublis.
         </p>
 
         <div className="cta-row">
@@ -41,11 +42,9 @@ function Home() {
       <section className="section">
         <h2>Le concept</h2>
         <div className="grid three-columns">
-          <Card title="Simple">Un seul planning partagé, mis à jour au fil des sessions.</Card>
-          <Card title="Fun">Ambiance cool, entraide et petites patates mascottes 🌱</Card>
-          <Card title="Efficace">
-            On priorise l&apos;utile: qui fait quoi, à peu près quand, et ce qu&apos;il reste à confirmer.
-          </Card>
+          <Card title="Simple">Un seul planning pour toute la team, mis à jour au même endroit.</Card>
+          <Card title="Fun">On avance sérieusement, sans se prendre trop au sérieux 🌱</Card>
+          <Card title="Efficace">On priorise les tâches utiles et on précise ce qui reste à confirmer.</Card>
         </div>
       </section>
 
@@ -57,7 +56,7 @@ function Home() {
 
             return (
               <Card key={item.id} title={item.title}>
-                <p className="muted-text">Mis à jour le {formatDateFr(item.updatedAt)}</p>
+                <p className="muted-text">Mise à jour: {formatDateFr(item.updatedAt)}</p>
                 <Badge tone={status.tone}>{status.label}</Badge>
               </Card>
             );
@@ -71,9 +70,9 @@ function Home() {
           {upcomingEvent ? (
             <>
               <p className="next-event-title">{upcomingEvent.title}</p>
-              <p className="muted-text">{getEventScheduleLabel(upcomingEvent)}</p>
+              <p className="muted-text">Période: {getEventScheduleLabel(upcomingEvent)}</p>
               {isEventIndicative(upcomingEvent) ? (
-                <p className="muted-text">Repère indicatif: on valide sur place selon la météo et les plants.</p>
+                <p className="muted-text">{getIndicativeValidationMessage(upcomingEvent)}</p>
               ) : null}
               <p>{upcomingEvent.description}</p>
             </>

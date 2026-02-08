@@ -1,6 +1,6 @@
 ﻿import Badge from "./Badge";
 import { STATUS_META, TYPE_META } from "../data/planning";
-import { getEventScheduleLabel, isEventIndicative } from "../utils/planning";
+import { getEventScheduleLabel, getIndicativeValidationMessage, isEventIndicative } from "../utils/planning";
 
 function Timeline({ events }) {
   if (!events.length) {
@@ -19,7 +19,7 @@ function Timeline({ events }) {
 
         return (
           <li key={event.id} className="timeline-item">
-            <span className="timeline-date">{getEventScheduleLabel(event)}</span>
+            <span className="timeline-date">Période: {getEventScheduleLabel(event)}</span>
             <article className="timeline-card">
               <div className="timeline-head">
                 <h3>{event.title}</h3>
@@ -32,7 +32,7 @@ function Timeline({ events }) {
               <p>{event.description}</p>
 
               {isEventIndicative(event) ? (
-                <p className="timeline-meta">Repère indicatif: on ajuste selon la météo et l'état des plants.</p>
+                <p className="timeline-meta">{getIndicativeValidationMessage(event)}</p>
               ) : null}
 
               {event.responsibles?.length ? (

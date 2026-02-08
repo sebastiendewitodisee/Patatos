@@ -15,6 +15,7 @@ import {
   formatDateFr,
   getChecklistByPhase,
   getEventScheduleLabel,
+  getIndicativeValidationMessage,
   getLastUpdatedEvent,
   getPlanningProgress,
   getUpcomingEvent,
@@ -52,7 +53,7 @@ function Planning() {
       const matchesType = typeFilter === "all" || event.type === typeFilter;
       const matchesSearch =
         loweredSearch.length === 0 ||
-        [event.title, event.description, event.responsibles?.join(" "), event.period]
+        [event.title, event.description, event.responsibles?.join(" "), event.period, event.validation]
           .filter(Boolean)
           .join(" ")
           .toLowerCase()
@@ -74,7 +75,10 @@ function Planning() {
             {upcomingEvent ? (
               <>
                 <p className="summary-title">{upcomingEvent.title}</p>
-                <p className="muted-text">{getEventScheduleLabel(upcomingEvent)}</p>
+                <p className="muted-text">Période: {getEventScheduleLabel(upcomingEvent)}</p>
+                {isEventIndicative(upcomingEvent) ? (
+                  <p className="muted-text">{getIndicativeValidationMessage(upcomingEvent)}</p>
+                ) : null}
               </>
             ) : (
               <p>Aucun événement à venir.</p>
@@ -107,7 +111,7 @@ function Planning() {
       <section className="section">
         <h2>Timeline des événements</h2>
         <p className="muted-text">
-          Format saison: les étapes sont affichées par période (ex: Mars–Avril), pas par date exacte.
+          Chaque carte affiche une période saisonnière. Les tâches indicatives incluent une règle de validation.
         </p>
         <Filters
           statusFilter={statusFilter}
@@ -138,7 +142,10 @@ function Planning() {
                         <div>
                           <p>{task.title}</p>
                           <Badge tone={status.tone}>{status.label}</Badge>
-                          {isEventIndicative(task) ? <p className="muted-text">{task.period ?? "Indicatif"}</p> : null}
+                          <p className="muted-text">Période: {task.period ?? "À confirmer"}</p>
+                          {isEventIndicative(task) ? (
+                            <p className="muted-text">{getIndicativeValidationMessage(task)}</p>
+                          ) : null}
                         </div>
                       </li>
                     );
@@ -159,6 +166,7 @@ function Planning() {
             Modifie simplement <code>src/data/planning.js</code>. Un objet = un événement (ordre, période, statut,
             type, phase, description).
           </p>
+          <p className="muted-text">Mini règle: si une tâche est indicative, ajoute toujours un champ `validation`.</p>
           <pre className="code-block">{`{
   id: "nouvelle-tache",
   order: 4,
@@ -168,6 +176,7 @@ function Planning() {
   status: "todo",
   phase: "Suivi",
   isIndicative: true,
+  validation: "Validation: on confirme après inspection terrain.",
   description: "Décrire ce qu'on fait"
 }`}</pre>
         </Card>

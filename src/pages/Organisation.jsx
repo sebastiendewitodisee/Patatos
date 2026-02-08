@@ -15,18 +15,20 @@ function Organisation() {
       <section className="section section-tight">
         <h1>Organisation 🌱</h1>
         <p className="section-intro">
-          Objectif: rester souples entre potes, mais assez carrés pour que le planning avance vraiment.
+          Version Patatos: souples sur les horaires, carrés sur le suivi. L'idée, c'est que ça avance sans stress.
         </p>
       </section>
 
       <section className="section">
-        <Card title="Liste des tâches">
+        <Card title="Répartition des tâches">
           <ul className="task-list">
             {tasks.map((task) => (
               <li key={task}>{task}</li>
             ))}
           </ul>
-          <p className="muted-text">On se répartit les rôles selon les dispos, puis on met à jour le planning central.</p>
+          <p className="muted-text">
+            Chacun prend une part selon ses dispos, puis on met à jour le planning central pour garder une vue propre.
+          </p>
         </Card>
       </section>
 

@@ -49,6 +49,14 @@ export function isEventIndicative(event) {
   return Boolean(event.isIndicative || hasIndicativeKeyword(event.period) || hasIndicativeKeyword(event.title));
 }
 
+export function getIndicativeValidationMessage(event) {
+  if (!isEventIndicative(event)) {
+    return "";
+  }
+
+  return event.validation ?? "Validation: on confirme après inspection terrain et météo.";
+}
+
 export function sortEventsByDate(events, order = "asc") {
   const sorted = [...events].sort((a, b) => {
     const aOrder = getEventOrder(a);
