@@ -26,6 +26,7 @@ function Timeline({ events }) {
                 <div className="timeline-badges">
                   <Badge tone={status.tone}>{status.label}</Badge>
                   <Badge tone={type.tone}>{type.label}</Badge>
+                  {isEventIndicative(event) ? <Badge tone="neutral">Indicatif</Badge> : null}
                 </div>
               </div>
 

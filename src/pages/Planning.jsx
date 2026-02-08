@@ -70,6 +70,15 @@ function Planning() {
         <p className="section-intro">Référence commune de la team pour la saison en cours.</p>
         <p className="muted-text">{PLANNING_SEASON}</p>
 
+        <Card title="Règles Patatos">
+          <ul className="tips-list">
+            <li>Le planning = la référence.</li>
+            <li>Après chaque session: on met à jour le statut.</li>
+            <li>Indicatif = on valide sur place (météo/sol/feuillage).</li>
+            <li>Une tâche = un responsable principal (si possible).</li>
+          </ul>
+        </Card>
+
         <div className="grid three-columns summary-grid">
           <Card title="Prochaine étape">
             {upcomingEvent ? (
@@ -141,7 +150,10 @@ function Planning() {
                         <span className={`checkbox ${task.status === "done" ? "is-checked" : ""}`} aria-hidden="true" />
                         <div>
                           <p>{task.title}</p>
-                          <Badge tone={status.tone}>{status.label}</Badge>
+                          <div className="timeline-badges">
+                            <Badge tone={status.tone}>{status.label}</Badge>
+                            {isEventIndicative(task) ? <Badge tone="neutral">Indicatif</Badge> : null}
+                          </div>
                           <p className="muted-text">Période: {task.period ?? "À confirmer"}</p>
                           {isEventIndicative(task) ? (
                             <p className="muted-text">{getIndicativeValidationMessage(task)}</p>
