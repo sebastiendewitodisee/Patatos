@@ -370,6 +370,16 @@
   font-size: 0.94rem;
 }
 
+.timeline-callout {
+  margin: 0;
+  padding: 0.7rem 0.8rem;
+  border-left: 3px solid rgba(87, 223, 155, 0.55);
+  border-radius: 0.6rem;
+  background: rgba(87, 223, 155, 0.08);
+  color: var(--text);
+  white-space: pre-line;
+}
+
 .checklist {
   list-style: none;
   padding: 0;
