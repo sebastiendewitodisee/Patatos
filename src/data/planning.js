@@ -30,12 +30,12 @@ export const planningEvents = [
     order: 1,
     period: "Début février 2026",
     updatedAt: "2026-02-08",
-    title: "Achat des plants (fait)",
+    title: "Achat des plants",
     type: "preparation",
     status: "done",
     phase: "Préparation",
     description: "Achat effectué par Sébastien: 27 sacs de 1,5 kg.",
-    responsibles: ["Sébastien"],
+    responsibles: ["Sébastien \"le vrai\"", "À définir"],
   },
   {
     id: "remboursement-achat-plants",
@@ -60,7 +60,7 @@ export const planningEvents = [
     phase: "Préparation",
     description:
       "Ouvrir les sacs et trier: retirer tubercules mous/moisis/abîmés. Mettre en cagettes ajourées (1–2 couches), lumière indirecte, endroit frais (~10–15°C). Contrôle 1×/semaine, objectif: germes courts et solides (pas longs/blancs).",
-    responsibles: ["Sébastien", "Melvin"],
+    responsibles: ["Sébastien \"le vrai\"", "À définir"],
   },
   {
     id: "passage-fermier-tracteur",
@@ -74,7 +74,7 @@ export const planningEvents = [
     isIndicative: true,
     validation: "Validation: on confirme après météo locale et sol non détrempé + dispo fermier.",
     description: "Préparation mécanique du terrain (tracteur) pour rendre la parcelle prête à travailler.",
-    responsibles: ["Denis", "Josh"],
+    responsibles: ["Sébastien \"le vrai\"", "À définir"],
   },
   {
     id: "preparation-terrain-team-avant-plantation",
@@ -88,7 +88,7 @@ export const planningEvents = [
     isIndicative: true,
     validation: "Validation: sol ressuyé (pas gelé, pas détrempé) + météo OK.",
     description: "Nettoyage, repérage des rangs, piquets/cordeau, préparation fine avant mise en terre.",
-    responsibles: ["Toute la team"],
+    responsibles: ["Sébastien \"le vrai\"", "À définir"],
   },
   {
     id: "brief-meteo-check-terrain",
@@ -102,7 +102,7 @@ export const planningEvents = [
     isIndicative: true,
     validation: "Validation: on confirme après relevé météo local et contrôle de l'humidité du sol.",
     description: "Point rapide avant session pour décider si on maintient, décale ou ajuste les tâches.",
-    responsibles: ["Denis", "Josh"],
+    responsibles: ["Sébastien \"le vrai\"", "À définir"],
   },
   {
     id: "plantation-session-1-lancement",
@@ -158,7 +158,7 @@ export const planningEvents = [
     isIndicative: true,
     validation: "Validation: on confirme après vérification de la pluie de la semaine et de l'état du sol.",
     description: "Passage court pour compléter l'arrosage uniquement si la parcelle manque d'eau.",
-    responsibles: ["Sébastien", "Melvin"],
+    responsibles: ["Sébastien \"le vrai\"", "À définir"],
   },
   {
     id: "buttage-1",
@@ -172,7 +172,7 @@ export const planningEvents = [
     isIndicative: true,
     validation: "Validation: on confirme l'intervention après observation de la hauteur des plants.",
     description: "Ramener la terre au pied des plants pour protéger les tubercules et soutenir la pousse.",
-    responsibles: ["Sébastien", "Jayden"],
+    responsibles: ["Sébastien \"le vrai\"", "À définir"],
   },
   {
     id: "tour-check-mildiou",
@@ -186,7 +186,7 @@ export const planningEvents = [
     isIndicative: true,
     validation: "Validation: on confirme après inspection du feuillage et alerte météo humidité/pluie.",
     description: "Tour ciblé pour repérer tôt les feuilles suspectes et décider des actions de suivi.",
-    responsibles: ["Emma", "Sébastien \"le vrai\""],
+    responsibles: ["Sébastien \"le vrai\"", "À définir"],
   },
   {
     id: "controle-maladies-arrosage",
@@ -200,7 +200,7 @@ export const planningEvents = [
     isIndicative: true,
     validation: "Validation: on ajuste après inspection du feuillage et point météo de la semaine.",
     description: "Surveiller le feuillage, ajuster l'arrosage et signaler rapidement les signes suspects.",
-    responsibles: ["Emma", "Matteo", "Eva"],
+    responsibles: ["Sébastien \"le vrai\"", "À définir"],
   },
   {
     id: "buttage-2-si-necessaire",
@@ -214,7 +214,7 @@ export const planningEvents = [
     isIndicative: true,
     validation: "Validation: on confirme uniquement si les tubercules risquent d'être exposés en surface.",
     description: "Deuxième passage de buttage si les rangs en ont besoin selon la pousse réelle.",
-    responsibles: ["Denis", "Sébastien"],
+    responsibles: ["Sébastien \"le vrai\"", "À définir"],
   },
   {
     id: "recolte-precoces-indicatif",
@@ -228,7 +228,7 @@ export const planningEvents = [
     isIndicative: true,
     validation: "Validation: on confirme après test sur quelques pieds et tenue de la peau.",
     description: "Premiers tests de récolte sur quelques pieds pour valider la maturité.",
-    responsibles: ["Denis", "Melvin", "Emma"],
+    responsibles: ["Sébastien \"le vrai\"", "À définir"],
   },
   {
     id: "tri-mise-en-cagettes",
@@ -242,7 +242,7 @@ export const planningEvents = [
     isIndicative: true,
     validation: "Validation: on confirme après contrôle visuel des tubercules (sains, abîmés, usage rapide).",
     description: "Trier la récolte et mettre en cagettes aérées pour préparer un stockage propre.",
-    responsibles: ["Melvin", "Josh", "Eva"],
+    responsibles: ["Sébastien \"le vrai\"", "À définir"],
   },
   {
     id: "recolte-conservation-indicatif",
@@ -256,7 +256,7 @@ export const planningEvents = [
     isIndicative: true,
     validation: "Validation: on confirme après inspection du feuillage sec et vérification des conditions météo.",
     description: "Récolte principale puis tri et stockage en zone fraîche, sèche et sombre.",
-    responsibles: ["Sébastien \"le vrai\"", "Sébastien", "Josh"],
+    responsibles: ["Sébastien \"le vrai\"", "À définir"],
   },
   {
     id: "point-stockage-controle-1",
@@ -270,6 +270,6 @@ export const planningEvents = [
     isIndicative: true,
     validation: "Validation: on confirme après contrôle humidité, température et état des cagettes.",
     description: "Premier contrôle post-stockage pour retirer les lots fragiles et vérifier les conditions.",
-    responsibles: ["Denis", "Sébastien \"le vrai\"", "Melvin"],
+    responsibles: ["Sébastien \"le vrai\"", "À définir"],
   },
 ];
