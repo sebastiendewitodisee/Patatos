@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 96" role="img" aria-label="Team Patates Patatos">
+  <text
+    x="8"
+    y="66"
+    font-family="'Trebuchet MS', 'Segoe UI', Arial, sans-serif"
+    font-size="52"
+    font-weight="700"
+    letter-spacing="0.4"
+    fill="#f8fbff"
+    stroke="#102033"
+    stroke-opacity="0.68"
+    stroke-width="1.6"
+    paint-order="stroke fill"
+  >
+    Team Patates Patatos
+  </text>
+</svg>

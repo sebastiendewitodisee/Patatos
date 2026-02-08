@@ -26,7 +26,19 @@
   flex: 1 1 auto;
 }
 
-.brand-label {
+.brand-wordmark,
+.brand-wordmark-fallback {
+  flex: 0 0 auto;
+}
+
+.brand-wordmark {
+  height: 28px;
+  width: auto;
+  max-width: min(100%, 20rem);
+  display: block;
+}
+
+.brand-wordmark-fallback {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -1344,7 +1356,12 @@ th {
     font-size: 1.05rem;
   }
 
-  .brand-label {
+  .brand-wordmark {
+    height: 24px;
+    max-width: min(100%, 15rem);
+  }
+
+  .brand-wordmark-fallback {
     max-width: 7rem;
     font-size: 0.9rem;
   }
@@ -1482,10 +1499,6 @@ th {
 }
 
 @media (max-width: 520px) {
-  .brand-label {
-    max-width: 4.4rem;
-  }
-
   .lightbox-nav {
     width: 40px;
     height: 40px;
@@ -1506,7 +1519,8 @@ th {
     gap: 0.35rem;
   }
 
-  .brand-label {
+  .brand-wordmark,
+  .brand-wordmark-fallback {
     display: none;
   }
 }

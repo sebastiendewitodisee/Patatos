@@ -52,6 +52,7 @@ function Header() {
   const [theme, setTheme] = useState(() => getStoredTheme() || getSystemTheme());
   const [hasThemePreference, setHasThemePreference] = useState(() => Boolean(getStoredTheme()));
   const [logoFailed, setLogoFailed] = useState(false);
+  const [wordmarkFailed, setWordmarkFailed] = useState(false);
   const isOpen = openAtPath === pathname;
   const currentLang = i18n.resolvedLanguage || i18n.language || DEFAULT_LANG;
   const currentLangCode = currentLang.toLowerCase().startsWith("nl") ? "nl" : "fr";
@@ -59,6 +60,7 @@ function Header() {
   const nextLangFlag = nextLang === "fr" ? "\u{1F1EB}\u{1F1F7}" : "\u{1F1F3}\u{1F1F1}";
   const nextLangAriaLabel = nextLang === "fr" ? t("nav.lang_to_fr") : t("nav.lang_to_nl");
   const logoSrc = `${import.meta.env.BASE_URL}brand/logo-team-patates-patatos.svg`;
+  const wordmarkSrc = `${import.meta.env.BASE_URL}brand/wordmark-team-patates-patatos.svg`;
 
   const isDarkTheme = theme === "dark";
   const nextTheme = isDarkTheme ? "light" : "dark";
@@ -214,7 +216,18 @@ function Header() {
               />
             )}
           </span>
-          <span className="brand-label">{t("nav.brand")}</span>
+          {wordmarkFailed ? (
+            <span className="brand-wordmark-fallback">{t("nav.brand")}</span>
+          ) : (
+            <img
+              className="brand-wordmark"
+              src={wordmarkSrc}
+              alt={t("nav.brand_wordmark_alt")}
+              loading="eager"
+              decoding="async"
+              onError={() => setWordmarkFailed(true)}
+            />
+          )}
         </Link>
 
         <nav ref={navRef} id="main-navigation" className={`site-nav${isOpen ? " is-open" : ""}`}>
