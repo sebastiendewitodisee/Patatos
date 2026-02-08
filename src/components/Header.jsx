@@ -62,13 +62,10 @@ function Header() {
     [t]
   );
 
-  const themeItems = useMemo(
-    () => [
-      { value: "dark", icon: "\u{1F319}", ariaLabel: t("nav.theme_dark") },
-      { value: "light", icon: "\u2600\uFE0F", ariaLabel: t("nav.theme_light") },
-    ],
-    [t]
-  );
+  const isDarkTheme = theme === "dark";
+  const nextTheme = isDarkTheme ? "light" : "dark";
+  const nextThemeIcon = isDarkTheme ? "\u2600\uFE0F" : "\u{1F319}";
+  const nextThemeAriaLabel = isDarkTheme ? t("nav.theme_to_light") : t("nav.theme_to_dark");
 
   useEffect(() => {
     if (!isOpen) {
@@ -224,21 +221,18 @@ function Header() {
 
         <div className="header-controls">
           <div className="lang-switch theme-switch header-theme-switch" role="group" aria-label={t("nav.theme")}>
-            {themeItems.map((themeItem) => (
-              <button
-                key={themeItem.value}
-                type="button"
-                className={`lang-btn${theme === themeItem.value ? " is-active" : ""}`}
-                aria-label={themeItem.ariaLabel}
-                aria-pressed={theme === themeItem.value}
-                title={themeItem.ariaLabel}
-                onClick={() => handleThemeChange(themeItem.value)}
-              >
-                <span className="theme-icon" aria-hidden="true">
-                  {themeItem.icon}
-                </span>
-              </button>
-            ))}
+            <button
+              type="button"
+              className="lang-btn theme-toggle-btn"
+              aria-label={nextThemeAriaLabel}
+              aria-pressed={isDarkTheme}
+              title={nextThemeAriaLabel}
+              onClick={() => handleThemeChange(nextTheme)}
+            >
+              <span className="theme-icon" aria-hidden="true">
+                {nextThemeIcon}
+              </span>
+            </button>
           </div>
 
           <div className="lang-switch header-language-switch" role="group" aria-label={t("nav.language")}>

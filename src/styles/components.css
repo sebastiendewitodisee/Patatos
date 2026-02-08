@@ -125,6 +125,11 @@
   justify-content: center;
 }
 
+.theme-toggle-btn {
+  min-width: 2.15rem;
+  padding: 0.3rem 0.42rem;
+}
+
 .burger-btn {
   display: none;
   width: 2.45rem;

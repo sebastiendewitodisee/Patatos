@@ -17,6 +17,8 @@
     "lang_nl": "NL",
     "theme_light": "Activer le mode clair",
     "theme_dark": "Activer le mode sombre",
+    "theme_to_light": "Activer le mode clair",
+    "theme_to_dark": "Activer le mode sombre",
     "toggle_theme": "Basculer le thème",
     "switch_to_light": "Passer en mode clair",
     "switch_to_dark": "Passer en mode sombre",

@@ -17,6 +17,8 @@
     "lang_nl": "NL",
     "theme_light": "Lichte modus inschakelen",
     "theme_dark": "Donkere modus inschakelen",
+    "theme_to_light": "Lichte modus inschakelen",
+    "theme_to_dark": "Donkere modus inschakelen",
     "toggle_theme": "Thema wisselen",
     "switch_to_light": "Schakel naar lichte modus",
     "switch_to_dark": "Schakel naar donkere modus",
