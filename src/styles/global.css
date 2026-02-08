@@ -184,18 +184,26 @@ textarea {
 /* Dropdown menu (options) — lisible en thème sombre */
 .select option,
 .select optgroup {
-  background-color: #111;
-  color: #f2f2f2;
+  background-color: rgba(20, 30, 46, 0.98);
+  color: var(--text);
 }
 
-/* Option sélectionnée (support variable selon navigateur/OS) */
+/* Option sélectionnée/active — sobre et lisible */
 .select option:checked {
-  background-color: rgba(87, 223, 155, 0.25);
-  color: #fff;
+  background-color: rgba(101, 179, 255, 0.24);
+  color: var(--text);
+}
+
+.select option:hover,
+.select option:focus {
+  background-color: rgba(255, 255, 255, 0.12);
+  color: var(--text);
 }
 
 /* Aide Chrome/Windows pour un menu natif cohérent en sombre */
 select.select {
+  background-color: rgba(255, 255, 255, 0.08);
+  color: var(--text);
   color-scheme: dark;
 }
 

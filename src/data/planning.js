@@ -58,7 +58,7 @@ export const planningEvents = [
     updatedAt: "2026-02-08",
     title: "Tri + germination des plants (27 sacs)",
     type: "preparation",
-    status: "doing",
+    status: "todo",
     phase: "Préparation",
     isIndicative: true,
     validation: "Validation: on confirme après contrôle des cagettes, de la lumière et de la tenue des germes.",
