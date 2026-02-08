@@ -1,7 +1,10 @@
-﻿import { useState } from "react";
+﻿import { useEffect, useState } from "react";
 import Badge from "../components/Badge";
 import Card from "../components/Card";
 import { varieties } from "../data/varieties";
+
+const RECAP_ID = "recap-varietes";
+const VARIETE_PREFIX = "variete-";
 
 function toSlug(value) {
   return value
@@ -12,8 +15,38 @@ function toSlug(value) {
     .replace(/(^-|-$)/g, "");
 }
 
+function getAnchorIdFromHash(hashValue) {
+  const normalizedHash = hashValue.replace(/^#/, "");
+  if (!normalizedHash) {
+    return "";
+  }
+
+  const segments = normalizedHash.split("#").reverse();
+  return segments.find((segment) => segment.startsWith(VARIETE_PREFIX) || segment === RECAP_ID) ?? "";
+}
+
+function updateVarietesHash(anchorId) {
+  window.location.hash = `/varietes#${anchorId}`;
+}
+
 function Varietes() {
   const [brokenImages, setBrokenImages] = useState({});
+
+  useEffect(() => {
+    const anchorId = getAnchorIdFromHash(window.location.hash);
+    if (!anchorId) {
+      return undefined;
+    }
+
+    const timeoutId = window.setTimeout(() => {
+      const target = document.getElementById(anchorId);
+      if (target) {
+        target.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+    }, 50);
+
+    return () => window.clearTimeout(timeoutId);
+  }, []);
 
   const scrollToAnchor = (event, targetId) => {
     event.preventDefault();
@@ -24,7 +57,7 @@ function Varietes() {
     }
 
     target.scrollIntoView({ behavior: "smooth", block: "start" });
-    window.history.replaceState(null, "", `#${targetId}`);
+    updateVarietesHash(targetId);
   };
 
   return (
@@ -42,7 +75,7 @@ function Varietes() {
         </Card>
       </section>
 
-      <section className="section anchor-offset" id="recap-varietes">
+      <section className="section anchor-offset" id={RECAP_ID}>
         <h2>Récapitulatif</h2>
         <div className="table-wrap">
           <table>
@@ -125,7 +158,7 @@ function Varietes() {
                     </p>
                   </div>
 
-                  <a href="#recap-varietes" onClick={(event) => scrollToAnchor(event, "recap-varietes")}>
+                  <a href={`#${RECAP_ID}`} onClick={(event) => scrollToAnchor(event, RECAP_ID)}>
                     Retour au récap ↑
                   </a>
                 </Card>
