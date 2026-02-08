@@ -212,6 +212,11 @@
   border-color: rgba(183, 148, 255, 0.42);
 }
 
+.badge-late {
+  background: rgba(255, 80, 80, 0.18);
+  border-color: rgba(255, 80, 80, 0.42);
+}
+
 .filters {
   margin-block: 0.95rem 1.1rem;
   display: grid;
@@ -349,6 +354,10 @@
   padding: 0.95rem;
   display: grid;
   gap: 0.65rem;
+}
+
+.timeline-card.is-late {
+  border-left: 3px solid rgba(255, 80, 80, 0.6);
 }
 
 .timeline-head {

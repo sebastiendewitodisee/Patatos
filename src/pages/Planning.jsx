@@ -20,6 +20,7 @@ import {
   getLastUpdatedEvent,
   getPlanningProgress,
   getUpcomingEvent,
+  isEventLate,
   isEventIndicative,
   sortEventsByDate,
 } from "../utils/planning";
@@ -244,6 +245,7 @@ function Planning() {
                   {phaseBlock.tasks.map((task) => {
                     const effectiveStatus = getEffectiveStatus(task);
                     const status = STATUS_META[effectiveStatus] ?? STATUS_META.todo;
+                    const isLate = isEventLate(task);
 
                     return (
                       <li key={task.id} className="checklist-item">
@@ -253,6 +255,7 @@ function Planning() {
                           <div className="timeline-badges">
                             <Badge tone={status.tone}>{status.label}</Badge>
                             {isEventIndicative(task) ? <Badge tone="neutral">Indicatif</Badge> : null}
+                            {isLate ? <Badge tone="late">⚠ En retard</Badge> : null}
                           </div>
                           <p className="muted-text">Période: {task.period ?? "À confirmer"}</p>
                           {isEventIndicative(task) ? (

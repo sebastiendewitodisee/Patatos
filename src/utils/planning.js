@@ -1,4 +1,4 @@
-function parsePlanningDate(dateValue) {
+ï»¿function parsePlanningDate(dateValue) {
   if (!dateValue) {
     return null;
   }
@@ -29,7 +29,7 @@ function stripAccents(value) {
 function normalizePeriodLabel(periodValue) {
   return stripAccents(periodValue.toLowerCase())
     .replace(/\([^)]*\)/g, " ")
-    .replace(/[–—]/g, "-")
+    .replace(/[â€“â€”]/g, "-")
     .replace(/\b1er\b/g, "1")
     .replace(/\s+/g, " ")
     .trim();
@@ -92,7 +92,7 @@ function getEventOrder(event) {
 export function formatDateFr(dateValue) {
   const parsed = parsePlanningDate(dateValue);
   if (!parsed) {
-    return "Date à confirmer";
+    return "Date Ã  confirmer";
   }
 
   return parsed.toLocaleDateString("fr-FR", {
@@ -111,7 +111,7 @@ export function getEventScheduleLabel(event) {
     return formatDateFr(event.date);
   }
 
-  return "Période à confirmer";
+  return "PÃ©riode Ã  confirmer";
 }
 
 export function isEventIndicative(event) {
@@ -123,7 +123,7 @@ export function getIndicativeValidationMessage(event) {
     return "";
   }
 
-  return event.validation ?? "Validation: on confirme après inspection terrain et météo.";
+  return event.validation ?? "Validation: on confirme aprÃ¨s inspection terrain et mÃ©tÃ©o.";
 }
 
 export function parsePeriodRange(periodValue) {
@@ -246,6 +246,27 @@ export function getEffectiveStatus(event, referenceDate = new Date()) {
   return reference < periodStart ? "upcoming" : "todo";
 }
 
+export function isEventLate(event, now = new Date()) {
+  if (!event || event.status === "done" || event.status === "doing") {
+    return false;
+  }
+
+  if (getEffectiveStatus(event, now) === "upcoming") {
+    return false;
+  }
+
+  const periodRange = parsePeriodRange(event.period);
+
+  if (!periodRange?.end) {
+    return false;
+  }
+
+  const reference = normalizeReferenceDate(now).getTime();
+  const periodEnd = normalizeReferenceDate(periodRange.end).getTime();
+
+  return reference > periodEnd;
+}
+
 export function sortEventsByDate(events, order = "asc") {
   const sorted = [...events].sort((a, b) => {
     const aOrder = getEventOrder(a);
@@ -303,3 +324,4 @@ export function getChecklistByPhase(events, phaseOrder = []) {
     tasks: sortEventsByDate(events.filter((event) => event.phase === phaseName)),
   }));
 }
+
