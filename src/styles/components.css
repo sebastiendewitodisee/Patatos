@@ -1552,8 +1552,8 @@ th {
   }
 
   .brand-wordmark-wrap {
-    width: clamp(160px, 30vw, 240px);
-    height: 34px;
+    width: clamp(240px, 45vw, 360px);
+    height: 51px;
   }
 
   .brand-wordmark-fallback {
@@ -1738,15 +1738,15 @@ th {
 
   .brand-wordmark-wrap {
     display: block;
-    width: clamp(120px, 42vw, 190px);
-    height: 28px;
+    width: clamp(180px, 63vw, 285px);
+    height: 42px;
   }
 }
 
 @media (max-width: 360px) {
   .brand-wordmark-wrap {
-    width: 110px;
-    height: 26px;
+    width: 165px;
+    height: 39px;
   }
 }
 
