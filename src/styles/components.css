@@ -93,7 +93,7 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  font-size: 1rem;
+  font-size: inherit;
   line-height: 1;
 }
 
@@ -119,6 +119,11 @@
   background: rgba(87, 223, 155, 0.18);
 }
 
+.header-theme-switch .lang-btn,
+.header-language-switch .lang-btn {
+  min-width: 2.2rem;
+}
+
 .header-theme-switch .lang-btn {
   display: inline-flex;
   align-items: center;
@@ -126,8 +131,9 @@
 }
 
 .theme-toggle-btn {
-  min-width: 2.15rem;
-  padding: 0.3rem 0.42rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .burger-btn {
@@ -1264,11 +1270,6 @@ th {
     min-width: 2rem;
     padding: 0.24rem 0.42rem;
     font-size: 0.76rem;
-  }
-
-  .header-theme-switch .lang-btn {
-    min-width: 2.15rem;
-    padding: 0.24rem 0.36rem;
   }
 
   .burger-btn {

@@ -223,7 +223,7 @@ function Header() {
           <div className="lang-switch theme-switch header-theme-switch" role="group" aria-label={t("nav.theme")}>
             <button
               type="button"
-              className="lang-btn theme-toggle-btn"
+              className={`lang-btn theme-toggle-btn${nextTheme === "dark" ? " is-active" : ""}`}
               aria-label={nextThemeAriaLabel}
               aria-pressed={isDarkTheme}
               title={nextThemeAriaLabel}
