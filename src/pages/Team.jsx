@@ -128,26 +128,22 @@ function Team() {
     <div className="container page-block team-page">
       <section className="section section-tight team-hero">
         <div className="team-hero-inner">
-          <div className="team-hero-layout">
-            <div className="team-hero-copy">
-              <span className="team-hero-badge">{t("team.hero.badge")}</span>
-              <h1 className="team-hero-title">{t("team.title")}</h1>
-              <p className="team-hero-sub">{t("team.intro")}</p>
+          <span className="team-hero-badge">{t("team.hero.badge")}</span>
+          <h1 className="team-hero-title">{t("team.title")}</h1>
+          <p className="team-hero-sub">{t("team.intro")}</p>
 
-              <div className="team-chip-row" aria-label={t("team.hero.chips_aria")}>
-                {HERO_CHIP_KEYS.map((chipKey) => (
-                  <span key={chipKey} className="team-hero-chip">
-                    {t(chipKey)}
-                  </span>
-                ))}
-              </div>
-            </div>
-
-            <figure className="group-photo team-group-photo team-hero-photo">
-              <img src={groupPhotoSrc} alt={t("team.group_photo_alt")} loading="lazy" />
-              <figcaption>{t("team.group_photo_caption")}</figcaption>
-            </figure>
+          <div className="team-chip-row" aria-label={t("team.hero.chips_aria")}>
+            {HERO_CHIP_KEYS.map((chipKey) => (
+              <span key={chipKey} className="team-hero-chip">
+                {t(chipKey)}
+              </span>
+            ))}
           </div>
+
+          <figure className="group-photo team-group-photo team-hero-banner">
+            <img src={groupPhotoSrc} alt={t("team.group_photo_alt")} loading="lazy" />
+            <figcaption>{t("team.group_photo_caption")}</figcaption>
+          </figure>
         </div>
       </section>
 
