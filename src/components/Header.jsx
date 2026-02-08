@@ -51,8 +51,10 @@ function Header() {
   const [openAtPath, setOpenAtPath] = useState(null);
   const [theme, setTheme] = useState(() => getStoredTheme() || getSystemTheme());
   const [hasThemePreference, setHasThemePreference] = useState(() => Boolean(getStoredTheme()));
+  const [logoFailed, setLogoFailed] = useState(false);
   const isOpen = openAtPath === pathname;
   const currentLang = i18n.resolvedLanguage || i18n.language || DEFAULT_LANG;
+  const logoSrc = `${import.meta.env.BASE_URL}brand/logo-team-patates-patatos.svg`;
 
   const languageItems = useMemo(
     () => [
@@ -200,8 +202,21 @@ function Header() {
     <header ref={headerRef} className="site-header">
       <div className="container header-inner">
         <Link to="/" className="brand" aria-label={t("nav.go_home")} onClick={() => setOpenAtPath(null)}>
-          <span className="brand-mark" aria-hidden="true">
-            {"\u{1F954}"}
+          <span className="brand-mark">
+            {logoFailed ? (
+              <span className="brand-logo-fallback" aria-hidden="true">
+                {"\u{1F954}"}
+              </span>
+            ) : (
+              <img
+                className="brand-logo"
+                src={logoSrc}
+                alt={t("nav.brand_alt")}
+                loading="eager"
+                decoding="async"
+                onError={() => setLogoFailed(true)}
+              />
+            )}
           </span>
           <span className="brand-label">{t("nav.brand")}</span>
         </Link>

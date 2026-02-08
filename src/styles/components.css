@@ -34,13 +34,35 @@
 }
 
 .brand-mark {
-  width: 2rem;
-  height: 2rem;
-  display: grid;
-  place-items: center;
-  border-radius: 0.6rem;
+  width: 2.25rem;
+  height: 2.25rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+}
+
+.brand-logo {
+  width: auto;
+  height: 36px;
+  display: block;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.24);
+  box-shadow: 0 3px 10px rgba(7, 10, 15, 0.26);
+}
+
+.brand-logo-fallback {
+  width: 2.25rem;
+  height: 2.25rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
   border: 1px solid var(--line);
   background: rgba(255, 255, 255, 0.08);
+  box-shadow: 0 3px 10px rgba(7, 10, 15, 0.26);
+  font-size: 1.18rem;
+  line-height: 1;
 }
 
 .site-nav {
@@ -1248,6 +1270,21 @@ th {
     min-width: 0;
   }
 
+  .brand-mark {
+    width: 2rem;
+    height: 2rem;
+  }
+
+  .brand-logo {
+    height: 32px;
+  }
+
+  .brand-logo-fallback {
+    width: 2rem;
+    height: 2rem;
+    font-size: 1.05rem;
+  }
+
   .brand-label {
     max-width: 7rem;
     font-size: 0.9rem;
@@ -1402,6 +1439,16 @@ th {
 
   .lightbox-nav-next {
     right: 10px;
+  }
+}
+
+@media (max-width: 420px) {
+  .brand {
+    gap: 0.35rem;
+  }
+
+  .brand-label {
+    display: none;
   }
 }
 
