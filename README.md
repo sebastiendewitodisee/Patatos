@@ -11,6 +11,26 @@ npm run dev
 
 App locale (par défaut): `http://127.0.0.1:5173`
 
+## Langue (FR/NL) avec HashRouter
+
+Priorité de résolution de la langue:
+
+1. URL `?lang=`
+2. `localStorage` (`patatos_lang`)
+3. Langue navigateur (`navigator.languages` / `navigator.language`)
+4. Défaut `fr`
+
+Formats d'URL supportés:
+
+- `https://.../Patatos/?lang=nl#/planning`
+- `https://.../Patatos/#/planning?lang=nl`
+
+Quand la langue est changée via le Header, le site met à jour `localStorage` et canonicalise l'URL en écrivant `?lang=` avant le hash, sans modifier le hash de route.
+
+Mini test manuel (Header mobile):
+- Ouvrir le site en largeur `<880px` et vérifier que les contrôles Thème/Langue sont visibles dans la barre.
+- Ouvrir le burger et vérifier que ces contrôles restent visibles + cliquables, et que le dropdown contient uniquement les liens de navigation.
+
 ## Build production
 
 ```bash
@@ -32,19 +52,11 @@ Le build est généré dans `dist/`.
 
 Le planning central est dans `src/data/planning.js`.
 
-Exemple d'entrée:
+Règles d'édition (modèle actuel):
 
-```js
-{
-  id: "plantation-weekend",
-  date: "2026-03-14",
-  title: "Plantation (session weekend)",
-  type: "plantation",
-  status: "a-faire",
-  phase: "Plantation",
-  description: "..."
-}
-```
+1. Ajouter/mettre à jour un événement avec un `id` stable, `order`, `period` (technique FR), `type`, `phaseId`, `status` et les champs utiles (`isIndicative`, `validation`, etc.).
+2. Conserver des `phaseId` stables: `preparation`, `plantation`, `suivi`, `recolte`, `conservation`.
+3. Ajouter les traductions associées dans `src/i18n/locales/fr.json` et `src/i18n/locales/nl.json` sous `planning.events.<id>.*`.
 
 ## Déploiement automatique GitHub Pages (repo `patatos`)
 
