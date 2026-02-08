@@ -50,7 +50,7 @@ Exemple d'entrée:
 
 Le projet est configuré pour un site GitHub Pages de type **project site**:
 
-- URL attendue: `https://<user>.github.io/patatos/`
+- URL attendue: `https://<user>.github.io/Patatos/`
 - Base Vite en production: `/<repo>/` auto-détectée depuis `GITHUB_REPOSITORY` (fallback local: `/patatos/`)
 - Router: `HashRouter` (URLs en `/#/planning`) pour éviter les 404 au refresh sur GitHub Pages
 
@@ -78,4 +78,4 @@ Une fois activé, chaque push sur `main` déclenche un déploiement.
 
 ## URL finale
 
-- `https://sebastiendewitodisee.github.io/patatos/`
+- `https://sebastiendewitodisee.github.io/Patatos/`
