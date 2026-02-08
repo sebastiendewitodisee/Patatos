@@ -33,10 +33,6 @@ function Timeline({ events }) {
         const status = STATUS_META[event.status] ?? STATUS_META.todo;
         const type = TYPE_META[event.type] ?? TYPE_META.preparation;
         const responsiblesDisplay = getResponsiblesDisplay(event.responsibles);
-        const isTriGerminationHelpEvent =
-          event.id === "tri-germination-plants" ||
-          event.id === "tri-germination-plants-27-sacs" ||
-          event.title === "Tri + germination des plants (27 sacs)";
 
         return (
           <li key={event.id} className="timeline-item">
@@ -51,7 +47,7 @@ function Timeline({ events }) {
                 </div>
               </div>
 
-              <p className={isTriGerminationHelpEvent ? "timeline-callout" : undefined}>{event.description}</p>
+              <p className={event.callout ? "timeline-callout" : undefined}>{event.description}</p>
 
               {isEventIndicative(event) ? (
                 <p className="timeline-meta">{getIndicativeValidationMessage(event)}</p>

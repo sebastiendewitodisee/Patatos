@@ -372,11 +372,14 @@
 
 .timeline-callout {
   margin: 0;
-  padding: 0.7rem 0.8rem;
-  border-left: 3px solid rgba(87, 223, 155, 0.55);
-  border-radius: 0.6rem;
-  background: rgba(87, 223, 155, 0.08);
+  padding: 0.72rem 0.86rem;
+  border-left: 3px solid rgba(87, 223, 155, 0.48);
+  border-radius: 0.72rem;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: linear-gradient(145deg, rgba(87, 223, 155, 0.13), rgba(101, 179, 255, 0.07));
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
   color: var(--text);
+  line-height: 1.45;
   white-space: pre-line;
 }
 

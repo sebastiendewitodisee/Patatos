@@ -60,6 +60,7 @@ export const planningEvents = [
     phase: "Préparation",
     isIndicative: true,
     validation: "Validation: on confirme après contrôle des cagettes, de la lumière et de la tenue des germes.",
+    callout: true,
     description:
       "On doit trier + lancer la germination proprement (40,5 kg / calibre 28/35).\n⚡ J’aurais besoin d’un coup de main : ceux qui veulent venir aider sont les bienvenus 🙌",
     responsibles: ["Sébastien \"le vrai\"", "À définir"],
