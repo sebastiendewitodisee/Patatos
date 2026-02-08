@@ -1,4 +1,4 @@
-﻿import { useEffect, useState } from "react";
+﻿import { useCallback, useEffect, useMemo, useState } from "react";
 import { createPortal } from "react-dom";
 import Badge from "../components/Badge";
 import Card from "../components/Card";
@@ -62,6 +62,88 @@ function Varietes() {
   const [brokenImages, setBrokenImages] = useState({});
   const [lightbox, setLightbox] = useState(null);
 
+  const varietyItems = useMemo(
+    () =>
+      varieties.map((item, index) => {
+        const slug = toSlug(item.name);
+        const rawImage = item.image?.trim() ?? "";
+        const imgSrc = rawImage ? `${import.meta.env.BASE_URL}${rawImage}` : "";
+        const hasImage = Boolean(rawImage) && !brokenImages[item.name];
+
+        return {
+          ...item,
+          index,
+          slug,
+          targetId: `variete-${slug}`,
+          imgSrc,
+          hasImage,
+          imageAlt: `Pomme de terre ${item.name}`,
+        };
+      }),
+    [brokenImages]
+  );
+
+  const hasMultipleImages = useMemo(
+    () => varietyItems.filter((item) => item.hasImage).length > 1,
+    [varietyItems]
+  );
+
+  const findNextImageIndex = useCallback(
+    (startIndex, direction) => {
+      const total = varietyItems.length;
+      if (total === 0) {
+        return -1;
+      }
+
+      let cursor = ((startIndex % total) + total) % total;
+      for (let step = 0; step < total; step += 1) {
+        if (varietyItems[cursor]?.hasImage) {
+          return cursor;
+        }
+        cursor = (cursor + direction + total) % total;
+      }
+
+      return -1;
+    },
+    [varietyItems]
+  );
+
+  const openAt = useCallback(
+    (nextIndex, direction = 1) => {
+      const resolvedIndex = findNextImageIndex(nextIndex, direction);
+      if (resolvedIndex === -1) {
+        return;
+      }
+
+      const entry = varietyItems[resolvedIndex];
+      if (!entry?.hasImage) {
+        return;
+      }
+
+      setLightbox({
+        index: resolvedIndex,
+        src: entry.imgSrc,
+        title: entry.name,
+        alt: entry.imageAlt,
+      });
+    },
+    [findNextImageIndex, varietyItems]
+  );
+
+  const openPrev = useCallback(() => {
+    if (!lightbox) {
+      return;
+    }
+    openAt(lightbox.index - 1, -1);
+  }, [lightbox, openAt]);
+
+  const openNext = useCallback(() => {
+    if (!lightbox) {
+      return;
+    }
+    openAt(lightbox.index + 1, 1);
+  }, [lightbox, openAt]);
+
   useEffect(() => {
     const focus = getFocusParamFromUrl();
     const targetId = getTargetIdFromFocus(focus);
@@ -80,18 +162,30 @@ function Varietes() {
   }, []);
 
   useEffect(() => {
+    if (!lightbox) {
+      return undefined;
+    }
+
     function onKeyDown(event) {
       if (event.key === "Escape") {
         setLightbox(null);
+        return;
+      }
+
+      if (event.key === "ArrowLeft") {
+        event.preventDefault();
+        openPrev();
+      }
+
+      if (event.key === "ArrowRight") {
+        event.preventDefault();
+        openNext();
       }
     }
 
-    if (lightbox) {
-      window.addEventListener("keydown", onKeyDown);
-    }
-
+    window.addEventListener("keydown", onKeyDown);
     return () => window.removeEventListener("keydown", onKeyDown);
-  }, [lightbox]);
+  }, [lightbox, openPrev, openNext]);
 
   useEffect(() => {
     if (!lightbox) {
@@ -118,10 +212,10 @@ function Varietes() {
     updateFocusParam(focus);
   };
 
-  const openLightbox = (event, imageSource, imageAlt, imageTitle) => {
+  const openLightbox = (event, index) => {
     event.preventDefault();
     event.stopPropagation();
-    setLightbox({ src: imageSource, alt: imageAlt, title: imageTitle });
+    openAt(index, 1);
   };
 
   const lightboxModal = lightbox ? (
@@ -140,7 +234,63 @@ function Varietes() {
         <button type="button" className="lightbox-close" onClick={() => setLightbox(null)} aria-label="Fermer">
           ✕
         </button>
-        <img className="lightbox-image" src={lightbox.src} alt={lightbox.alt} />
+
+        <div
+          className="lightbox-image-wrap"
+          onClick={(event) => {
+            if (!hasMultipleImages) {
+              return;
+            }
+
+            const rect = event.currentTarget.getBoundingClientRect();
+            const isLeftSide = event.clientX < rect.left + rect.width / 2;
+            if (isLeftSide) {
+              openPrev();
+            } else {
+              openNext();
+            }
+          }}
+        >
+          <button
+            type="button"
+            className="lightbox-nav lightbox-nav-prev"
+            aria-label="Image précédente"
+            onClick={(event) => {
+              event.stopPropagation();
+              openPrev();
+            }}
+            disabled={!hasMultipleImages}
+          >
+            ‹
+          </button>
+
+          <img
+            className="lightbox-image"
+            src={lightbox.src}
+            alt={lightbox.alt}
+            onError={() => {
+              const failedName = varietyItems[lightbox.index]?.name;
+              if (failedName) {
+                setBrokenImages((prev) => ({ ...prev, [failedName]: true }));
+              }
+              setLightbox(null);
+            }}
+          />
+
+          <button
+            type="button"
+            className="lightbox-nav lightbox-nav-next"
+            aria-label="Image suivante"
+            onClick={(event) => {
+              event.stopPropagation();
+              openNext();
+            }}
+            disabled={!hasMultipleImages}
+          >
+            ›
+          </button>
+        </div>
+
         <p className="lightbox-caption">{lightbox.title}</p>
       </div>
     </div>
@@ -175,29 +325,24 @@ function Varietes() {
               </tr>
             </thead>
             <tbody>
-              {varieties.map((item) => {
-                const slug = toSlug(item.name);
-                const targetId = `variete-${slug}`;
-
-                return (
-                  <tr key={item.name}>
-                    <td>
-                      <a
-                        href={`#${VARIETES_ROUTE}?focus=${targetId}`}
-                        onClick={(event) => scrollToAnchor(event, targetId, targetId)}
-                      >
-                        {item.name} <span aria-hidden="true">→</span>
-                      </a>
-                    </td>
-                    <td>
-                      <strong>{item.type}</strong>
-                    </td>
-                    <td>{item.planting}</td>
-                    <td>{item.harvest}</td>
-                    <td>{item.usage}</td>
-                  </tr>
-                );
-              })}
+              {varietyItems.map((item) => (
+                <tr key={item.name}>
+                  <td>
+                    <a
+                      href={`#${VARIETES_ROUTE}?focus=${item.targetId}`}
+                      onClick={(event) => scrollToAnchor(event, item.targetId, item.targetId)}
+                    >
+                      {item.name} <span aria-hidden="true">→</span>
+                    </a>
+                  </td>
+                  <td>
+                    <strong>{item.type}</strong>
+                  </td>
+                  <td>{item.planting}</td>
+                  <td>{item.harvest}</td>
+                  <td>{item.usage}</td>
+                </tr>
+              ))}
             </tbody>
           </table>
         </div>
@@ -206,16 +351,11 @@ function Varietes() {
       <section className="section">
         <h2>Détails des variétés</h2>
         <div className="grid three-columns">
-          {varieties.map((item) => {
-            const slug = toSlug(item.name);
-            const targetId = `variete-${slug}`;
-            const rawImage = item.image?.trim();
-            const imgSrc = rawImage ? `${import.meta.env.BASE_URL}${rawImage}` : "";
-            const imageAlt = `Pomme de terre ${item.name}`;
-            const showPlaceholder = !imgSrc || brokenImages[item.name];
+          {varietyItems.map((item) => {
+            const showPlaceholder = !item.hasImage;
 
             return (
-              <div key={item.name} id={targetId} className="anchor-offset">
+              <div key={item.name} id={item.targetId} className="anchor-offset">
                 <Card>
                   <div className="variety-card-header">
                     {showPlaceholder ? (
@@ -227,14 +367,13 @@ function Varietes() {
                         type="button"
                         className="image-button"
                         aria-label={`Agrandir l'image de ${item.name}`}
-                        onClick={(event) => openLightbox(event, imgSrc, imageAlt, item.name)}
+                        onClick={(event) => openLightbox(event, item.index)}
                       >
                         <img
-                          src={imgSrc}
-                          alt={imageAlt}
+                          src={item.imgSrc}
+                          alt={item.imageAlt}
                           className="variety-thumb"
-                          onError={(event) => {
-                            event.currentTarget.style.display = "none";
+                          onError={() => {
                             setBrokenImages((prev) => ({ ...prev, [item.name]: true }));
                           }}
                         />
