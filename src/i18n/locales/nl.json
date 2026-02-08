@@ -290,6 +290,7 @@
     "title": "Team 🧑‍🌾",
     "intro": "Team Patatos gaat samen vooruit: simpel, fun en georganiseerd.",
     "hero": {
+      "badge": "🥔 Team Patatos",
       "chips_aria": "Sfeer Team Patatos",
       "chip1": "Simpel",
       "chip2": "Fun",
@@ -308,6 +309,11 @@
     },
     "member_labels": {
       "roles": "Rollen"
+    },
+    "filters": {
+      "title": "Filter op rol",
+      "all_roles": "Alle rollen",
+      "count": "{{count}} lid/leden"
     },
     "roles": {
       "lead": "Coördinatie",

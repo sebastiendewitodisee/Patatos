@@ -1,4 +1,4 @@
-import { useState } from "react";
+﻿import { useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import Badge from "../components/Badge";
 
@@ -22,7 +22,7 @@ const teamMembers = [
   },
   {
     id: "sebastien1",
-    name: 'Sébastien "le vrai"',
+    name: "S\u00E9bastien \"le vrai\"",
     image: "team/sebastien1.png",
     roles: ["team.roles.lead", "team.roles.support"],
     taglineKey: "team.taglines.sebastien1",
@@ -30,7 +30,7 @@ const teamMembers = [
   },
   {
     id: "sebastien2",
-    name: "Sébastien",
+    name: "S\u00E9bastien",
     image: "team/sebastien2.png",
     roles: ["team.roles.support"],
     taglineKey: "team.taglines.sebastien2",
@@ -59,6 +59,20 @@ const heroChipKeys = ["team.hero.chip1", "team.hero.chip2", "team.hero.chip3"];
 function Team() {
   const { t } = useTranslation();
   const [imageErrors, setImageErrors] = useState({});
+  const [roleFilter, setRoleFilter] = useState("all");
+
+  const roleOptions = useMemo(() => {
+    const roleSet = new Set(teamMembers.flatMap((member) => member.roles));
+    return Array.from(roleSet);
+  }, []);
+
+  const filteredMembers = useMemo(() => {
+    if (roleFilter === "all") {
+      return teamMembers;
+    }
+
+    return teamMembers.filter((member) => member.roles.includes(roleFilter));
+  }, [roleFilter]);
 
   const statsItems = [
     { key: "members", value: String(teamMembers.length) },
@@ -80,6 +94,7 @@ function Team() {
     <div className="container page-block team-page">
       <section className="section section-tight team-hero">
         <div className="team-hero-copy">
+          <span className="team-hero-badge">{t("team.hero.badge")}</span>
           <h1>{t("team.title")}</h1>
           <p className="section-intro">{t("team.intro")}</p>
           <div className="team-chip-row" aria-label={t("team.hero.chips_aria")}>
@@ -109,14 +124,41 @@ function Team() {
           <p className="muted-text">{t("team.sections.members_subtitle")}</p>
         </div>
 
+        <div className="team-filters" aria-label={t("team.filters.title")}>
+          <p className="team-filters-label">{t("team.filters.title")}</p>
+
+          <div className="team-filter-chips" role="group" aria-label={t("team.filters.title")}>
+            <button
+              type="button"
+              className={`filter-chip team-filter-chip${roleFilter === "all" ? " is-active" : ""}`}
+              onClick={() => setRoleFilter("all")}
+            >
+              {t("team.filters.all_roles")}
+            </button>
+
+            {roleOptions.map((roleKey) => (
+              <button
+                key={roleKey}
+                type="button"
+                className={`filter-chip team-filter-chip${roleFilter === roleKey ? " is-active" : ""}`}
+                onClick={() => setRoleFilter(roleKey)}
+              >
+                {t(roleKey)}
+              </button>
+            ))}
+          </div>
+
+          <p className="muted-text team-filters-count">{t("team.filters.count", { count: filteredMembers.length })}</p>
+        </div>
+
         <div className="team-grid">
-          {teamMembers.map((member) => {
+          {filteredMembers.map((member, index) => {
             const imgSrc = member.image ? `${import.meta.env.BASE_URL}${member.image}` : "";
             const hasImage = Boolean(imgSrc) && !imageErrors[member.id];
             const cardClassName = member.featured ? "team-card is-featured" : "team-card";
 
             return (
-              <article key={member.id} className={cardClassName} tabIndex={0}>
+              <article key={member.id} className={cardClassName} tabIndex={0} style={{ "--delay": `${index * 60}ms` }}>
                 <div className="team-card-head">
                   <div className="team-avatar" style={{ "--avatar-focus-y": avatarFocusByMemberId[member.id] ?? "18%" }}>
                     {hasImage ? (

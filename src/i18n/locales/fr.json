@@ -290,6 +290,7 @@
     "title": "Équipe 🧑‍🌾",
     "intro": "La team Patatos avance ensemble: simple, fun et organisée.",
     "hero": {
+      "badge": "🥔 Team Patatos",
       "chips_aria": "Ambiance Team Patatos",
       "chip1": "Simple",
       "chip2": "Fun",
@@ -308,6 +309,11 @@
     },
     "member_labels": {
       "roles": "Rôles"
+    },
+    "filters": {
+      "title": "Filtrer par rôle",
+      "all_roles": "Tous les rôles",
+      "count": "{{count}} membre(s)"
     },
     "roles": {
       "lead": "Coordination",
