@@ -1,7 +1,10 @@
-﻿import Card from "../components/Card";
+﻿import { useState } from "react";
+import Card from "../components/Card";
 import { varieties } from "../data/varieties";
 
 function Varietes() {
+  const [brokenImages, setBrokenImages] = useState({});
+
   return (
     <div className="container page-block">
       <section className="section section-tight">
@@ -13,7 +16,7 @@ function Varietes() {
 
       <section className="section">
         <Card title="Repères de saison">
-          <p>Toutes les périodes et rendements sont des repères (météo/sol/variété).</p>
+          <p>Toutes les périodes sont des repères: on ajuste selon météo, sol et observation des plants.</p>
         </Card>
       </section>
 
@@ -34,29 +37,58 @@ function Varietes() {
           <table>
             <thead>
               <tr>
+                <th>Image</th>
                 <th>Variété</th>
                 <th>Type</th>
                 <th>Plantation</th>
                 <th>Récolte</th>
                 <th>Usage</th>
-                <th>Rendement (m²)</th>
-                <th>Rendement (1 kg plants)</th>
               </tr>
             </thead>
             <tbody>
-              {varieties.map((item) => (
-                <tr key={item.name}>
-                  <td>{item.name}</td>
-                  <td>
-                    <strong>{item.type}</strong>
-                  </td>
-                  <td>{item.planting}</td>
-                  <td>{item.harvest}</td>
-                  <td>{item.usage}</td>
-                  <td>{item.yieldM2}</td>
-                  <td>{item.yieldPerKgSeed}</td>
-                </tr>
-              ))}
+              {varieties.map((item) => {
+                const showPlaceholder = !item.image || brokenImages[item.name];
+
+                return (
+                  <tr key={item.name}>
+                    <td>
+                      {showPlaceholder ? (
+                        <span
+                          aria-label={`Placeholder pour ${item.name}`}
+                          style={{
+                            width: 48,
+                            height: 48,
+                            display: "inline-grid",
+                            placeItems: "center",
+                            borderRadius: 12,
+                            border: "1px solid rgba(255, 255, 255, 0.2)",
+                            background: "rgba(255, 255, 255, 0.08)",
+                            fontSize: 22,
+                          }}
+                        >
+                          🥔
+                        </span>
+                      ) : (
+                        <img
+                          src={item.image}
+                          alt={`Pomme de terre ${item.name}`}
+                          style={{ width: 48, height: 48, objectFit: "cover", borderRadius: 12 }}
+                          onError={() => {
+                            setBrokenImages((prev) => ({ ...prev, [item.name]: true }));
+                          }}
+                        />
+                      )}
+                    </td>
+                    <td>{item.name}</td>
+                    <td>
+                      <strong>{item.type}</strong>
+                    </td>
+                    <td>{item.planting}</td>
+                    <td>{item.harvest}</td>
+                    <td>{item.usage}</td>
+                  </tr>
+                );
+              })}
             </tbody>
           </table>
         </div>
