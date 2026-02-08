@@ -8,14 +8,13 @@ import { PHASE_ORDER, RESPONSIBLE_TBD_TOKEN, STATUS_META, STATUS_OPTIONS, planni
 import {
   formatDateLocale,
   getChecklistByPhase,
-  getEffectiveStatus,
   getEventPhaseId,
   getEventScheduleLabel,
+  getPhaseStatus,
   getIndicativeValidationMessage,
   getLastUpdatedEvent,
   getPlanningProgress,
   getUpcomingEvent,
-  isEventLate,
   isEventIndicative,
   sortEventsByDate,
 } from "../utils/planning";
@@ -109,14 +108,9 @@ function Planning() {
     const loweredSearch = search.trim().toLowerCase();
 
     return sortedEvents.filter((event) => {
-      const effectiveStatus = getEffectiveStatus(event);
+      const phaseStatus = getPhaseStatus(event);
       const eventPhaseId = getEventPhaseId(event);
-      const matchesStatus =
-        statusFilter === "all" ||
-        (statusFilter === "done" && event.status === "done") ||
-        (statusFilter === "doing" && event.status === "doing") ||
-        (statusFilter === "todo" && effectiveStatus === "todo") ||
-        (statusFilter === "upcoming" && effectiveStatus === "upcoming");
+      const matchesStatus = statusFilter === "all" || phaseStatus.status === statusFilter;
       const matchesPhase = phaseFilter === "all" || eventPhaseId === phaseFilter;
       const matchesSearch =
         loweredSearch.length === 0 ||
@@ -279,9 +273,8 @@ function Planning() {
               {phaseBlock.tasks.length ? (
                 <ul className="checklist">
                   {phaseBlock.tasks.map((task) => {
-                    const effectiveStatus = getEffectiveStatus(task);
-                    const status = STATUS_META[effectiveStatus] ?? STATUS_META.todo;
-                    const isLate = isEventLate(task);
+                    const phaseStatus = getPhaseStatus(task);
+                    const status = STATUS_META[phaseStatus.status] ?? STATUS_META.todo;
 
                     return (
                       <li key={task.id} className="checklist-item">
@@ -289,9 +282,9 @@ function Planning() {
                         <div>
                           <p>{getEventText(task, "titleKey", "title", t)}</p>
                           <div className="timeline-badges">
-                            <Badge tone={status.tone}>{t(`status.${effectiveStatus}`)}</Badge>
+                            <Badge tone={status.tone}>{t(`status.${phaseStatus.status}`)}</Badge>
                             {isEventIndicative(task) ? <Badge tone="neutral">{t("planning.timeline.indicative")}</Badge> : null}
-                            {isLate ? <Badge tone="late">{t("planning.timeline.late")}</Badge> : null}
+                            {phaseStatus.isLate ? <Badge tone="late">{t("planning.timeline.late")}</Badge> : null}
                           </div>
                           <p className="muted-text">
                             {t("common.period_with_value", {
@@ -321,7 +314,6 @@ function Planning() {
             {t("planning.update.instruction_prefix")} <code>src/data/planning.js</code>. {t("planning.update.instruction_suffix")}
           </p>
           <p className="muted-text">{t("planning.update.rule")}</p>
-          <pre className="code-block">{t("planning.update.example")}</pre>
         </Card>
       </section>
     </div>

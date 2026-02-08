@@ -3,6 +3,7 @@ export const PLANNING_SEASON = "Saison 2026 (Belgique)";
 export const STATUS_META = {
   upcoming: { label: "À venir", tone: "neutral" },
   todo: { label: "À faire", tone: "todo" },
+  in_progress: { label: "En cours", tone: "progress" },
   doing: { label: "En cours", tone: "progress" },
   done: { label: "Fait", tone: "done" },
 };
@@ -11,7 +12,7 @@ export const STATUS_OPTIONS = [
   { value: "all", label: "Tous" },
   { value: "upcoming", label: "À venir" },
   { value: "todo", label: "À faire" },
-  { value: "doing", label: "En cours" },
+  { value: "in_progress", label: "En cours" },
   { value: "done", label: "Fait" },
 ];
 

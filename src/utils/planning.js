@@ -84,6 +84,32 @@ function normalizeReferenceDate(dateValue) {
   return resolvedDate;
 }
 
+function normalizeManualStatus(statusValue) {
+  if (typeof statusValue !== "string") {
+    return "";
+  }
+
+  const normalized = stripAccents(statusValue.toLowerCase().trim());
+
+  if (normalized === "done") {
+    return "done";
+  }
+
+  if (normalized === "in_progress" || normalized === "doing") {
+    return "in_progress";
+  }
+
+  if (normalized === "upcoming") {
+    return "upcoming";
+  }
+
+  if (normalized === "todo") {
+    return "todo";
+  }
+
+  return "";
+}
+
 function hasIndicativeKeyword(value) {
   if (typeof value !== "string") {
     return false;
@@ -253,50 +279,56 @@ export function parsePeriodRange(periodValue) {
   return null;
 }
 
-export function getEffectiveStatus(event, referenceDate = new Date()) {
-  if (event?.status === "done") {
-    return "done";
+function getEventDateRange(event) {
+  if (event?.period) {
+    return parsePeriodRange(event.period);
   }
 
-  if (event?.status === "doing") {
-    return "doing";
+  const parsedDate = parsePlanningDate(event?.date);
+  if (!parsedDate) {
+    return null;
   }
 
-  if (!event?.period) {
-    return event?.status === "upcoming" ? "upcoming" : "todo";
+  const normalizedDate = normalizeReferenceDate(parsedDate);
+  return { start: normalizedDate, end: normalizedDate };
+}
+
+export function getPhaseStatus(event, referenceDate = new Date()) {
+  const manualStatus = normalizeManualStatus(event?.status);
+
+  if (manualStatus === "done") {
+    return { status: "done", isLate: false };
   }
 
-  const periodRange = parsePeriodRange(event.period);
-
-  if (!periodRange) {
-    return event?.status === "upcoming" ? "upcoming" : "todo";
+  const eventRange = getEventDateRange(event);
+  if (!eventRange?.start || !eventRange?.end) {
+    return {
+      status: manualStatus === "upcoming" || manualStatus === "in_progress" ? manualStatus : "todo",
+      isLate: false,
+    };
   }
 
   const reference = normalizeReferenceDate(referenceDate).getTime();
-  const periodStart = normalizeReferenceDate(periodRange.start).getTime();
+  const start = normalizeReferenceDate(eventRange.start).getTime();
+  const end = normalizeReferenceDate(eventRange.end).getTime();
 
-  return reference < periodStart ? "upcoming" : "todo";
+  if (reference < start) {
+    return { status: "upcoming", isLate: false };
+  }
+
+  if (reference <= end) {
+    return { status: "in_progress", isLate: false };
+  }
+
+  return { status: "todo", isLate: true };
+}
+
+export function getEffectiveStatus(event, referenceDate = new Date()) {
+  return getPhaseStatus(event, referenceDate).status;
 }
 
 export function isEventLate(event, now = new Date()) {
-  if (!event || event.status === "done" || event.status === "doing") {
-    return false;
-  }
-
-  if (getEffectiveStatus(event, now) === "upcoming") {
-    return false;
-  }
-
-  const periodRange = parsePeriodRange(event.period);
-
-  if (!periodRange?.end) {
-    return false;
-  }
-
-  const reference = normalizeReferenceDate(now).getTime();
-  const periodEnd = normalizeReferenceDate(periodRange.end).getTime();
-
-  return reference > periodEnd;
+  return getPhaseStatus(event, now).isLate;
 }
 
 export function sortEventsByDate(events, order = "asc") {

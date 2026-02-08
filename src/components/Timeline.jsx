@@ -2,11 +2,10 @@ import { useTranslation } from "react-i18next";
 import Badge from "./Badge";
 import { RESPONSIBLE_TBD_TOKEN, STATUS_META, TYPE_META } from "../data/planning";
 import {
-  getEffectiveStatus,
   getEventScheduleLabel,
+  getPhaseStatus,
   getIndicativeValidationMessage,
   isEventIndicative,
-  isEventLate,
 } from "../utils/planning";
 
 function getResponsiblesDisplay(event) {
@@ -72,11 +71,11 @@ function Timeline({ events }) {
   return (
     <ol className="timeline-list">
       {events.map((event) => {
-        const effectiveStatus = getEffectiveStatus(event);
-        const status = STATUS_META[effectiveStatus] ?? STATUS_META.todo;
+        const phaseStatus = getPhaseStatus(event);
+        const status = STATUS_META[phaseStatus.status] ?? STATUS_META.todo;
         const type = TYPE_META[event.type] ?? TYPE_META.preparation;
         const responsiblesDisplay = getResponsiblesDisplay(event);
-        const isLate = isEventLate(event);
+        const isLate = phaseStatus.isLate;
 
         return (
           <li key={event.id} className="timeline-item">
@@ -89,7 +88,7 @@ function Timeline({ events }) {
               <div className="timeline-head">
                 <h3>{getEventText(event, "titleKey", "title", t)}</h3>
                 <div className="timeline-badges">
-                  <Badge tone={status.tone}>{t(`status.${effectiveStatus}`)}</Badge>
+                  <Badge tone={status.tone}>{t(`status.${phaseStatus.status}`)}</Badge>
                   <Badge tone={type.tone}>{t(`planning.types.${event.type}`)}</Badge>
                   {isEventIndicative(event) ? <Badge tone="neutral">{t("planning.timeline.indicative")}</Badge> : null}
                   {isLate ? <Badge tone="late">{t("planning.timeline.late")}</Badge> : null}
