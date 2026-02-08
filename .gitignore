@@ -22,3 +22,8 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Local scratch image exports (not used in production)
+public/team/logo2.png
+public/team/logo2_wide.transparent2.png
+public/team/logo2_wide.transparent3.png
