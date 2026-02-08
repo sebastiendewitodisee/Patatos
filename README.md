@@ -51,7 +51,7 @@ Exemple d'entrée:
 Le projet est configuré pour un site GitHub Pages de type **project site**:
 
 - URL attendue: `https://<user>.github.io/patatos/`
-- Base Vite en production: `/patatos/` (`vite.config.js`)
+- Base Vite en production: `/<repo>/` auto-détectée depuis `GITHUB_REPOSITORY` (fallback local: `/patatos/`)
 - Router: `HashRouter` (URLs en `/#/planning`) pour éviter les 404 au refresh sur GitHub Pages
 
 ### 1) Workflow GitHub Actions
