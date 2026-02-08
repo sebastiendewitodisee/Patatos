@@ -1,7 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-labelledby="title desc">
-  <title id="title">Team Patates Patatos badge</title>
-  <desc id="desc">Minimal premium potato badge.</desc>
-
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128">
   <circle cx="64" cy="64" r="52" fill="#d9b37a" fill-opacity="0.82"/>
   <circle cx="64" cy="64" r="52" fill="none" stroke="currentColor" stroke-opacity="0.32" stroke-width="2.8"/>
 

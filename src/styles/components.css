@@ -48,8 +48,14 @@
   display: block;
   flex: 0 0 auto;
   border-radius: 999px;
-  border: 1px solid rgba(255, 255, 255, 0.22);
-  box-shadow: 0 3px 10px rgba(7, 10, 15, 0.24);
+  border: 1px solid var(--line);
+  outline: 1px solid rgba(255, 255, 255, 0.14);
+  box-shadow: 0 2px 8px rgba(4, 8, 14, 0.24);
+}
+
+:root.theme-light .brand-logo {
+  outline-color: rgba(17, 19, 24, 0.1);
+  box-shadow: 0 2px 7px rgba(17, 19, 24, 0.12);
 }
 
 .brand-logo-fallback {
