@@ -60,7 +60,7 @@ function Header() {
   const nextLangFlag = nextLang === "fr" ? "\u{1F1EB}\u{1F1F7}" : "\u{1F1F3}\u{1F1F1}";
   const nextLangAriaLabel = nextLang === "fr" ? t("nav.lang_to_fr") : t("nav.lang_to_nl");
   const logoSrc = `${import.meta.env.BASE_URL}brand/logo-team-patates-patatos.svg`;
-  const wordmarkSrc = `${import.meta.env.BASE_URL}brand/wordmark-team-patates-patatos-illustrated.svg`;
+  const wordmarkPngSrc = `${import.meta.env.BASE_URL}team/logo2_wide.png`;
 
   const isDarkTheme = theme === "dark";
   const nextTheme = isDarkTheme ? "light" : "dark";
@@ -221,7 +221,7 @@ function Header() {
           ) : (
             <img
               className="brand-wordmark"
-              src={wordmarkSrc}
+              src={wordmarkPngSrc}
               alt={t("nav.brand_wordmark_alt")}
               loading="eager"
               decoding="async"

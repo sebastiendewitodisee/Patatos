@@ -36,6 +36,7 @@
   width: auto;
   max-width: min(100%, 20rem);
   display: block;
+  object-fit: contain;
 }
 
 .brand-wordmark-fallback {
