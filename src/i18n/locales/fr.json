@@ -349,6 +349,8 @@
   "team": {
     "title": "Équipe 🧑‍🌾",
     "intro": "La team Patatos avance ensemble: simple, fun et organisée.",
+    "group_photo_alt": "Photo de groupe — Team Patatos",
+    "group_photo_caption": "Team Patatos",
     "hero": {
       "badge": "🥔 Team Patatos",
       "chips_aria": "Ambiance Team Patatos",

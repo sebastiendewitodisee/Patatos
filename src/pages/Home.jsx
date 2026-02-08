@@ -45,6 +45,7 @@ function getEventValidationText(event, t, validationFallback) {
 
 function Home() {
   const { t, i18n } = useTranslation();
+  const groupPhotoSrc = `${import.meta.env.BASE_URL}team/team.png`;
   const latestUpdates = getLatestUpdates(planningEvents, 3);
   const upcomingEvent = getUpcomingEvent(planningEvents);
   const dateFallback = t("planning.fallbacks.date_tbc");
@@ -60,6 +61,10 @@ function Home() {
           {t("home.title")} <span aria-hidden="true">🥔</span>
         </h1>
         <p className="hero-copy">{t("home.subtitle")}</p>
+        <figure className="group-photo home-group-photo">
+          <img src={groupPhotoSrc} alt={t("team.group_photo_alt")} loading="lazy" />
+          <figcaption>{t("team.group_photo_caption")}</figcaption>
+        </figure>
 
         <div className="cta-row">
           <Link to="/planning" className="btn btn-primary">

@@ -61,6 +61,7 @@ const TEAM_MEMBERS = [
 
 function Team() {
   const { t } = useTranslation();
+  const groupPhotoSrc = `${import.meta.env.BASE_URL}team/team.png`;
   const [imageErrors, setImageErrors] = useState({});
   const [roleFilter, setRoleFilter] = useState("all");
   const [query, setQuery] = useState("");
@@ -160,6 +161,13 @@ function Team() {
             ))}
           </div>
         </div>
+      </section>
+
+      <section className="section section-tight">
+        <figure className="group-photo team-group-photo">
+          <img src={groupPhotoSrc} alt={t("team.group_photo_alt")} loading="lazy" />
+          <figcaption>{t("team.group_photo_caption")}</figcaption>
+        </figure>
       </section>
 
       <section className="section">
