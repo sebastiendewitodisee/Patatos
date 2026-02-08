@@ -40,11 +40,14 @@
     "choose_nl_aria": "Kies Nederlands",
     "actions_aria": "Taalselectie",
     "close": "Welkomstvenster sluiten",
-    "image_alt": "Team Patates Patatos WEEKEND"
+    "image_alt": "Team Patates Patatos WEEKEND",
+    "reopen": "Welkomstscherm opnieuw tonen"
   },
   "footer": {
     "copyright": "© {{year}} Team Patates Patatos · Oogstoperatie 🥔",
-    "legal": "Juridische vermeldingen"
+    "legal": "Juridische vermeldingen",
+    "preferences_title": "Voorkeuren",
+    "language": "Taal"
   },
   "status": {
     "all": "Alles",

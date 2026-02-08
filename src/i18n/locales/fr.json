@@ -40,11 +40,14 @@
     "choose_nl_aria": "Choisir le néerlandais",
     "actions_aria": "Choix de la langue",
     "close": "Fermer la fenêtre de bienvenue",
-    "image_alt": "Team Patates Patatos WEEKEND"
+    "image_alt": "Team Patates Patatos WEEKEND",
+    "reopen": "Revoir l'écran d'accueil"
   },
   "footer": {
     "copyright": "© {{year}} Team Patates Patatos · Opération Récolte 🥔",
-    "legal": "Mentions légales"
+    "legal": "Mentions légales",
+    "preferences_title": "Préférences",
+    "language": "Langue"
   },
   "status": {
     "all": "Tous",

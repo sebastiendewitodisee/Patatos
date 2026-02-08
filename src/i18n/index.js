@@ -12,8 +12,9 @@ import {
 } from "./language-utils";
 
 export { DEFAULT_LANG, STORAGE_KEY, SUPPORTED_LANGS } from "./language-utils";
+export const WELCOME_SEEN_STORAGE_KEY = "patatos_has_seen_welcome";
 
-function getStoredLang() {
+export function getStoredLang() {
   if (typeof window === "undefined") {
     return "";
   }
@@ -23,6 +24,42 @@ function getStoredLang() {
     return normalizeLang(stored);
   } catch {
     return "";
+  }
+}
+
+export function hasSeenWelcome() {
+  if (typeof window === "undefined") {
+    return true;
+  }
+
+  try {
+    return window.localStorage.getItem(WELCOME_SEEN_STORAGE_KEY) === "1";
+  } catch {
+    return false;
+  }
+}
+
+export function markWelcomeSeen() {
+  if (typeof window === "undefined") {
+    return;
+  }
+
+  try {
+    window.localStorage.setItem(WELCOME_SEEN_STORAGE_KEY, "1");
+  } catch {
+    // No-op when storage is unavailable.
+  }
+}
+
+export function resetWelcomeSeen() {
+  if (typeof window === "undefined") {
+    return;
+  }
+
+  try {
+    window.localStorage.removeItem(WELCOME_SEEN_STORAGE_KEY);
+  } catch {
+    // No-op when storage is unavailable.
   }
 }
 

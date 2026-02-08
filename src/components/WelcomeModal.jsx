@@ -1,32 +1,6 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { DEFAULT_LANG, setLangToUrl, setStoredLang } from "../i18n";
-
-const WELCOME_SEEN_STORAGE_KEY = "patatos_has_seen_welcome";
-
-function getHasSeenWelcome() {
-  if (typeof window === "undefined") {
-    return true;
-  }
-
-  try {
-    return window.localStorage.getItem(WELCOME_SEEN_STORAGE_KEY) === "1";
-  } catch {
-    return false;
-  }
-}
-
-function setHasSeenWelcome() {
-  if (typeof window === "undefined") {
-    return;
-  }
-
-  try {
-    window.localStorage.setItem(WELCOME_SEEN_STORAGE_KEY, "1");
-  } catch {
-    // No-op when storage is unavailable.
-  }
-}
+import { DEFAULT_LANG, hasSeenWelcome, markWelcomeSeen, setLangToUrl, setStoredLang } from "../i18n";
 
 function normalizeCurrentLang(lang) {
   if (typeof lang !== "string" || lang.trim().length === 0) {
@@ -36,7 +10,7 @@ function normalizeCurrentLang(lang) {
   return lang.toLowerCase().startsWith("nl") ? "nl" : "fr";
 }
 
-function WelcomeModal() {
+function WelcomeModal({ openNonce = 0 }) {
   const { t, i18n } = useTranslation();
   const dialogRef = useRef(null);
   const primaryActionRef = useRef(null);
@@ -46,7 +20,7 @@ function WelcomeModal() {
       return false;
     }
 
-    return !getHasSeenWelcome();
+    return !hasSeenWelcome();
   });
   const wordmarkSrc = useMemo(
     () => `${import.meta.env.BASE_URL}team/logo2_wide.transparent-v2.png`,
@@ -55,7 +29,7 @@ function WelcomeModal() {
 
   const closeModal = useCallback(() => {
     setIsOpen(false);
-    setHasSeenWelcome();
+    markWelcomeSeen();
   }, []);
 
   const handleLanguageSelect = useCallback(
@@ -143,6 +117,20 @@ function WelcomeModal() {
       previousFocusRef.current?.focus();
     };
   }, [closeModal, isOpen]);
+
+  useEffect(() => {
+    if (openNonce <= 0 || typeof window === "undefined") {
+      return undefined;
+    }
+
+    const frame = window.requestAnimationFrame(() => {
+      setIsOpen(true);
+    });
+
+    return () => {
+      window.cancelAnimationFrame(frame);
+    };
+  }, [openNonce]);
 
   if (!isOpen) {
     return null;
