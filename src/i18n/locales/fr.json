@@ -289,12 +289,25 @@
   "team": {
     "title": "Équipe 🧑‍🌾",
     "intro": "La team Patatos avance ensemble: simple, fun et organisée.",
+    "hero": {
+      "chips_aria": "Ambiance Team Patatos",
+      "chip1": "Simple",
+      "chip2": "Fun",
+      "chip3": "Efficace"
+    },
+    "sections": {
+      "members_title": "La team",
+      "members_subtitle": "Les personnes qui font vivre Patatos au quotidien."
+    },
     "stats": {
       "members": "Membres",
       "season": "Saison",
       "seasonValue": "2026",
       "motto": "Motto",
       "mottoValue": "Simple, fun, efficace"
+    },
+    "member_labels": {
+      "roles": "Rôles"
     },
     "roles": {
       "lead": "Coordination",
@@ -312,7 +325,14 @@
     },
     "focus": {
       "label": "Cette semaine",
-      "value": "On se cale sur les priorités du planning."
+      "value": "On se cale sur les priorités du planning.",
+      "items": {
+        "denis": "On garde le terrain prêt pour la prochaine session.",
+        "sebastien1": "On aligne la team sur les priorités de la quinzaine.",
+        "sebastien2": "On reste dispo pour les tâches de support à chaud.",
+        "josh": "On vérifie que le matos est prêt avant la session.",
+        "melvin": "On garde un suivi propre des plants sur la période."
+      }
     }
   },
   "organisation": {

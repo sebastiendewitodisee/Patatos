@@ -289,12 +289,25 @@
   "team": {
     "title": "Team 🧑‍🌾",
     "intro": "Team Patatos gaat samen vooruit: simpel, fun en georganiseerd.",
+    "hero": {
+      "chips_aria": "Sfeer Team Patatos",
+      "chip1": "Simpel",
+      "chip2": "Fun",
+      "chip3": "Efficiënt"
+    },
+    "sections": {
+      "members_title": "Het team",
+      "members_subtitle": "De mensen die Patatos elke week laten draaien."
+    },
     "stats": {
       "members": "Leden",
       "season": "Seizoen",
       "seasonValue": "2026",
       "motto": "Motto",
       "mottoValue": "Simpel, fun, efficiënt"
+    },
+    "member_labels": {
+      "roles": "Rollen"
     },
     "roles": {
       "lead": "Coördinatie",
@@ -312,7 +325,14 @@
     },
     "focus": {
       "label": "Deze week",
-      "value": "We stemmen af op de prioriteiten in de planning."
+      "value": "We stemmen af op de prioriteiten in de planning.",
+      "items": {
+        "denis": "We houden het terrein klaar voor de volgende sessie.",
+        "sebastien1": "We zetten de team op één lijn voor deze twee weken.",
+        "sebastien2": "We blijven paraat voor support op het juiste moment.",
+        "josh": "We checken dat al het materiaal klaarstaat voor de sessie.",
+        "melvin": "We houden de opvolging van de planten strak op schema."
+      }
     }
   },
   "organisation": {
