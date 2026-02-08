@@ -6,7 +6,7 @@
     type: "storage",
     plantingKey: "varieties.items.alouette.planting",
     harvestKey: "varieties.items.alouette.harvest",
-    usageKey: "varieties.items.alouette.usage",
+    usageTags: ["vapeur", "frites", "four"],
   },
   {
     id: "cheyenne",
@@ -15,7 +15,7 @@
     type: "storage",
     plantingKey: "varieties.items.cheyenne.planting",
     harvestKey: "varieties.items.cheyenne.harvest",
-    usageKey: "varieties.items.cheyenne.usage",
+    usageTags: ["salade", "vapeur", "roties"],
   },
   {
     id: "desiree",
@@ -24,7 +24,7 @@
     type: "storage",
     plantingKey: "varieties.items.desiree.planting",
     harvestKey: "varieties.items.desiree.harvest",
-    usageKey: "varieties.items.desiree.usage",
+    usageTags: ["vapeur", "frites", "puree"],
   },
   {
     id: "premiere",
@@ -33,7 +33,7 @@
     type: "early",
     plantingKey: "varieties.items.premiere.planting",
     harvestKey: "varieties.items.premiere.harvest",
-    usageKey: "varieties.items.premiere.usage",
+    usageTags: ["frites", "sautees", "four"],
   },
   {
     id: "jelly",
@@ -42,7 +42,7 @@
     type: "storage",
     plantingKey: "varieties.items.jelly.planting",
     harvestKey: "varieties.items.jelly.harvest",
-    usageKey: "varieties.items.jelly.usage",
+    usageTags: ["frites", "vapeur", "four"],
   },
   {
     id: "frieslander",
@@ -51,7 +51,7 @@
     type: "early",
     plantingKey: "varieties.items.frieslander.planting",
     harvestKey: "varieties.items.frieslander.harvest",
-    usageKey: "varieties.items.frieslander.usage",
+    usageTags: ["vapeur", "sautees", "frites"],
   },
   {
     id: "nicola",
@@ -60,7 +60,7 @@
     type: "early",
     plantingKey: "varieties.items.nicola.planting",
     harvestKey: "varieties.items.nicola.harvest",
-    usageKey: "varieties.items.nicola.usage",
+    usageTags: ["salade", "vapeur", "sautees"],
   },
   {
     id: "bintje",
@@ -69,7 +69,7 @@
     type: "storage",
     plantingKey: "varieties.items.bintje.planting",
     harvestKey: "varieties.items.bintje.harvest",
-    usageKey: "varieties.items.bintje.usage",
+    usageTags: ["frites", "roties", "puree"],
   },
   {
     id: "melody",
@@ -78,7 +78,7 @@
     type: "storage",
     plantingKey: "varieties.items.melody.planting",
     harvestKey: "varieties.items.melody.harvest",
-    usageKey: "varieties.items.melody.usage",
+    usageTags: ["vapeur", "sautees", "four"],
   },
   {
     id: "zen",
@@ -87,6 +87,6 @@
     type: "storage",
     plantingKey: "varieties.items.zen.planting",
     harvestKey: "varieties.items.zen.harvest",
-    usageKey: "varieties.items.zen.usage",
+    usageTags: ["salade", "vapeur", "sautees"],
   },
 ];

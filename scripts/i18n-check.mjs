@@ -217,6 +217,13 @@ async function collectDynamicDataKeys() {
         keys.add(keyValue);
       }
     }
+
+    const usageTags = Array.isArray(item?.usageTags) ? item.usageTags : [];
+    for (const usageTag of usageTags) {
+      if (typeof usageTag === "string" && usageTag.trim()) {
+        keys.add(`varieties.usage.${usageTag}`);
+      }
+    }
   }
 
   for (const item of faqModule.faqItems ?? []) {

@@ -1098,6 +1098,30 @@ th {
   margin-top: 8px;
 }
 
+.variety-usage-row {
+  display: grid;
+  gap: 0.34rem;
+}
+
+.usage-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.34rem;
+}
+
+.usage-chip {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 999px;
+  border: 1px solid rgba(87, 223, 155, 0.34);
+  background: rgba(87, 223, 155, 0.14);
+  color: var(--text);
+  padding: 0.14rem 0.54rem;
+  font-size: 0.78rem;
+  line-height: 1.25;
+  font-weight: 700;
+}
+
 .image-button {
   background: transparent;
   border: 0;

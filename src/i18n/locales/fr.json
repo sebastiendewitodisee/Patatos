@@ -302,53 +302,64 @@
       "alouette": {
         "planting": "Avril",
         "harvest": "Août–Octobre",
-        "usage": "polyvalent"
+        "usage": "vapeur / frites / au four"
       },
       "cheyenne": {
         "planting": "Avril",
         "harvest": "Août–Septembre",
-        "usage": "salade/vapeur (chair ferme, groupe A)"
+        "usage": "salade / vapeur / rôties"
       },
       "desiree": {
         "planting": "Avril",
         "harvest": "Août–Septembre",
-        "usage": "polyvalent (groupe B-C)"
+        "usage": "vapeur / frites / purée"
       },
       "premiere": {
         "planting": "Mars–Avril",
         "harvest": "Juin–Juillet",
-        "usage": "frites (précoce)"
+        "usage": "frites / sautées / au four"
       },
       "jelly": {
         "planting": "Avril",
         "harvest": "Septembre–Octobre",
-        "usage": "polyvalent (légèrement farineuse)"
+        "usage": "frites / vapeur / au four"
       },
       "frieslander": {
         "planting": "Mars–Avril",
         "harvest": "Juin–Juillet",
-        "usage": "vapeur/ferme + frites"
+        "usage": "vapeur / sautées / frites"
       },
       "nicola": {
         "planting": "Mars–Avril",
         "harvest": "Juillet–Août",
-        "usage": "salade/vapeur (waxy)"
+        "usage": "salade / vapeur / sautées"
       },
       "bintje": {
         "planting": "Avril",
         "harvest": "Août–Octobre",
-        "usage": "frites/purée"
+        "usage": "frites / rôties / purée"
       },
       "melody": {
         "planting": "Avril",
         "harvest": "Août–Septembre",
-        "usage": "frites/purée (polyvalent)"
+        "usage": "vapeur / sautées / au four"
       },
       "zen": {
         "planting": "Avril",
         "harvest": "Juillet–Septembre",
-        "usage": "tenue ferme / gratins"
+        "usage": "salade / vapeur / sautées"
       }
+    },
+    "usage": {
+      "salade": "Salade",
+      "vapeur": "Vapeur",
+      "sautees": "Sautées",
+      "frites": "Frites",
+      "puree": "Purée",
+      "gratin": "Gratin",
+      "four": "Au four",
+      "potage": "Potage",
+      "roties": "Rôties"
     }
   },
   "team": {

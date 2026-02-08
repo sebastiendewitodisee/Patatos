@@ -302,53 +302,64 @@
       "alouette": {
         "planting": "april",
         "harvest": "augustus–oktober",
-        "usage": "veelzijdig"
+        "usage": "stomen / frieten / oven"
       },
       "cheyenne": {
         "planting": "april",
         "harvest": "augustus–september",
-        "usage": "salade/stomen (vastkokend, groep A)"
+        "usage": "salade / stomen / geroosterd"
       },
       "desiree": {
         "planting": "april",
         "harvest": "augustus–september",
-        "usage": "veelzijdig (groep B-C)"
+        "usage": "stomen / frieten / puree"
       },
       "premiere": {
         "planting": "maart–april",
         "harvest": "juni–juli",
-        "usage": "frieten (vroeg ras)"
+        "usage": "frieten / bakken / oven"
       },
       "jelly": {
         "planting": "april",
         "harvest": "september–oktober",
-        "usage": "veelzijdig (licht bloemig)"
+        "usage": "frieten / stomen / oven"
       },
       "frieslander": {
         "planting": "maart–april",
         "harvest": "juni–juli",
-        "usage": "stomen/vast + frieten"
+        "usage": "stomen / bakken / frieten"
       },
       "nicola": {
         "planting": "maart–april",
         "harvest": "juli–augustus",
-        "usage": "salade/stomen (waxy)"
+        "usage": "salade / stomen / bakken"
       },
       "bintje": {
         "planting": "april",
         "harvest": "augustus–oktober",
-        "usage": "frieten/puree"
+        "usage": "frieten / geroosterd / puree"
       },
       "melody": {
         "planting": "april",
         "harvest": "augustus–september",
-        "usage": "frieten/puree (veelzijdig)"
+        "usage": "stomen / bakken / oven"
       },
       "zen": {
         "planting": "april",
         "harvest": "juli–september",
-        "usage": "vastkokend / gratins"
+        "usage": "salade / stomen / bakken"
       }
+    },
+    "usage": {
+      "salade": "Salade",
+      "vapeur": "Stomen",
+      "sautees": "Bakken",
+      "frites": "Frieten",
+      "puree": "Puree",
+      "gratin": "Ovenschotel",
+      "four": "Oven",
+      "potage": "Soep",
+      "roties": "Geroosterd"
     }
   },
   "team": {

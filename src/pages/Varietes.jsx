@@ -84,6 +84,31 @@ function getVarietyText(item, keyName, fallbackKeyName, t) {
   return t(translationKey, { defaultValue: fallbackValue ?? "" });
 }
 
+function getUsageTags(item) {
+  if (!Array.isArray(item?.usageTags)) {
+    return [];
+  }
+
+  return item.usageTags.filter((tag) => typeof tag === "string" && tag.trim()).slice(0, 3);
+}
+
+function renderUsageChips(item, t) {
+  const usageTags = getUsageTags(item);
+  if (!usageTags.length) {
+    return <span>{t("common.to_define")}</span>;
+  }
+
+  return (
+    <div className="usage-chips" aria-label={t("varieties.usage_label")}>
+      {usageTags.map((tag) => (
+        <span key={`${item.id}-${tag}`} className="usage-chip">
+          {t(`varieties.usage.${tag}`)}
+        </span>
+      ))}
+    </div>
+  );
+}
+
 function Varietes() {
   const { t } = useTranslation();
   const [brokenImages, setBrokenImages] = useState({});
@@ -362,7 +387,7 @@ function Varietes() {
                   </td>
                   <td>{getVarietyText(item, "plantingKey", "planting", t)}</td>
                   <td>{getVarietyText(item, "harvestKey", "harvest", t)}</td>
-                  <td>{getVarietyText(item, "usageKey", "usage", t)}</td>
+                  <td>{renderUsageChips(item, t)}</td>
                 </tr>
               ))}
             </tbody>
@@ -416,9 +441,9 @@ function Varietes() {
                     <p>
                       <strong>{t("varieties.harvest_label")}:</strong> {getVarietyText(item, "harvestKey", "harvest", t)}
                     </p>
-                    <p>
-                      <strong>{t("varieties.usage_label")}:</strong> {getVarietyText(item, "usageKey", "usage", t)}
-                    </p>
+                    <div className="variety-usage-row">
+                      <strong>{t("varieties.usage_label")}:</strong> {renderUsageChips(item, t)}
+                    </div>
                   </div>
 
                   <a href={`#${VARIETES_ROUTE}?focus=recap`} onClick={(event) => scrollToAnchor(event, RECAP_ID, "recap")}>
