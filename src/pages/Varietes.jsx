@@ -5,6 +5,7 @@ import { varieties } from "../data/varieties";
 
 const RECAP_ID = "recap-varietes";
 const VARIETE_PREFIX = "variete-";
+const VARIETES_ROUTE = "/varietes";
 
 function toSlug(value) {
   return value
@@ -15,31 +16,59 @@ function toSlug(value) {
     .replace(/(^-|-$)/g, "");
 }
 
-function getAnchorIdFromHash(hashValue) {
-  const normalizedHash = hashValue.replace(/^#/, "");
-  if (!normalizedHash) {
+function getFocusParamFromUrl() {
+  const url = new URL(window.location.href);
+  const focusFromSearch = url.searchParams.get("focus");
+  if (focusFromSearch) {
+    return focusFromSearch;
+  }
+
+  const hashValue = url.hash.replace(/^#/, "");
+  const [, hashQuery = ""] = hashValue.split("?");
+  return new URLSearchParams(hashQuery).get("focus");
+}
+
+function getTargetIdFromFocus(focus) {
+  if (!focus) {
     return "";
   }
 
-  const segments = normalizedHash.split("#").reverse();
-  return segments.find((segment) => segment.startsWith(VARIETE_PREFIX) || segment === RECAP_ID) ?? "";
+  if (focus === "recap") {
+    return RECAP_ID;
+  }
+
+  if (focus.startsWith(VARIETE_PREFIX)) {
+    return focus;
+  }
+
+  return "";
 }
 
-function updateVarietesHash(anchorId) {
-  window.location.hash = `/varietes#${anchorId}`;
+function updateFocusParam(focus) {
+  const url = new URL(window.location.href);
+  const hashValue = url.hash.replace(/^#/, "");
+  const [hashPathRaw, hashQuery = ""] = hashValue.split("?");
+  const hashPath = (hashPathRaw.split("#")[0] || VARIETES_ROUTE).trim();
+
+  const params = new URLSearchParams(hashQuery);
+  params.set("focus", focus);
+
+  const nextHash = `${hashPath}?${params.toString()}`;
+  window.history.replaceState({}, "", `${url.pathname}#${nextHash}`);
 }
 
 function Varietes() {
   const [brokenImages, setBrokenImages] = useState({});
 
   useEffect(() => {
-    const anchorId = getAnchorIdFromHash(window.location.hash);
-    if (!anchorId) {
+    const focus = getFocusParamFromUrl();
+    const targetId = getTargetIdFromFocus(focus);
+    if (!targetId) {
       return undefined;
     }
 
     const timeoutId = window.setTimeout(() => {
-      const target = document.getElementById(anchorId);
+      const target = document.getElementById(targetId);
       if (target) {
         target.scrollIntoView({ behavior: "smooth", block: "start" });
       }
@@ -48,7 +77,7 @@ function Varietes() {
     return () => window.clearTimeout(timeoutId);
   }, []);
 
-  const scrollToAnchor = (event, targetId) => {
+  const scrollToAnchor = (event, targetId, focus) => {
     event.preventDefault();
 
     const target = document.getElementById(targetId);
@@ -57,7 +86,7 @@ function Varietes() {
     }
 
     target.scrollIntoView({ behavior: "smooth", block: "start" });
-    updateVarietesHash(targetId);
+    updateFocusParam(focus);
   };
 
   return (
@@ -96,7 +125,10 @@ function Varietes() {
                 return (
                   <tr key={item.name}>
                     <td>
-                      <a href={`#${targetId}`} onClick={(event) => scrollToAnchor(event, targetId)}>
+                      <a
+                        href={`#${VARIETES_ROUTE}?focus=${targetId}`}
+                        onClick={(event) => scrollToAnchor(event, targetId, targetId)}
+                      >
                         {item.name} <span aria-hidden="true">→</span>
                       </a>
                     </td>
@@ -158,7 +190,10 @@ function Varietes() {
                     </p>
                   </div>
 
-                  <a href={`#${RECAP_ID}`} onClick={(event) => scrollToAnchor(event, RECAP_ID)}>
+                  <a
+                    href={`#${VARIETES_ROUTE}?focus=recap`}
+                    onClick={(event) => scrollToAnchor(event, RECAP_ID, "recap")}
+                  >
                     Retour au récap ↑
                   </a>
                 </Card>
