@@ -56,7 +56,7 @@ function updateFocusParam(focus) {
   params.set("focus", focus);
 
   const nextHash = `${hashPath}?${params.toString()}`;
-  window.history.replaceState({}, "", `${url.pathname}#${nextHash}`);
+  window.history.replaceState({}, "", `${url.pathname}${url.search}#${nextHash}`);
 }
 
 const VARIETY_TYPE_TRANSLATION_KEYS = {

@@ -1,33 +1,48 @@
-﻿import i18n from "i18next";
+import i18n from "i18next";
 import { initReactI18next } from "react-i18next";
 import fr from "./locales/fr.json";
 import nl from "./locales/nl.json";
+import {
+  buildPathWithLangBeforeHash,
+  DEFAULT_LANG,
+  getLangFromHref,
+  normalizeLang,
+  resolvePreferredLang,
+  STORAGE_KEY,
+} from "./language-utils";
 
-export const STORAGE_KEY = "patatos_lang";
-export const SUPPORTED_LANGS = ["fr", "nl"];
-export const DEFAULT_LANG = "fr";
-
-function isSupportedLang(lang) {
-  return typeof lang === "string" && SUPPORTED_LANGS.includes(lang);
-}
-
-function getHashRouteData(hashValue = "") {
-  const normalizedHash = (hashValue || "").replace(/^#/, "");
-  const [rawPath = "/", rawQuery = ""] = normalizedHash.split("?");
-
-  return {
-    path: rawPath || "/",
-    params: new URLSearchParams(rawQuery),
-  };
-}
+export { DEFAULT_LANG, STORAGE_KEY, SUPPORTED_LANGS } from "./language-utils";
 
 function getStoredLang() {
+  if (typeof window === "undefined") {
+    return "";
+  }
+
   try {
     const stored = window.localStorage.getItem(STORAGE_KEY);
-    return isSupportedLang(stored) ? stored : "";
+    return normalizeLang(stored);
   } catch {
     return "";
   }
+}
+
+function getNavigatorCandidates() {
+  if (typeof window === "undefined") {
+    return [];
+  }
+
+  const languages = [];
+  const navigatorLanguages = window.navigator?.languages ?? [];
+
+  if (Array.isArray(navigatorLanguages)) {
+    languages.push(...navigatorLanguages);
+  }
+
+  if (window.navigator?.language) {
+    languages.push(window.navigator.language);
+  }
+
+  return languages;
 }
 
 export function getLangFromUrl() {
@@ -35,61 +50,53 @@ export function getLangFromUrl() {
     return "";
   }
 
-  const url = new URL(window.location.href);
-  const searchLang = url.searchParams.get("lang");
-  if (isSupportedLang(searchLang)) {
-    return searchLang;
-  }
-
-  const { params } = getHashRouteData(url.hash);
-  const hashLang = params.get("lang");
-
-  return isSupportedLang(hashLang) ? hashLang : "";
+  return getLangFromHref(window.location.href);
 }
 
 export function setStoredLang(lang) {
-  if (!isSupportedLang(lang) || typeof window === "undefined") {
+  const normalizedLang = normalizeLang(lang);
+
+  if (!normalizedLang || typeof window === "undefined") {
     return;
   }
 
   try {
-    window.localStorage.setItem(STORAGE_KEY, lang);
+    window.localStorage.setItem(STORAGE_KEY, normalizedLang);
   } catch {
     // No-op when storage is unavailable.
   }
 }
 
 export function setLangToUrl(lang) {
-  if (!isSupportedLang(lang) || typeof window === "undefined") {
+  const normalizedLang = normalizeLang(lang);
+
+  if (!normalizedLang || typeof window === "undefined") {
     return;
   }
 
-  const url = new URL(window.location.href);
-  const baseSearchParams = new URLSearchParams(url.search);
-  baseSearchParams.delete("lang");
+  const nextPath = buildPathWithLangBeforeHash(window.location.href, normalizedLang);
+  if (!nextPath) {
+    return;
+  }
 
-  const { path, params } = getHashRouteData(url.hash);
-  params.set("lang", lang);
+  const currentPath = `${window.location.pathname}${window.location.search}${window.location.hash}`;
+  if (nextPath === currentPath) {
+    return;
+  }
 
-  const nextHash = `${path}${params.toString() ? `?${params.toString()}` : ""}`;
-  const nextSearch = baseSearchParams.toString();
-  const nextUrl = `${url.pathname}${nextSearch ? `?${nextSearch}` : ""}#${nextHash}`;
-
-  window.history.replaceState({}, "", nextUrl);
+  window.history.replaceState({}, "", nextPath);
 }
 
 function resolveInitialLang() {
-  const langFromUrl = getLangFromUrl();
-  if (isSupportedLang(langFromUrl)) {
-    return langFromUrl;
+  if (typeof window === "undefined") {
+    return DEFAULT_LANG;
   }
 
-  const storedLang = getStoredLang();
-  if (isSupportedLang(storedLang)) {
-    return storedLang;
-  }
-
-  return DEFAULT_LANG;
+  return resolvePreferredLang({
+    href: window.location.href,
+    storedLang: getStoredLang(),
+    navigatorLanguages: getNavigatorCandidates(),
+  });
 }
 
 const initialLang = resolveInitialLang();
@@ -107,9 +114,11 @@ i18n.use(initReactI18next).init({
 });
 
 setStoredLang(initialLang);
+setLangToUrl(initialLang);
 
 i18n.on("languageChanged", (lang) => {
   setStoredLang(lang);
+  setLangToUrl(lang);
 });
 
 export default i18n;
