@@ -62,6 +62,35 @@
   background: rgba(101, 179, 255, 0.18);
 }
 
+.lang-switch {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  margin-left: 0.35rem;
+}
+
+.lang-btn {
+  border-radius: 0.62rem;
+  border: 1px solid var(--line);
+  padding: 0.3rem 0.56rem;
+  color: var(--muted);
+  background: rgba(255, 255, 255, 0.06);
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.lang-btn:hover {
+  color: var(--text);
+  border-color: rgba(255, 255, 255, 0.18);
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.lang-btn.is-active {
+  color: var(--text);
+  border-color: rgba(87, 223, 155, 0.42);
+  background: rgba(87, 223, 155, 0.18);
+}
+
 .burger-btn {
   display: none;
   width: 2.45rem;
@@ -813,6 +842,11 @@ th {
 
   .nav-link {
     padding: 0.55rem 0.7rem;
+  }
+
+  .lang-switch {
+    margin-left: 0;
+    margin-top: 0.3rem;
   }
 
   .filter-fields {

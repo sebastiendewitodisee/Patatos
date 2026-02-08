@@ -1,15 +1,10 @@
 ﻿import { useMemo, useState } from "react";
+import { useTranslation } from "react-i18next";
 import Badge from "../components/Badge";
 import Card from "../components/Card";
 import Filters from "../components/Filters";
 import Timeline from "../components/Timeline";
-import {
-  PHASE_ORDER,
-  PLANNING_SEASON,
-  STATUS_META,
-  STATUS_OPTIONS,
-  planningEvents,
-} from "../data/planning";
+import { PHASE_ORDER, STATUS_META, STATUS_OPTIONS, planningEvents } from "../data/planning";
 import {
   formatDateFr,
   getChecklistByPhase,
@@ -24,7 +19,21 @@ import {
   sortEventsByDate,
 } from "../utils/planning";
 
+const PHASE_TRANSLATION_KEYS = {
+  Préparation: "preparation",
+  Plantation: "plantation",
+  Suivi: "suivi",
+  Récolte: "recolte",
+  Conservation: "conservation",
+};
+
+function getPhaseLabel(phase, t) {
+  const key = PHASE_TRANSLATION_KEYS[phase];
+  return key ? t(`planning.phases.${key}`) : phase;
+}
+
 function Planning() {
+  const { t } = useTranslation();
   const [statusFilter, setStatusFilter] = useState("all");
   const [phaseFilter, setPhaseFilter] = useState("all");
   const [search, setSearch] = useState("");
@@ -43,9 +52,21 @@ function Planning() {
   const lastUpdate = useMemo(() => getLastUpdatedEvent(planningEvents), []);
   const checklist = useMemo(() => getChecklistByPhase(planningEvents, PHASE_ORDER), []);
 
+  const statusOptions = useMemo(
+    () =>
+      STATUS_OPTIONS.map((option) => ({
+        value: option.value,
+        label: t(`status.${option.value}`, { defaultValue: option.label }),
+      })),
+    [t]
+  );
+
   const phaseOptions = useMemo(
-    () => [{ value: "all", label: "Toutes les phases" }, ...PHASE_ORDER.map((phase) => ({ value: phase, label: phase }))],
-    []
+    () => [
+      { value: "all", label: t("planning.filters.all_phases") },
+      ...PHASE_ORDER.map((phase) => ({ value: phase, label: getPhaseLabel(phase, t) })),
+    ],
+    [t]
   );
 
   const filteredEvents = useMemo(() => {
@@ -79,7 +100,7 @@ function Planning() {
   if (statusFilter !== "all") {
     activeChips.push({
       key: `status-${statusFilter}`,
-      label: `Statut: ${STATUS_META[statusFilter]?.label ?? statusFilter}`,
+      label: t("planning.filters.active_status", { value: t(`status.${statusFilter}`) }),
       onClear: () => setStatusFilter("all"),
     });
   }
@@ -87,7 +108,7 @@ function Planning() {
   if (phaseFilter !== "all") {
     activeChips.push({
       key: `phase-${phaseFilter}`,
-      label: `Phase: ${phaseFilter}`,
+      label: t("planning.filters.active_phase", { value: getPhaseLabel(phaseFilter, t) }),
       onClear: () => setPhaseFilter("all"),
     });
   }
@@ -95,7 +116,7 @@ function Planning() {
   if (trimmedSearch) {
     activeChips.push({
       key: `search-${trimmedSearch.toLowerCase()}`,
-      label: `Recherche: ${trimmedSearch}`,
+      label: t("planning.filters.active_search", { value: trimmedSearch }),
       onClear: () => setSearch(""),
     });
   }
@@ -103,50 +124,48 @@ function Planning() {
   return (
     <div className="container page-block planning-page">
       <section className="section section-tight">
-        <h1>Planning central 🗓️</h1>
-        <p className="section-intro">Référence commune de la team pour la saison en cours.</p>
-        <p className="muted-text">{PLANNING_SEASON}</p>
+        <h1>{t("planning.title")}</h1>
+        <p className="section-intro">{t("planning.intro")}</p>
+        <p className="muted-text">{t("planning.season")}</p>
 
-        <Card title="Règles Patatos">
+        <Card title={t("planning.rules_title") }>
           <ul className="tips-list">
-            <li>Le planning = la référence.</li>
-            <li>Après chaque session: on met à jour le statut.</li>
-            <li>Indicatif = on valide sur place (météo/sol/feuillage).</li>
-            <li>Une tâche = un responsable principal (si possible).</li>
+            <li>{t("planning.rules.r1")}</li>
+            <li>{t("planning.rules.r2")}</li>
+            <li>{t("planning.rules.r3")}</li>
+            <li>{t("planning.rules.r4")}</li>
           </ul>
         </Card>
 
         <div className="grid three-columns summary-grid">
-          <Card title="Prochaine étape">
+          <Card title={t("planning.summary.next")}>
             {upcomingEvent ? (
               <>
                 <p className="summary-title">{upcomingEvent.title}</p>
-                <p className="muted-text">Période: {getEventScheduleLabel(upcomingEvent)}</p>
+                <p className="muted-text">{t("common.period_with_value", { value: getEventScheduleLabel(upcomingEvent) })}</p>
                 {isEventIndicative(upcomingEvent) ? (
                   <p className="muted-text">{getIndicativeValidationMessage(upcomingEvent)}</p>
                 ) : null}
               </>
             ) : (
-              <p>Aucun événement à venir.</p>
+              <p>{t("planning.summary.none_upcoming")}</p>
             )}
           </Card>
 
-          <Card title="Dernière mise à jour">
+          <Card title={t("planning.summary.last_update")}>
             {lastUpdate ? (
               <>
                 <p className="summary-title">{lastUpdate.title}</p>
                 <p className="muted-text">{formatDateFr(lastUpdate.updatedAt)}</p>
               </>
             ) : (
-              <p>Pas encore de mise à jour.</p>
+              <p>{t("planning.summary.none_update")}</p>
             )}
           </Card>
 
-          <Card title="Progression">
+          <Card title={t("planning.summary.progress")}>
             <p className="summary-title">{progress.percent}%</p>
-            <p className="muted-text">
-              {progress.done} tâche(s) faite(s) · {progress.remaining} restante(s)
-            </p>
+            <p className="muted-text">{t("planning.summary.progress_details", { done: progress.done, remaining: progress.remaining })}</p>
             <div className="progress-track" aria-hidden="true">
               <span style={{ width: `${progress.percent}%` }} />
             </div>
@@ -155,10 +174,8 @@ function Planning() {
       </section>
 
       <section className="section">
-        <h2>Timeline des événements</h2>
-        <p className="muted-text">
-          Chaque carte affiche une période saisonnière. Les tâches indicatives incluent une règle de validation.
-        </p>
+        <h2>{t("planning.timeline.title")}</h2>
+        <p className="muted-text">{t("planning.timeline.intro")}</p>
         <Filters
           statusFilter={statusFilter}
           onStatusChange={setStatusFilter}
@@ -166,14 +183,14 @@ function Planning() {
           onPhaseChange={setPhaseFilter}
           search={search}
           onSearchChange={setSearch}
-          statusOptions={STATUS_OPTIONS}
+          statusOptions={statusOptions}
           phaseOptions={phaseOptions}
           onReset={resetFilters}
           isResetDisabled={isResetDisabled}
         />
         <div className="planning-results sticky-results">
           <p className="muted-text">
-            <strong>{filteredEvents.length}</strong> résultat(s) · sur {sortedEvents.length}
+            <strong>{filteredEvents.length}</strong> {t("planning.timeline.results_tail", { total: sortedEvents.length })}
           </p>
 
           <div className="result-bar" aria-hidden="true">
@@ -181,38 +198,36 @@ function Planning() {
           </div>
 
           {activeChips.length ? (
-            <div className="active-filters" aria-label="Filtres actifs">
+            <div className="active-filters" aria-label={t("planning.timeline.active_filters_aria")}>
               {activeChips.map((chip) => (
                 <button
                   key={chip.key}
                   type="button"
                   className="active-chip"
                   onClick={chip.onClear}
-                  aria-label={`Retirer filtre ${chip.label}`}
+                  aria-label={t("planning.timeline.remove_filter", { label: chip.label })}
                 >
                   {chip.label} <span aria-hidden="true">✕</span>
                 </button>
               ))}
               <button type="button" className="active-chip active-chip-clearall" onClick={resetFilters}>
-                Tout effacer
+                {t("planning.timeline.clear_all")}
               </button>
             </div>
           ) : (
-            <p className="muted-text planning-hint">Aucun filtre actif.</p>
+            <p className="muted-text planning-hint">{t("planning.timeline.none_active")}</p>
           )}
 
-          {filteredEvents.length === 0 ? (
-            <p className="muted-text planning-zero">Aucun résultat: essaie de reset les filtres ou enlève un mot-clé.</p>
-          ) : null}
+          {filteredEvents.length === 0 ? <p className="muted-text planning-zero">{t("planning.timeline.no_results")}</p> : null}
         </div>
         <Timeline events={filteredEvents} />
       </section>
 
       <section className="section">
-        <h2>Checklist par phase</h2>
+        <h2>{t("planning.checklist.title")}</h2>
         <div className="grid two-columns">
           {checklist.map((phaseBlock) => (
-            <Card key={phaseBlock.phase} title={phaseBlock.phase}>
+            <Card key={phaseBlock.phase} title={getPhaseLabel(phaseBlock.phase, t)}>
               {phaseBlock.tasks.length ? (
                 <ul className="checklist">
                   {phaseBlock.tasks.map((task) => {
@@ -226,11 +241,11 @@ function Planning() {
                         <div>
                           <p>{task.title}</p>
                           <div className="timeline-badges">
-                            <Badge tone={status.tone}>{status.label}</Badge>
-                            {isEventIndicative(task) ? <Badge tone="neutral">Indicatif</Badge> : null}
-                            {isLate ? <Badge tone="late">⚠ En retard</Badge> : null}
+                            <Badge tone={status.tone}>{t(`status.${effectiveStatus}`)}</Badge>
+                            {isEventIndicative(task) ? <Badge tone="neutral">{t("planning.timeline.indicative")}</Badge> : null}
+                            {isLate ? <Badge tone="late">{t("planning.timeline.late")}</Badge> : null}
                           </div>
-                          <p className="muted-text">Période: {task.period ?? "À confirmer"}</p>
+                          <p className="muted-text">{t("common.period_with_value", { value: task.period ?? "-" })}</p>
                           {isEventIndicative(task) ? (
                             <p className="muted-text">{getIndicativeValidationMessage(task)}</p>
                           ) : null}
@@ -240,7 +255,7 @@ function Planning() {
                   })}
                 </ul>
               ) : (
-                <p className="muted-text">Aucune tâche dans cette phase.</p>
+                <p className="muted-text">{t("planning.checklist.empty")}</p>
               )}
             </Card>
           ))}
@@ -248,25 +263,13 @@ function Planning() {
       </section>
 
       <section className="section">
-        <h2>Comment mettre à jour le planning ?</h2>
+        <h2>{t("planning.update.title")}</h2>
         <Card>
           <p>
-            Modifie simplement <code>src/data/planning.js</code>. Un objet = un événement (ordre, période, statut,
-            type, phase, description).
+            {t("planning.update.instruction_prefix")} <code>src/data/planning.js</code>. {t("planning.update.instruction_suffix")}
           </p>
-          <p className="muted-text">Mini règle: si une tâche est indicative, ajoute toujours un champ `validation`.</p>
-          <pre className="code-block">{`{
-  id: "nouvelle-tache",
-  order: 4,
-  period: "Avril–Mai 2026 (indicatif)",
-  title: "Nouvelle action",
-  type: "suivi",
-  status: "todo",
-  phase: "Suivi",
-  isIndicative: true,
-  validation: "Validation: on confirme après inspection terrain.",
-  description: "Décrire ce qu'on fait"
-}`}</pre>
+          <p className="muted-text">{t("planning.update.rule")}</p>
+          <pre className="code-block">{t("planning.update.example")}</pre>
         </Card>
       </section>
     </div>

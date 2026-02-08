@@ -1,0 +1,164 @@
+﻿{
+  "nav": {
+    "brand": "Team Patates Patatos",
+    "home": "Accueil",
+    "planning": "Planning",
+    "team": "Équipe",
+    "varieties": "Variétés",
+    "organisation": "Organisation",
+    "faq": "FAQ",
+    "contact": "Contact",
+    "go_home": "Retour à l'accueil",
+    "open_menu": "Ouvrir le menu",
+    "language": "Langue",
+    "lang_fr": "FR",
+    "lang_nl": "NL",
+    "switch_to_fr": "Passer en français",
+    "switch_to_nl": "Passer en néerlandais"
+  },
+  "footer": {
+    "copyright": "© {{year}} Team Patates Patatos · Opération Récolte 🥔",
+    "legal": "Mentions légales"
+  },
+  "status": {
+    "all": "Tous",
+    "upcoming": "À venir",
+    "todo": "À faire",
+    "doing": "En cours",
+    "done": "Fait"
+  },
+  "common": {
+    "period": "Période",
+    "period_with_value": "Période: {{value}}"
+  },
+  "home": {
+    "eyebrow": "Team Patates Patatos",
+    "title": "Opération Récolte",
+    "subtitle": "Base camp Patatos: on garde l'ambiance entre potes, mais avec un planning clair pour éviter les oublis.",
+    "cta_planning": "Voir le planning central",
+    "cta_team": "Voir l'équipe",
+    "cta_varieties": "Voir les variétés",
+    "concept_title": "Le concept",
+    "concept_simple_title": "Simple",
+    "concept_simple_text": "Un seul planning pour toute la team, mis à jour au même endroit.",
+    "concept_fun_title": "Fun",
+    "concept_fun_text": "On avance sérieusement, sans se prendre trop au sérieux 🌱",
+    "concept_efficient_title": "Efficace",
+    "concept_efficient_text": "On priorise les tâches utiles et on précise ce qui reste à confirmer.",
+    "latest_updates_title": "Dernières mises à jour",
+    "updated_at": "Mise à jour: {{date}}",
+    "next_title": "Prochain rendez-vous",
+    "no_upcoming": "Pas d'événement à venir pour le moment. Ajoute-en un dans le planning."
+  },
+  "planning": {
+    "season": "Saison 2026 (Belgique)",
+    "title": "Planning central 🗓️",
+    "intro": "Référence commune de la team pour la saison en cours.",
+    "rules_title": "Règles Patatos",
+    "rules": {
+      "r1": "Le planning = la référence.",
+      "r2": "Après chaque session: on met à jour le statut.",
+      "r3": "Indicatif = on valide sur place (météo/sol/feuillage).",
+      "r4": "Une tâche = un responsable principal (si possible)."
+    },
+    "summary": {
+      "next": "Prochaine étape",
+      "last_update": "Dernière mise à jour",
+      "progress": "Progression",
+      "none_upcoming": "Aucun événement à venir.",
+      "none_update": "Pas encore de mise à jour.",
+      "progress_details": "{{done}} tâche(s) faite(s) · {{remaining}} restante(s)"
+    },
+    "timeline": {
+      "title": "Timeline des événements",
+      "intro": "Chaque carte affiche une période saisonnière. Les tâches indicatives incluent une règle de validation.",
+      "results_tail": "résultat(s) · sur {{total}}",
+      "active_filters_aria": "Filtres actifs",
+      "remove_filter": "Retirer filtre {{label}}",
+      "clear_all": "Tout effacer",
+      "none_active": "Aucun filtre actif.",
+      "no_results": "Aucun résultat: essaie de reset les filtres ou enlève un mot-clé.",
+      "empty": "Aucun événement ne correspond aux filtres actuels.",
+      "indicative": "Indicatif",
+      "late": "⚠ En retard",
+      "responsible": "Responsable",
+      "team_all": "Toute la team"
+    },
+    "filters": {
+      "section_aria": "Filtres du planning",
+      "status_group_aria": "Filtrer par statut",
+      "phase_label": "Filtrer par phase",
+      "search_label": "Rechercher",
+      "search_placeholder": "Rechercher un titre, une note, un prénom...",
+      "reset": "Reset",
+      "all_phases": "Toutes les phases",
+      "active_status": "Statut: {{value}}",
+      "active_phase": "Phase: {{value}}",
+      "active_search": "Recherche: {{value}}"
+    },
+    "checklist": {
+      "title": "Checklist par phase",
+      "empty": "Aucune tâche dans cette phase."
+    },
+    "update": {
+      "title": "Comment mettre à jour le planning ?",
+      "instruction_prefix": "Modifie simplement",
+      "instruction_suffix": "Un objet = un événement (ordre, période, statut, type, phase, description).",
+      "rule": "Mini règle: si une tâche est indicative, ajoute toujours un champ `validation`.",
+      "example": "{\n  id: \"nouvelle-tache\",\n  order: 4,\n  period: \"Avril–Mai 2026\",\n  title: \"Nouvelle action\",\n  type: \"suivi\",\n  status: \"todo\",\n  phase: \"Suivi\",\n  isIndicative: true,\n  validation: \"Validation: on confirme après inspection terrain.\",\n  description: \"Décrire ce qu'on fait\"\n}"
+    },
+    "phases": {
+      "preparation": "Préparation",
+      "plantation": "Plantation",
+      "suivi": "Suivi",
+      "recolte": "Récolte",
+      "conservation": "Conservation"
+    },
+    "types": {
+      "preparation": "Préparation",
+      "plantation": "Plantation",
+      "suivi": "Suivi",
+      "recolte": "Récolte",
+      "conservation": "Conservation"
+    }
+  },
+  "varieties": {
+    "title": "Variétés 🥔",
+    "intro": "Liste Patatos 2026: aperçu simple des variétés, périodes de saison et usages pratiques.",
+    "season_title": "Repères de saison",
+    "season_text": "Toutes les périodes sont des repères: on ajuste selon météo, sol et observation des plants.",
+    "recap_title": "Récapitulatif",
+    "table": {
+      "name": "Variété",
+      "type": "Type",
+      "planting": "Plantation",
+      "harvest": "Récolte",
+      "usage": "Usage"
+    },
+    "details_title": "Détails des variétés",
+    "image_alt": "Pomme de terre {{name}}",
+    "zoom_image": "Agrandir l'image de {{name}}",
+    "lightbox_label": "Image {{title}}",
+    "lightbox_close": "Fermer",
+    "lightbox_prev": "Image précédente",
+    "lightbox_next": "Image suivante",
+    "planting_label": "Plantation",
+    "harvest_label": "Récolte",
+    "usage_label": "Usage",
+    "type_early": "précoce",
+    "type_storage": "conservation",
+    "back_to_recap": "Retour au récap ↑",
+    "harvest_tips_title": "Conseils récolte",
+    "harvest_tips": {
+      "t1": "Feuillage qui jaunit: signe que la maturité approche.",
+      "t2": "Peau qui tient quand tu frottes doucement: bon indicateur.",
+      "t3": "Fais un test sur un pied avant de lancer toute la récolte."
+    },
+    "storage_tips_title": "Conseils conservation",
+    "storage_tips": {
+      "t1": "Stocker au frais, au sec et à l'obscurité.",
+      "t2": "Ne pas laver avant stockage.",
+      "t3": "Trier régulièrement pour retirer les tubercules abîmés."
+    }
+  }
+}

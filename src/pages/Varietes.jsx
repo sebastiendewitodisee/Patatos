@@ -1,5 +1,6 @@
 ﻿import { useCallback, useEffect, useMemo, useState } from "react";
 import { createPortal } from "react-dom";
+import { useTranslation } from "react-i18next";
 import Badge from "../components/Badge";
 import Card from "../components/Card";
 import { varieties } from "../data/varieties";
@@ -58,7 +59,25 @@ function updateFocusParam(focus) {
   window.history.replaceState({}, "", `${url.pathname}#${nextHash}`);
 }
 
+function getVarietyTypeLabel(type, t) {
+  const normalized = (type || "")
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLowerCase();
+
+  if (normalized.includes("precoce")) {
+    return t("varieties.type_early");
+  }
+
+  if (normalized.includes("conservation")) {
+    return t("varieties.type_storage");
+  }
+
+  return type;
+}
+
 function Varietes() {
+  const { t } = useTranslation();
   const [brokenImages, setBrokenImages] = useState({});
   const [lightbox, setLightbox] = useState(null);
 
@@ -77,16 +96,13 @@ function Varietes() {
           targetId: `variete-${slug}`,
           imgSrc,
           hasImage,
-          imageAlt: `Pomme de terre ${item.name}`,
+          imageAlt: t("varieties.image_alt", { name: item.name }),
         };
       }),
-    [brokenImages]
+    [brokenImages, t]
   );
 
-  const hasMultipleImages = useMemo(
-    () => varietyItems.filter((item) => item.hasImage).length > 1,
-    [varietyItems]
-  );
+  const hasMultipleImages = useMemo(() => varietyItems.filter((item) => item.hasImage).length > 1, [varietyItems]);
 
   const findNextImageIndex = useCallback(
     (startIndex, direction) => {
@@ -223,7 +239,7 @@ function Varietes() {
       className="lightbox-overlay"
       role="dialog"
       aria-modal="true"
-      aria-label={`Image ${lightbox.title}`}
+      aria-label={t("varieties.lightbox_label", { title: lightbox.title })}
       onMouseDown={(event) => {
         if (event.target === event.currentTarget) {
           setLightbox(null);
@@ -231,7 +247,7 @@ function Varietes() {
       }}
     >
       <div className="lightbox-content">
-        <button type="button" className="lightbox-close" onClick={() => setLightbox(null)} aria-label="Fermer">
+        <button type="button" className="lightbox-close" onClick={() => setLightbox(null)} aria-label={t("varieties.lightbox_close")}>
           ✕
         </button>
 
@@ -254,7 +270,7 @@ function Varietes() {
           <button
             type="button"
             className="lightbox-nav lightbox-nav-prev"
-            aria-label="Image précédente"
+            aria-label={t("varieties.lightbox_prev")}
             onClick={(event) => {
               event.stopPropagation();
               openPrev();
@@ -280,7 +296,7 @@ function Varietes() {
           <button
             type="button"
             className="lightbox-nav lightbox-nav-next"
-            aria-label="Image suivante"
+            aria-label={t("varieties.lightbox_next")}
             onClick={(event) => {
               event.stopPropagation();
               openNext();
@@ -299,29 +315,27 @@ function Varietes() {
   return (
     <div className="container page-block">
       <section className="section section-tight">
-        <h1>Variétés 🥔</h1>
-        <p className="section-intro">
-          Liste Patatos 2026: aperçu simple des variétés, périodes de saison et usages pratiques.
-        </p>
+        <h1>{t("varieties.title")}</h1>
+        <p className="section-intro">{t("varieties.intro")}</p>
       </section>
 
       <section className="section">
-        <Card title="Repères de saison">
-          <p>Toutes les périodes sont des repères: on ajuste selon météo, sol et observation des plants.</p>
+        <Card title={t("varieties.season_title") }>
+          <p>{t("varieties.season_text")}</p>
         </Card>
       </section>
 
       <section className="section anchor-offset" id={RECAP_ID}>
-        <h2>Récapitulatif</h2>
+        <h2>{t("varieties.recap_title")}</h2>
         <div className="table-wrap">
           <table>
             <thead>
               <tr>
-                <th>Variété</th>
-                <th>Type</th>
-                <th>Plantation</th>
-                <th>Récolte</th>
-                <th>Usage</th>
+                <th>{t("varieties.table.name")}</th>
+                <th>{t("varieties.table.type")}</th>
+                <th>{t("varieties.table.planting")}</th>
+                <th>{t("varieties.table.harvest")}</th>
+                <th>{t("varieties.table.usage")}</th>
               </tr>
             </thead>
             <tbody>
@@ -336,7 +350,7 @@ function Varietes() {
                     </a>
                   </td>
                   <td>
-                    <strong>{item.type}</strong>
+                    <strong>{getVarietyTypeLabel(item.type, t)}</strong>
                   </td>
                   <td>{item.planting}</td>
                   <td>{item.harvest}</td>
@@ -349,7 +363,7 @@ function Varietes() {
       </section>
 
       <section className="section">
-        <h2>Détails des variétés</h2>
+        <h2>{t("varieties.details_title")}</h2>
         <div className="grid three-columns">
           {varietyItems.map((item) => {
             const showPlaceholder = !item.hasImage;
@@ -367,7 +381,7 @@ function Varietes() {
                         <button
                           type="button"
                           className="image-button"
-                          aria-label={`Agrandir l'image de ${item.name}`}
+                          aria-label={t("varieties.zoom_image", { name: item.name })}
                           onClick={(event) => openLightbox(event, item.index)}
                         >
                           <img
@@ -383,27 +397,24 @@ function Varietes() {
                     </div>
                     <div>
                       <h3>{item.name}</h3>
-                      <Badge tone={item.type === "précoce" ? "plantation" : "conservation"}>{item.type}</Badge>
+                      <Badge tone={item.type === "précoce" ? "plantation" : "conservation"}>{getVarietyTypeLabel(item.type, t)}</Badge>
                     </div>
                   </div>
 
                   <div className="variety-meta">
                     <p>
-                      <strong>Plantation:</strong> {item.planting}
+                      <strong>{t("varieties.planting_label")}:</strong> {item.planting}
                     </p>
                     <p>
-                      <strong>Récolte:</strong> {item.harvest}
+                      <strong>{t("varieties.harvest_label")}:</strong> {item.harvest}
                     </p>
                     <p>
-                      <strong>Usage:</strong> {item.usage}
+                      <strong>{t("varieties.usage_label")}:</strong> {item.usage}
                     </p>
                   </div>
 
-                  <a
-                    href={`#${VARIETES_ROUTE}?focus=recap`}
-                    onClick={(event) => scrollToAnchor(event, RECAP_ID, "recap")}
-                  >
-                    Retour au récap ↑
+                  <a href={`#${VARIETES_ROUTE}?focus=recap`} onClick={(event) => scrollToAnchor(event, RECAP_ID, "recap")}>
+                    {t("varieties.back_to_recap")}
                   </a>
                 </Card>
               </div>
@@ -413,23 +424,23 @@ function Varietes() {
       </section>
 
       <section className="section">
-        <h2>Conseils récolte</h2>
+        <h2>{t("varieties.harvest_tips_title")}</h2>
         <Card>
           <ul className="tips-list">
-            <li>Feuillage qui jaunit: signe que la maturité approche.</li>
-            <li>Peau qui tient quand tu frottes doucement: bon indicateur.</li>
-            <li>Fais un test sur un pied avant de lancer toute la récolte.</li>
+            <li>{t("varieties.harvest_tips.t1")}</li>
+            <li>{t("varieties.harvest_tips.t2")}</li>
+            <li>{t("varieties.harvest_tips.t3")}</li>
           </ul>
         </Card>
       </section>
 
       <section className="section">
-        <h2>Conseils conservation</h2>
+        <h2>{t("varieties.storage_tips_title")}</h2>
         <Card>
           <ul className="tips-list">
-            <li>Stocker au frais, au sec et à l&apos;obscurité.</li>
-            <li>Ne pas laver avant stockage.</li>
-            <li>Trier régulièrement pour retirer les tubercules abîmés.</li>
+            <li>{t("varieties.storage_tips.t1")}</li>
+            <li>{t("varieties.storage_tips.t2")}</li>
+            <li>{t("varieties.storage_tips.t3")}</li>
           </ul>
         </Card>
       </section>

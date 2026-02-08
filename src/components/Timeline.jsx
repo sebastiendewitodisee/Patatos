@@ -1,4 +1,5 @@
-﻿import Badge from "./Badge";
+﻿import { useTranslation } from "react-i18next";
+import Badge from "./Badge";
 import { STATUS_META, TYPE_META } from "../data/planning";
 import {
   getEffectiveStatus,
@@ -25,10 +26,12 @@ function getResponsiblesDisplay(responsibles) {
 }
 
 function Timeline({ events }) {
+  const { t } = useTranslation();
+
   if (!events.length) {
     return (
       <div className="empty-state">
-        <p>Aucun événement ne correspond aux filtres actuels.</p>
+        <p>{t("planning.timeline.empty")}</p>
       </div>
     );
   }
@@ -44,15 +47,15 @@ function Timeline({ events }) {
 
         return (
           <li key={event.id} className="timeline-item">
-            <span className="timeline-date">Période: {getEventScheduleLabel(event)}</span>
+            <span className="timeline-date">{t("common.period_with_value", { value: getEventScheduleLabel(event) })}</span>
             <article className={`timeline-card ${isLate ? "is-late" : ""}`.trim()}>
               <div className="timeline-head">
                 <h3>{event.title}</h3>
                 <div className="timeline-badges">
-                  <Badge tone={status.tone}>{status.label}</Badge>
-                  <Badge tone={type.tone}>{type.label}</Badge>
-                  {isEventIndicative(event) ? <Badge tone="neutral">Indicatif</Badge> : null}
-                  {isLate ? <Badge tone="late">⚠ En retard</Badge> : null}
+                  <Badge tone={status.tone}>{t(`status.${effectiveStatus}`)}</Badge>
+                  <Badge tone={type.tone}>{t(`planning.types.${event.type}`, { defaultValue: type.label })}</Badge>
+                  {isEventIndicative(event) ? <Badge tone="neutral">{t("planning.timeline.indicative")}</Badge> : null}
+                  {isLate ? <Badge tone="late">{t("planning.timeline.late")}</Badge> : null}
                 </div>
               </div>
 
@@ -64,9 +67,9 @@ function Timeline({ events }) {
 
               {responsiblesDisplay ? (
                 <p className="timeline-meta">
-                  Responsable :{" "}
+                  {t("planning.timeline.responsible")} :{" "}
                   {responsiblesDisplay.isTeam ? (
-                    responsiblesDisplay.principal
+                    t("planning.timeline.team_all")
                   ) : (
                     <>
                       <strong>{responsiblesDisplay.principal}</strong>

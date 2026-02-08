@@ -1,0 +1,164 @@
+﻿{
+  "nav": {
+    "brand": "Team Patates Patatos",
+    "home": "Start",
+    "planning": "Planning",
+    "team": "Team",
+    "varieties": "Variëteiten",
+    "organisation": "Organisatie",
+    "faq": "FAQ",
+    "contact": "Contact",
+    "go_home": "Terug naar start",
+    "open_menu": "Menu openen",
+    "language": "Taal",
+    "lang_fr": "FR",
+    "lang_nl": "NL",
+    "switch_to_fr": "Schakel naar Frans",
+    "switch_to_nl": "Schakel naar Nederlands"
+  },
+  "footer": {
+    "copyright": "© {{year}} Team Patates Patatos · Oogstoperatie 🥔",
+    "legal": "Juridische vermeldingen"
+  },
+  "status": {
+    "all": "Alles",
+    "upcoming": "Komt eraan",
+    "todo": "Te doen",
+    "doing": "Bezig",
+    "done": "Klaar"
+  },
+  "common": {
+    "period": "Periode",
+    "period_with_value": "Periode: {{value}}"
+  },
+  "home": {
+    "eyebrow": "Team Patates Patatos",
+    "title": "Oogstoperatie",
+    "subtitle": "Patatos basecamp: losse sfeer onder vrienden, met een duidelijke planning zodat niets vergeten wordt.",
+    "cta_planning": "Centrale planning bekijken",
+    "cta_team": "Team bekijken",
+    "cta_varieties": "Variëteiten bekijken",
+    "concept_title": "Het concept",
+    "concept_simple_title": "Eenvoudig",
+    "concept_simple_text": "Eén planning voor het hele team, bijgewerkt op één plek.",
+    "concept_fun_title": "Fun",
+    "concept_fun_text": "We werken serieus, zonder onszelf te serieus te nemen 🌱",
+    "concept_efficient_title": "Efficiënt",
+    "concept_efficient_text": "We prioriteren nuttige taken en markeren wat nog bevestigd moet worden.",
+    "latest_updates_title": "Laatste updates",
+    "updated_at": "Update: {{date}}",
+    "next_title": "Volgende afspraak",
+    "no_upcoming": "Nog geen volgende gebeurtenis. Voeg er één toe in de planning."
+  },
+  "planning": {
+    "season": "Seizoen 2026 (België)",
+    "title": "Centrale planning 🗓️",
+    "intro": "Gezamenlijk referentiepunt van het team voor het lopende seizoen.",
+    "rules_title": "Patatos-regels",
+    "rules": {
+      "r1": "De planning is de referentie.",
+      "r2": "Na elke sessie werken we de status bij.",
+      "r3": "Indicatief = we valideren ter plaatse (weer/bodem/loof).",
+      "r4": "Eén taak = één hoofdverantwoordelijke (indien mogelijk)."
+    },
+    "summary": {
+      "next": "Volgende stap",
+      "last_update": "Laatste update",
+      "progress": "Voortgang",
+      "none_upcoming": "Geen komende gebeurtenis.",
+      "none_update": "Nog geen update.",
+      "progress_details": "{{done}} taak/taken klaar · {{remaining}} resterend"
+    },
+    "timeline": {
+      "title": "Tijdlijn van gebeurtenissen",
+      "intro": "Elke kaart toont een seizoensperiode. Indicatieve taken bevatten een validatieregel.",
+      "results_tail": "resultaat/resultaten · op {{total}}",
+      "active_filters_aria": "Actieve filters",
+      "remove_filter": "Filter verwijderen {{label}}",
+      "clear_all": "Alles wissen",
+      "none_active": "Geen actieve filters.",
+      "no_results": "Geen resultaat: reset de filters of verwijder een zoekwoord.",
+      "empty": "Geen gebeurtenis past bij de huidige filters.",
+      "indicative": "Indicatief",
+      "late": "⚠ Te laat",
+      "responsible": "Verantwoordelijke",
+      "team_all": "Hele team"
+    },
+    "filters": {
+      "section_aria": "Planningfilters",
+      "status_group_aria": "Filter op status",
+      "phase_label": "Filter op fase",
+      "search_label": "Zoeken",
+      "search_placeholder": "Zoek op titel, notitie, voornaam...",
+      "reset": "Reset",
+      "all_phases": "Alle fasen",
+      "active_status": "Status: {{value}}",
+      "active_phase": "Fase: {{value}}",
+      "active_search": "Zoeken: {{value}}"
+    },
+    "checklist": {
+      "title": "Checklist per fase",
+      "empty": "Geen taken in deze fase."
+    },
+    "update": {
+      "title": "Hoe updaten we de planning?",
+      "instruction_prefix": "Pas gewoon",
+      "instruction_suffix": "aan. Eén object = één gebeurtenis (volgorde, periode, status, type, fase, beschrijving).",
+      "rule": "Kleine regel: als een taak indicatief is, voeg altijd een veld `validation` toe.",
+      "example": "{\n  id: \"nieuwe-taak\",\n  order: 4,\n  period: \"April–Mei 2026\",\n  title: \"Nieuwe actie\",\n  type: \"suivi\",\n  status: \"todo\",\n  phase: \"Suivi\",\n  isIndicative: true,\n  validation: \"Validatie: we bevestigen na terreincontrole.\",\n  description: \"Beschrijf wat we doen\"\n}"
+    },
+    "phases": {
+      "preparation": "Voorbereiding",
+      "plantation": "Aanplanten",
+      "suivi": "Opvolging",
+      "recolte": "Oogst",
+      "conservation": "Bewaring"
+    },
+    "types": {
+      "preparation": "Voorbereiding",
+      "plantation": "Aanplanten",
+      "suivi": "Opvolging",
+      "recolte": "Oogst",
+      "conservation": "Bewaring"
+    }
+  },
+  "varieties": {
+    "title": "Variëteiten 🥔",
+    "intro": "Patatos 2026-lijst: eenvoudig overzicht van variëteiten, seizoensperiodes en praktisch gebruik.",
+    "season_title": "Seizoensrichtlijnen",
+    "season_text": "Alle periodes zijn richtlijnen: we sturen bij op basis van weer, bodem en observatie van de planten.",
+    "recap_title": "Overzicht",
+    "table": {
+      "name": "Variëteit",
+      "type": "Type",
+      "planting": "Planten",
+      "harvest": "Oogst",
+      "usage": "Gebruik"
+    },
+    "details_title": "Details van de variëteiten",
+    "image_alt": "Aardappel {{name}}",
+    "zoom_image": "Afbeelding van {{name}} vergroten",
+    "lightbox_label": "Afbeelding {{title}}",
+    "lightbox_close": "Sluiten",
+    "lightbox_prev": "Vorige afbeelding",
+    "lightbox_next": "Volgende afbeelding",
+    "planting_label": "Planten",
+    "harvest_label": "Oogst",
+    "usage_label": "Gebruik",
+    "type_early": "vroeg",
+    "type_storage": "bewaring",
+    "back_to_recap": "Terug naar overzicht ↑",
+    "harvest_tips_title": "Oogsttips",
+    "harvest_tips": {
+      "t1": "Loof dat vergeelt: teken dat de rijpheid nadert.",
+      "t2": "Schil die blijft zitten als je zacht wrijft: goede indicator.",
+      "t3": "Test eerst op één plant voor je de volledige oogst start."
+    },
+    "storage_tips_title": "Bewaartips",
+    "storage_tips": {
+      "t1": "Bewaren op een koele, droge en donkere plaats.",
+      "t2": "Niet wassen voor opslag.",
+      "t3": "Regelmatig sorteren en beschadigde knollen verwijderen."
+    }
+  }
+}
