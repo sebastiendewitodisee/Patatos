@@ -2,14 +2,14 @@
 
 Site multi-pages (SPA React) pour organiser le projet potager **Opération Récolte 🥔**.
 
-## Démarrage
+## Démarrage local
 
 ```bash
 npm i
 npm run dev
 ```
 
-App dispo ensuite sur l'URL fournie par Vite (en local: `http://127.0.0.1:5173`).
+App locale (par défaut): `http://127.0.0.1:5173`
 
 ## Build production
 
@@ -17,6 +17,8 @@ App dispo ensuite sur l'URL fournie par Vite (en local: `http://127.0.0.1:5173`)
 npm run build
 npm run preview
 ```
+
+Le build est généré dans `dist/`.
 
 ## Structure principale
 
@@ -26,13 +28,11 @@ npm run preview
 - `src/utils/planning.js`: fonctions de calcul (prochaine étape, progression, dernières updates)
 - `src/styles/`: styles globaux et composants
 
-## Mettre à jour le planning (important)
+## Mettre à jour le planning
 
-Le planning central est dans:
+Le planning central est dans `src/data/planning.js`.
 
-- `src/data/planning.js`
-
-Chaque entrée est un objet simple:
+Exemple d'entrée:
 
 ```js
 {
@@ -46,73 +46,36 @@ Chaque entrée est un objet simple:
 }
 ```
 
-## Déploiement Vercel (recommandé)
+## Déploiement automatique GitHub Pages (repo `patatos`)
 
-1. Push du repo sur GitHub.
-2. Import du repo dans Vercel.
-3. Framework détecté: **Vite**.
-4. Build command: `npm run build`
-5. Output directory: `dist`
+Le projet est configuré pour un site GitHub Pages de type **project site**:
 
-## Déploiement GitHub Pages (option)
+- URL attendue: `https://<user>.github.io/patatos/`
+- Base Vite en production: `/patatos/` (`vite.config.js`)
+- Router: `HashRouter` (URLs en `/#/planning`) pour éviter les 404 au refresh sur GitHub Pages
 
-### 1) Configurer la base Vite
+### 1) Workflow GitHub Actions
 
-Dans `vite.config.js`, définir `base` avec le nom du repo (exemple `patatos-site`):
+Le workflow est déjà fourni dans:
 
-```js
-import { defineConfig } from "vite";
-import react from "@vitejs/plugin-react";
+- `.github/workflows/deploy.yml`
 
-export default defineConfig({
-  plugins: [react()],
-  base: "/patatos-site/",
-});
-```
+Il exécute automatiquement à chaque push sur `main`:
 
-### 2) Action GitHub (workflow)
+1. checkout
+2. setup-node (Node 20)
+3. `npm ci`
+4. `npm run build`
+5. publication de `dist/` via `actions/upload-pages-artifact` + `actions/deploy-pages`
 
-Créer `.github/workflows/deploy.yml`:
+### 2) Activer GitHub Pages dans le repo
 
-```yml
-name: Deploy Vite to GitHub Pages
+Dans GitHub: `Settings > Pages`
 
-on:
-  push:
-    branches: [main]
-  workflow_dispatch:
+- Source: `GitHub Actions`
 
-permissions:
-  contents: read
-  pages: write
-  id-token: write
+Une fois activé, chaque push sur `main` déclenche un déploiement.
 
-concurrency:
-  group: pages
-  cancel-in-progress: true
+## URL finale
 
-jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 20
-          cache: npm
-      - run: npm ci
-      - run: npm run build
-      - uses: actions/upload-pages-artifact@v3
-        with:
-          path: dist
-
-  deploy:
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    runs-on: ubuntu-latest
-    needs: build
-    steps:
-      - id: deployment
-        uses: actions/deploy-pages@v4
-```
+- `https://sebastiendewitodisee.github.io/patatos/`
