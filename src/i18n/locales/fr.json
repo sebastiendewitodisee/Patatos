@@ -290,6 +290,58 @@
       "t1": "Stocker au frais, au sec et à l'obscurité.",
       "t2": "Ne pas laver avant stockage.",
       "t3": "Trier régulièrement pour retirer les tubercules abîmés."
+    },
+    "items": {
+      "alouette": {
+        "planting": "Avril",
+        "harvest": "Août–Octobre",
+        "usage": "polyvalent"
+      },
+      "cheyenne": {
+        "planting": "Avril",
+        "harvest": "Août–Septembre",
+        "usage": "salade/vapeur (chair ferme, groupe A)"
+      },
+      "desiree": {
+        "planting": "Avril",
+        "harvest": "Août–Septembre",
+        "usage": "polyvalent (groupe B-C)"
+      },
+      "premiere": {
+        "planting": "Mars–Avril",
+        "harvest": "Juin–Juillet",
+        "usage": "frites (précoce)"
+      },
+      "jelly": {
+        "planting": "Avril",
+        "harvest": "Septembre–Octobre",
+        "usage": "polyvalent (légèrement farineuse)"
+      },
+      "frieslander": {
+        "planting": "Mars–Avril",
+        "harvest": "Juin–Juillet",
+        "usage": "vapeur/ferme + frites"
+      },
+      "nicola": {
+        "planting": "Mars–Avril",
+        "harvest": "Juillet–Août",
+        "usage": "salade/vapeur (waxy)"
+      },
+      "bintje": {
+        "planting": "Avril",
+        "harvest": "Août–Octobre",
+        "usage": "frites/purée"
+      },
+      "melody": {
+        "planting": "Avril",
+        "harvest": "Août–Septembre",
+        "usage": "frites/purée (polyvalent)"
+      },
+      "zen": {
+        "planting": "Avril",
+        "harvest": "Juillet–Septembre",
+        "usage": "tenue ferme / gratins"
+      }
     }
   },
   "team": {

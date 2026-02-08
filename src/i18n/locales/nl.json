@@ -290,6 +290,58 @@
       "t1": "Bewaren op een koele, droge en donkere plaats.",
       "t2": "Niet wassen voor opslag.",
       "t3": "Regelmatig sorteren en beschadigde knollen verwijderen."
+    },
+    "items": {
+      "alouette": {
+        "planting": "april",
+        "harvest": "augustus–oktober",
+        "usage": "veelzijdig"
+      },
+      "cheyenne": {
+        "planting": "april",
+        "harvest": "augustus–september",
+        "usage": "salade/stomen (vastkokend, groep A)"
+      },
+      "desiree": {
+        "planting": "april",
+        "harvest": "augustus–september",
+        "usage": "veelzijdig (groep B-C)"
+      },
+      "premiere": {
+        "planting": "maart–april",
+        "harvest": "juni–juli",
+        "usage": "frieten (vroeg ras)"
+      },
+      "jelly": {
+        "planting": "april",
+        "harvest": "september–oktober",
+        "usage": "veelzijdig (licht bloemig)"
+      },
+      "frieslander": {
+        "planting": "maart–april",
+        "harvest": "juni–juli",
+        "usage": "stomen/vast + frieten"
+      },
+      "nicola": {
+        "planting": "maart–april",
+        "harvest": "juli–augustus",
+        "usage": "salade/stomen (waxy)"
+      },
+      "bintje": {
+        "planting": "april",
+        "harvest": "augustus–oktober",
+        "usage": "frieten/puree"
+      },
+      "melody": {
+        "planting": "april",
+        "harvest": "augustus–september",
+        "usage": "frieten/puree (veelzijdig)"
+      },
+      "zen": {
+        "planting": "april",
+        "harvest": "juli–september",
+        "usage": "vastkokend / gratins"
+      }
     }
   },
   "team": {

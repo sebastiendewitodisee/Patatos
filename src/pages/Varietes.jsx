@@ -59,21 +59,29 @@ function updateFocusParam(focus) {
   window.history.replaceState({}, "", `${url.pathname}#${nextHash}`);
 }
 
+const VARIETY_TYPE_TRANSLATION_KEYS = {
+  early: "varieties.type_early",
+  storage: "varieties.type_storage",
+};
+
 function getVarietyTypeLabel(type, t) {
-  const normalized = (type || "")
-    .normalize("NFD")
-    .replace(/[\u0300-\u036f]/g, "")
-    .toLowerCase();
-
-  if (normalized.includes("precoce")) {
-    return t("varieties.type_early");
+  const translationKey = VARIETY_TYPE_TRANSLATION_KEYS[type];
+  if (translationKey) {
+    return t(translationKey);
   }
 
-  if (normalized.includes("conservation")) {
-    return t("varieties.type_storage");
+  return type ?? "";
+}
+
+function getVarietyText(item, keyName, fallbackKeyName, t) {
+  const translationKey = item?.[keyName];
+  const fallbackValue = fallbackKeyName ? item?.[fallbackKeyName] : "";
+
+  if (!translationKey) {
+    return fallbackValue ?? "";
   }
 
-  return type;
+  return t(translationKey, { defaultValue: fallbackValue ?? "" });
 }
 
 function Varietes() {
@@ -352,9 +360,9 @@ function Varietes() {
                   <td>
                     <strong>{getVarietyTypeLabel(item.type, t)}</strong>
                   </td>
-                  <td>{item.planting}</td>
-                  <td>{item.harvest}</td>
-                  <td>{item.usage}</td>
+                  <td>{getVarietyText(item, "plantingKey", "planting", t)}</td>
+                  <td>{getVarietyText(item, "harvestKey", "harvest", t)}</td>
+                  <td>{getVarietyText(item, "usageKey", "usage", t)}</td>
                 </tr>
               ))}
             </tbody>
@@ -397,19 +405,19 @@ function Varietes() {
                     </div>
                     <div>
                       <h3>{item.name}</h3>
-                      <Badge tone={item.type === "précoce" ? "plantation" : "conservation"}>{getVarietyTypeLabel(item.type, t)}</Badge>
+                      <Badge tone={item.type === "early" ? "plantation" : "conservation"}>{getVarietyTypeLabel(item.type, t)}</Badge>
                     </div>
                   </div>
 
                   <div className="variety-meta">
                     <p>
-                      <strong>{t("varieties.planting_label")}:</strong> {item.planting}
+                      <strong>{t("varieties.planting_label")}:</strong> {getVarietyText(item, "plantingKey", "planting", t)}
                     </p>
                     <p>
-                      <strong>{t("varieties.harvest_label")}:</strong> {item.harvest}
+                      <strong>{t("varieties.harvest_label")}:</strong> {getVarietyText(item, "harvestKey", "harvest", t)}
                     </p>
                     <p>
-                      <strong>{t("varieties.usage_label")}:</strong> {item.usage}
+                      <strong>{t("varieties.usage_label")}:</strong> {getVarietyText(item, "usageKey", "usage", t)}
                     </p>
                   </div>
 

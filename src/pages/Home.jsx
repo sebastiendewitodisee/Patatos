@@ -4,7 +4,7 @@ import Badge from "../components/Badge";
 import Card from "../components/Card";
 import { planningEvents, STATUS_META } from "../data/planning";
 import {
-  formatDateFr,
+  formatDateLocale,
   getEffectiveStatus,
   getEventScheduleLabel,
   getIndicativeValidationMessage,
@@ -13,13 +13,43 @@ import {
   isEventIndicative,
 } from "../utils/planning";
 
+function getEventText(event, keyName, fallbackKeyName, t) {
+  const translationKey = event?.[keyName];
+  const fallbackValue = fallbackKeyName ? event?.[fallbackKeyName] : "";
+
+  if (!translationKey) {
+    return fallbackValue ?? "";
+  }
+
+  return t(translationKey, { defaultValue: fallbackValue ?? "" });
+}
+
+function getEventPeriodLabel(event, t, locale, periodFallback, dateFallback) {
+  const fallbackLabel = getEventScheduleLabel(event, {
+    periodFallback,
+    dateFallback: event?.date ? formatDateLocale(event.date, locale, dateFallback) : dateFallback,
+  });
+
+  if (!event?.periodKey) {
+    return fallbackLabel;
+  }
+
+  return t(event.periodKey, { defaultValue: fallbackLabel });
+}
+
+function getEventValidationText(event, t, validationFallback) {
+  const fallbackLabel = getIndicativeValidationMessage(event, validationFallback);
+  return event?.validationKey ? t(event.validationKey, { defaultValue: fallbackLabel }) : fallbackLabel;
+}
+
 function Home() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const latestUpdates = getLatestUpdates(planningEvents, 3);
   const upcomingEvent = getUpcomingEvent(planningEvents);
   const dateFallback = t("planning.fallbacks.date_tbc");
   const periodFallback = t("planning.fallbacks.period_tbc");
   const validationFallback = t("planning.fallbacks.validation");
+  const locale = i18n.resolvedLanguage === "nl" ? "nl-BE" : "fr-FR";
 
   return (
     <div className="container page-block home-page">
@@ -60,8 +90,8 @@ function Home() {
             const status = STATUS_META[statusKey] ?? STATUS_META.todo;
 
             return (
-              <Card key={item.id} title={item.title}>
-                <p className="muted-text">{t("home.updated_at", { date: formatDateFr(item.updatedAt, dateFallback) })}</p>
+              <Card key={item.id} title={getEventText(item, "titleKey", "title", t)}>
+                <p className="muted-text">{t("home.updated_at", { date: formatDateLocale(item.updatedAt, locale, dateFallback) })}</p>
                 <Badge tone={status.tone}>{t(`status.${statusKey}`)}</Badge>
               </Card>
             );
@@ -74,16 +104,16 @@ function Home() {
         <Card className="next-event-card">
           {upcomingEvent ? (
             <>
-              <p className="next-event-title">{upcomingEvent.title}</p>
+              <p className="next-event-title">{getEventText(upcomingEvent, "titleKey", "title", t)}</p>
               <p className="muted-text">
                 {t("common.period_with_value", {
-                  value: getEventScheduleLabel(upcomingEvent, { periodFallback, dateFallback }),
+                  value: getEventPeriodLabel(upcomingEvent, t, locale, periodFallback, dateFallback),
                 })}
               </p>
               {isEventIndicative(upcomingEvent) ? (
-                <p className="muted-text">{getIndicativeValidationMessage(upcomingEvent, validationFallback)}</p>
+                <p className="muted-text">{getEventValidationText(upcomingEvent, t, validationFallback)}</p>
               ) : null}
-              <p>{upcomingEvent.description}</p>
+              <p>{getEventText(upcomingEvent, "descriptionKey", "description", t)}</p>
             </>
           ) : (
             <p>{t("home.no_upcoming")}</p>
