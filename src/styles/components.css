@@ -28,9 +28,10 @@
 
 .brand-wordmark-wrap {
   display: block;
-  width: clamp(220px, 18vw, 320px);
+  width: clamp(220px, 18vw, 340px);
   height: 44px;
-  flex: 0 0 auto;
+  flex: 0 1 auto;
+  min-width: 0;
   margin: 0;
   padding: 0;
   line-height: 0;
@@ -1736,7 +1737,16 @@ th {
   }
 
   .brand-wordmark-wrap {
-    display: none;
+    display: block;
+    width: clamp(120px, 42vw, 190px);
+    height: 28px;
+  }
+}
+
+@media (max-width: 360px) {
+  .brand-wordmark-wrap {
+    width: 110px;
+    height: 26px;
   }
 }
 
