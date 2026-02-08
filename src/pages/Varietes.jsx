@@ -92,6 +92,27 @@ function getUsageTags(item) {
   return item.usageTags.filter((tag) => typeof tag === "string" && tag.trim()).slice(0, 3);
 }
 
+function getVarietyCultureText(item, field, t) {
+  if (!item?.id || !field) {
+    return t("common.to_define");
+  }
+
+  return t(`varieties.items.${item.id}.${field}`, { defaultValue: t("common.to_define") });
+}
+
+function getVarietyTips(item, t) {
+  if (!item?.id) {
+    return [];
+  }
+
+  const tips = t(`varieties.items.${item.id}.tips`, { returnObjects: true, defaultValue: [] });
+  if (!Array.isArray(tips)) {
+    return [];
+  }
+
+  return tips.filter((tip) => typeof tip === "string" && tip.trim().length > 0);
+}
+
 function renderUsageChips(item, t) {
   const usageTags = getUsageTags(item);
   if (!usageTags.length) {
@@ -358,48 +379,12 @@ function Varietes() {
         </Card>
       </section>
 
-      <section className="section anchor-offset" id={RECAP_ID}>
-        <h2>{t("varieties.recap_title")}</h2>
-        <div className="table-wrap">
-          <table>
-            <thead>
-              <tr>
-                <th>{t("varieties.table.name")}</th>
-                <th>{t("varieties.table.type")}</th>
-                <th>{t("varieties.table.planting")}</th>
-                <th>{t("varieties.table.harvest")}</th>
-                <th>{t("varieties.table.usage")}</th>
-              </tr>
-            </thead>
-            <tbody>
-              {varietyItems.map((item) => (
-                <tr key={item.name}>
-                  <td>
-                    <a
-                      href={`#${VARIETES_ROUTE}?focus=${item.targetId}`}
-                      onClick={(event) => scrollToAnchor(event, item.targetId, item.targetId)}
-                    >
-                      {item.name} <span aria-hidden="true">→</span>
-                    </a>
-                  </td>
-                  <td>
-                    <strong>{getVarietyTypeLabel(item.type, t)}</strong>
-                  </td>
-                  <td>{getVarietyText(item, "plantingKey", "planting", t)}</td>
-                  <td>{getVarietyText(item, "harvestKey", "harvest", t)}</td>
-                  <td>{renderUsageChips(item, t)}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      </section>
-
       <section className="section">
         <h2>{t("varieties.details_title")}</h2>
         <div className="grid three-columns">
           {varietyItems.map((item) => {
             const showPlaceholder = !item.hasImage;
+            const varietyTips = getVarietyTips(item, t);
 
             return (
               <div key={item.name} id={item.targetId} className="anchor-offset">
@@ -435,14 +420,46 @@ function Varietes() {
                   </div>
 
                   <div className="variety-meta">
-                    <p>
-                      <strong>{t("varieties.planting_label")}:</strong> {getVarietyText(item, "plantingKey", "planting", t)}
-                    </p>
-                    <p>
-                      <strong>{t("varieties.harvest_label")}:</strong> {getVarietyText(item, "harvestKey", "harvest", t)}
-                    </p>
+                    <div className="variety-culture-grid">
+                      <p>
+                        <strong>{t("varieties.culture_labels.soil_type")}:</strong> {getVarietyCultureText(item, "soil_type", t)}
+                      </p>
+                      <p>
+                        <strong>{t("varieties.culture_labels.exposure")}:</strong> {getVarietyCultureText(item, "exposure", t)}
+                      </p>
+                      <p>
+                        <strong>{t("varieties.culture_labels.planting_depth")}:</strong> {getVarietyCultureText(item, "planting_depth", t)}
+                      </p>
+                      <p>
+                        <strong>{t("varieties.culture_labels.spacing")}:</strong> {getVarietyCultureText(item, "spacing", t)}
+                      </p>
+                      <p>
+                        <strong>{t("varieties.culture_labels.planting_period")}:</strong> {getVarietyCultureText(item, "planting_period", t)}
+                      </p>
+                      <p>
+                        <strong>{t("varieties.culture_labels.harvest_period")}:</strong> {getVarietyCultureText(item, "harvest_period", t)}
+                      </p>
+                      <p>
+                        <strong>{t("varieties.culture_labels.yield")}:</strong> {getVarietyCultureText(item, "yield", t)}
+                      </p>
+                      <p>
+                        <strong>{t("varieties.culture_labels.disease_resistance")}:</strong> {getVarietyCultureText(item, "disease_resistance", t)}
+                      </p>
+                    </div>
                     <div className="variety-usage-row">
                       <strong>{t("varieties.usage_label")}:</strong> {renderUsageChips(item, t)}
+                    </div>
+                    <div className="variety-tips-row">
+                      <strong>{t("varieties.culture_labels.tips")}:</strong>
+                      {varietyTips.length ? (
+                        <ul className="variety-card-tips">
+                          {varietyTips.map((tip, index) => (
+                            <li key={`${item.id}-tip-${index}`}>{tip}</li>
+                          ))}
+                        </ul>
+                      ) : (
+                        <span>{t("common.to_define")}</span>
+                      )}
                     </div>
                   </div>
 
@@ -453,6 +470,43 @@ function Varietes() {
               </div>
             );
           })}
+        </div>
+      </section>
+
+      <section className="section anchor-offset" id={RECAP_ID}>
+        <h2>{t("varieties.recap_title")}</h2>
+        <div className="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>{t("varieties.table.name")}</th>
+                <th>{t("varieties.table.type")}</th>
+                <th>{t("varieties.table.planting")}</th>
+                <th>{t("varieties.table.harvest")}</th>
+                <th>{t("varieties.table.usage")}</th>
+              </tr>
+            </thead>
+            <tbody>
+              {varietyItems.map((item) => (
+                <tr key={item.name}>
+                  <td>
+                    <a
+                      href={`#${VARIETES_ROUTE}?focus=${item.targetId}`}
+                      onClick={(event) => scrollToAnchor(event, item.targetId, item.targetId)}
+                    >
+                      {item.name} <span aria-hidden="true">→</span>
+                    </a>
+                  </td>
+                  <td>
+                    <strong>{getVarietyTypeLabel(item.type, t)}</strong>
+                  </td>
+                  <td>{getVarietyText(item, "plantingKey", "planting", t)}</td>
+                  <td>{getVarietyText(item, "harvestKey", "harvest", t)}</td>
+                  <td>{renderUsageChips(item, t)}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
       </section>
 

@@ -319,52 +319,172 @@
       "alouette": {
         "planting": "Avril",
         "harvest": "Août–Octobre",
-        "usage": "vapeur / frites / au four"
+        "usage": "vapeur / frites / au four",
+        "soil_type": "Limoneux a sablo-limoneux, bien draine",
+        "exposure": "Plein soleil",
+        "planting_depth": "8-10 cm",
+        "spacing": "35 cm entre plants / 70 cm entre rangs",
+        "planting_period": "Mars-Avril",
+        "harvest_period": "Aout-Octobre",
+        "yield": "3.5-4.5 kg/m2",
+        "disease_resistance": "Bonne tolerance au mildiou du feuillage",
+        "tips": [
+          "Buttez des que les plants atteignent 15-20 cm.",
+          "Arrosez regulierement en floraison sans detremper le sol."
+        ]
       },
       "cheyenne": {
         "planting": "Avril",
         "harvest": "Août–Septembre",
-        "usage": "salade / vapeur / rôties"
+        "usage": "salade / vapeur / rôties",
+        "soil_type": "Limoneux leger a sablo-limoneux, sol vite rechauffe",
+        "exposure": "Plein soleil",
+        "planting_depth": "8-10 cm",
+        "spacing": "32-35 cm entre plants / 65-70 cm entre rangs",
+        "planting_period": "Mars-Avril",
+        "harvest_period": "Aout-Septembre",
+        "yield": "3-4 kg/m2",
+        "disease_resistance": "Tolerance moyenne au mildiou, vigilance en periode humide",
+        "tips": [
+          "Evitez les exces d'azote pour garder des tubercules fermes.",
+          "Buttez soigneusement pour limiter le verdissement."
+        ]
       },
       "desiree": {
         "planting": "Avril",
         "harvest": "Août–Septembre",
-        "usage": "vapeur / frites / purée"
+        "usage": "vapeur / frites / purée",
+        "soil_type": "Limoneux a argilo-limoneux, fertile et meuble",
+        "exposure": "Plein soleil",
+        "planting_depth": "10-12 cm",
+        "spacing": "35-38 cm entre plants / 70-75 cm entre rangs",
+        "planting_period": "Avril",
+        "harvest_period": "Aout-Septembre",
+        "yield": "3.5-5 kg/m2",
+        "disease_resistance": "Bonne tolerance a la secheresse, sensibilite moyenne au mildiou",
+        "tips": [
+          "Preferez des arrosages profonds mais espaces en ete sec.",
+          "Laissez ressuyer la peau avant la mise en stockage."
+        ]
       },
       "premiere": {
         "planting": "Mars–Avril",
         "harvest": "Juin–Juillet",
-        "usage": "frites / sautées / au four"
+        "usage": "frites / sautées / au four",
+        "soil_type": "Sablo-limoneux leger, bien rechauffe",
+        "exposure": "Plein soleil",
+        "planting_depth": "8-10 cm",
+        "spacing": "30-32 cm entre plants / 60-65 cm entre rangs",
+        "planting_period": "Mars-Avril",
+        "harvest_period": "Juin-Juillet",
+        "yield": "2.5-3.5 kg/m2",
+        "disease_resistance": "Cycle court: vigilance mildiou en fin de culture",
+        "tips": [
+          "Faites pregermer 2 a 3 semaines pour gagner en precocite.",
+          "Recoltez jeune pour garder une chair fine."
+        ]
       },
       "jelly": {
         "planting": "Avril",
         "harvest": "Septembre–Octobre",
-        "usage": "frites / vapeur / au four"
+        "usage": "frites / vapeur / au four",
+        "soil_type": "Limoneux profond, riche en matiere organique",
+        "exposure": "Plein soleil",
+        "planting_depth": "10-12 cm",
+        "spacing": "35-38 cm entre plants / 70-75 cm entre rangs",
+        "planting_period": "Avril",
+        "harvest_period": "Septembre-Octobre",
+        "yield": "4-5.5 kg/m2",
+        "disease_resistance": "Bonne tenue globale, surveillance du mildiou du feuillage",
+        "tips": [
+          "Maintenez une humidite reguliere pendant le grossissement.",
+          "Evitez de blesser les tubercules au ramassage."
+        ]
       },
       "frieslander": {
         "planting": "Mars–Avril",
         "harvest": "Juin–Juillet",
-        "usage": "vapeur / sautées / frites"
+        "usage": "vapeur / sautées / frites",
+        "soil_type": "Sablo-limoneux leger, bien draine",
+        "exposure": "Plein soleil",
+        "planting_depth": "8-10 cm",
+        "spacing": "30-33 cm entre plants / 60-65 cm entre rangs",
+        "planting_period": "Mars-Avril",
+        "harvest_period": "Juin-Juillet",
+        "yield": "2.8-3.8 kg/m2",
+        "disease_resistance": "Sensibilite moyenne au mildiou, prevention utile",
+        "tips": [
+          "Montez les buttes tot pour proteger les jeunes tubercules.",
+          "Arrosez en petites doses regulieres sur sol sableux."
+        ]
       },
       "nicola": {
         "planting": "Mars–Avril",
         "harvest": "Juillet–Août",
-        "usage": "salade / vapeur / sautées"
+        "usage": "salade / vapeur / sautées",
+        "soil_type": "Limoneux leger a moyen, bien draine",
+        "exposure": "Plein soleil",
+        "planting_depth": "8-10 cm",
+        "spacing": "32-35 cm entre plants / 65-70 cm entre rangs",
+        "planting_period": "Mars-Avril",
+        "harvest_period": "Juillet-Aout",
+        "yield": "3-4.2 kg/m2",
+        "disease_resistance": "Bonne tenue des tubercules, vigilance mildiou",
+        "tips": [
+          "Recoltez progressivement selon vos besoins cuisine.",
+          "Conservez a l'abri de la lumiere pour garder la fermete."
+        ]
       },
       "bintje": {
         "planting": "Avril",
         "harvest": "Août–Octobre",
-        "usage": "frites / rôties / purée"
+        "usage": "frites / rôties / purée",
+        "soil_type": "Limoneux profond, meuble et fertile",
+        "exposure": "Plein soleil",
+        "planting_depth": "10-12 cm",
+        "spacing": "35-40 cm entre plants / 70-75 cm entre rangs",
+        "planting_period": "Avril",
+        "harvest_period": "Aout-Octobre",
+        "yield": "3.5-5 kg/m2",
+        "disease_resistance": "Sensible au mildiou (feuillage et tubercules), suivi strict",
+        "tips": [
+          "Renforcez la rotation des parcelles (3 a 4 ans).",
+          "Evitez l'irrigation tardive avant recolte."
+        ]
       },
       "melody": {
         "planting": "Avril",
         "harvest": "Août–Septembre",
-        "usage": "vapeur / sautées / au four"
+        "usage": "vapeur / sautées / au four",
+        "soil_type": "Limoneux a argilo-limoneux bien structure",
+        "exposure": "Plein soleil",
+        "planting_depth": "10-12 cm",
+        "spacing": "35-38 cm entre plants / 70-75 cm entre rangs",
+        "planting_period": "Avril",
+        "harvest_period": "Aout-Septembre",
+        "yield": "4-5 kg/m2",
+        "disease_resistance": "Bonne robustesse generale, sensibilite moderee au mildiou",
+        "tips": [
+          "Faites un buttage haut pour homogeneiser le calibre.",
+          "Laissez cicatriser 7 a 10 jours avant stockage long."
+        ]
       },
       "zen": {
         "planting": "Avril",
         "harvest": "Juillet–Septembre",
-        "usage": "salade / vapeur / sautées"
+        "usage": "salade / vapeur / sautées",
+        "soil_type": "Limoneux leger a moyen, bien draine",
+        "exposure": "Plein soleil a mi-ombre legere",
+        "planting_depth": "8-10 cm",
+        "spacing": "32-35 cm entre plants / 65-70 cm entre rangs",
+        "planting_period": "Avril",
+        "harvest_period": "Juillet-Septembre",
+        "yield": "3-4 kg/m2",
+        "disease_resistance": "Profil equilibre, vigilance en conditions tres humides",
+        "tips": [
+          "Surveillez pucerons et doryphores des le debut d'ete.",
+          "Arrosez surtout au demarrage des tubercules."
+        ]
       }
     },
     "usage": {
@@ -377,6 +497,17 @@
       "four": "Au four",
       "potage": "Potage",
       "roties": "Rôties"
+    },
+    "culture_labels": {
+      "soil_type": "Type de sol",
+      "exposure": "Exposition",
+      "planting_depth": "Profondeur de plantation",
+      "spacing": "Espacement entre les plants",
+      "planting_period": "Periode de plantation",
+      "harvest_period": "Periode de recolte",
+      "yield": "Rendement moyen",
+      "disease_resistance": "Resistance aux maladies",
+      "tips": "Conseils pratiques"
     }
   },
   "team": {

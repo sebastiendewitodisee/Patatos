@@ -319,52 +319,172 @@
       "alouette": {
         "planting": "april",
         "harvest": "augustus–oktober",
-        "usage": "stomen / frieten / oven"
+        "usage": "stomen / frieten / oven",
+        "soil_type": "Lemig tot zandleem, goed doorlatend",
+        "exposure": "Volle zon",
+        "planting_depth": "8-10 cm",
+        "spacing": "35 cm tussen planten / 70 cm tussen rijen",
+        "planting_period": "Maart-April",
+        "harvest_period": "Augustus-Oktober",
+        "yield": "3.5-4.5 kg/m2",
+        "disease_resistance": "Goede tolerantie tegen phytophthora in het loof",
+        "tips": [
+          "Aanaarden zodra het loof 15-20 cm hoog is.",
+          "Regelmatig water geven tijdens de bloei, zonder natte bodem."
+        ]
       },
       "cheyenne": {
         "planting": "april",
         "harvest": "augustus–september",
-        "usage": "salade / stomen / geroosterd"
+        "usage": "salade / stomen / geroosterd",
+        "soil_type": "Lichte leem tot zandleem, snel opwarmende grond",
+        "exposure": "Volle zon",
+        "planting_depth": "8-10 cm",
+        "spacing": "32-35 cm tussen planten / 65-70 cm tussen rijen",
+        "planting_period": "Maart-April",
+        "harvest_period": "Augustus-September",
+        "yield": "3-4 kg/m2",
+        "disease_resistance": "Gemiddelde tolerantie tegen phytophthora, opletten bij nat weer",
+        "tips": [
+          "Vermijd te veel stikstof om stevige knollen te houden.",
+          "Zorg voor een nette aanaarding om vergroening te beperken."
+        ]
       },
       "desiree": {
         "planting": "april",
         "harvest": "augustus–september",
-        "usage": "stomen / frieten / puree"
+        "usage": "stomen / frieten / puree",
+        "soil_type": "Lemig tot kleileem, vruchtbaar en luchtig",
+        "exposure": "Volle zon",
+        "planting_depth": "10-12 cm",
+        "spacing": "35-38 cm tussen planten / 70-75 cm tussen rijen",
+        "planting_period": "April",
+        "harvest_period": "Augustus-September",
+        "yield": "3.5-5 kg/m2",
+        "disease_resistance": "Goede droogtetolerantie, gemiddelde gevoeligheid voor phytophthora",
+        "tips": [
+          "Geef diep water maar met tussenpozen in droge zomerperiodes.",
+          "Laat de schil nadrogen voor lange bewaring."
+        ]
       },
       "premiere": {
         "planting": "maart–april",
         "harvest": "juni–juli",
-        "usage": "frieten / bakken / oven"
+        "usage": "frieten / bakken / oven",
+        "soil_type": "Lichte zandleem, snel opwarmend",
+        "exposure": "Volle zon",
+        "planting_depth": "8-10 cm",
+        "spacing": "30-32 cm tussen planten / 60-65 cm tussen rijen",
+        "planting_period": "Maart-April",
+        "harvest_period": "Juni-Juli",
+        "yield": "2.5-3.5 kg/m2",
+        "disease_resistance": "Korte teeltcyclus: let op phytophthora op het einde",
+        "tips": [
+          "Voorkiem 2 tot 3 weken voor een vroege oogst.",
+          "Oogst jong voor een fijne textuur."
+        ]
       },
       "jelly": {
         "planting": "april",
         "harvest": "september–oktober",
-        "usage": "frieten / stomen / oven"
+        "usage": "frieten / stomen / oven",
+        "soil_type": "Diepe leemgrond, rijk aan organische stof",
+        "exposure": "Volle zon",
+        "planting_depth": "10-12 cm",
+        "spacing": "35-38 cm tussen planten / 70-75 cm tussen rijen",
+        "planting_period": "April",
+        "harvest_period": "September-Oktober",
+        "yield": "4-5.5 kg/m2",
+        "disease_resistance": "Algemeen sterke veldprestatie, loof regelmatig controleren",
+        "tips": [
+          "Houd het vochtgehalte stabiel tijdens knolgroei.",
+          "Vermijd stootschade bij het rooien."
+        ]
       },
       "frieslander": {
         "planting": "maart–april",
         "harvest": "juni–juli",
-        "usage": "stomen / bakken / frieten"
+        "usage": "stomen / bakken / frieten",
+        "soil_type": "Lichte zandleem, goed drainerend",
+        "exposure": "Volle zon",
+        "planting_depth": "8-10 cm",
+        "spacing": "30-33 cm tussen planten / 60-65 cm tussen rijen",
+        "planting_period": "Maart-April",
+        "harvest_period": "Juni-Juli",
+        "yield": "2.8-3.8 kg/m2",
+        "disease_resistance": "Gemiddelde gevoeligheid voor phytophthora, preventie aanbevolen",
+        "tips": [
+          "Aanaarden in een vroeg stadium om jonge knollen te beschermen.",
+          "Op zandgrond beter vaker kleine watergiften geven."
+        ]
       },
       "nicola": {
         "planting": "maart–april",
         "harvest": "juli–augustus",
-        "usage": "salade / stomen / bakken"
+        "usage": "salade / stomen / bakken",
+        "soil_type": "Lichte tot middelzware leem, goed doorlatend",
+        "exposure": "Volle zon",
+        "planting_depth": "8-10 cm",
+        "spacing": "32-35 cm tussen planten / 65-70 cm tussen rijen",
+        "planting_period": "Maart-April",
+        "harvest_period": "Juli-Augustus",
+        "yield": "3-4.2 kg/m2",
+        "disease_resistance": "Stevige knolkwaliteit, wel alert blijven op phytophthora",
+        "tips": [
+          "Geschikt voor geleidelijke oogst volgens keukenvraag.",
+          "Donker bewaren om stevige knollen te behouden."
+        ]
       },
       "bintje": {
         "planting": "april",
         "harvest": "augustus–oktober",
-        "usage": "frieten / geroosterd / puree"
+        "usage": "frieten / geroosterd / puree",
+        "soil_type": "Diepe, losse en vruchtbare leemgrond",
+        "exposure": "Volle zon",
+        "planting_depth": "10-12 cm",
+        "spacing": "35-40 cm tussen planten / 70-75 cm tussen rijen",
+        "planting_period": "April",
+        "harvest_period": "Augustus-Oktober",
+        "yield": "3.5-5 kg/m2",
+        "disease_resistance": "Gevoelig voor phytophthora (loof en knol), strikte opvolging nodig",
+        "tips": [
+          "Werk met ruime vruchtwisseling (3 tot 4 jaar).",
+          "Vermijd late beregening vlak voor de oogst."
+        ]
       },
       "melody": {
         "planting": "april",
         "harvest": "augustus–september",
-        "usage": "stomen / bakken / oven"
+        "usage": "stomen / bakken / oven",
+        "soil_type": "Lemig tot kleileem, goed gestructureerd",
+        "exposure": "Volle zon",
+        "planting_depth": "10-12 cm",
+        "spacing": "35-38 cm tussen planten / 70-75 cm tussen rijen",
+        "planting_period": "April",
+        "harvest_period": "Augustus-September",
+        "yield": "4-5 kg/m2",
+        "disease_resistance": "Goede algemene robuustheid, matige gevoeligheid voor phytophthora",
+        "tips": [
+          "Aard hoog aan voor een gelijkmatiger knolmaat.",
+          "Laat 7 tot 10 dagen narijpen voor lange bewaring."
+        ]
       },
       "zen": {
         "planting": "april",
         "harvest": "juli–september",
-        "usage": "salade / stomen / bakken"
+        "usage": "salade / stomen / bakken",
+        "soil_type": "Lichte tot middelzware leem, goed doorlatend",
+        "exposure": "Volle zon tot lichte halfschaduw",
+        "planting_depth": "8-10 cm",
+        "spacing": "32-35 cm tussen planten / 65-70 cm tussen rijen",
+        "planting_period": "April",
+        "harvest_period": "Juli-September",
+        "yield": "3-4 kg/m2",
+        "disease_resistance": "Evenwichtig profiel, extra controle bij langdurig nat weer",
+        "tips": [
+          "Controleer op bladluizen en coloradokevers vanaf vroege zomer.",
+          "Water vooral bij de start van de knolvorming."
+        ]
       }
     },
     "usage": {
@@ -377,6 +497,17 @@
       "four": "Oven",
       "potage": "Soep",
       "roties": "Geroosterd"
+    },
+    "culture_labels": {
+      "soil_type": "Bodemtype",
+      "exposure": "Expositie",
+      "planting_depth": "Plantdiepte",
+      "spacing": "Afstand tussen planten",
+      "planting_period": "Plantperiode",
+      "harvest_period": "Oogstperiode",
+      "yield": "Gemiddelde opbrengst",
+      "disease_resistance": "Ziekteresistentie",
+      "tips": "Praktische tips"
     }
   },
   "team": {

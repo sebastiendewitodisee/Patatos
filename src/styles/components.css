@@ -1235,11 +1235,43 @@ th {
 
 .variety-meta {
   margin-top: 8px;
+  display: grid;
+  gap: 0.55rem;
+}
+
+.variety-culture-grid {
+  display: grid;
+  gap: 0.3rem;
+}
+
+.variety-culture-grid p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.9rem;
+  line-height: 1.35;
+}
+
+.variety-culture-grid strong {
+  color: var(--text);
 }
 
 .variety-usage-row {
   display: grid;
   gap: 0.34rem;
+}
+
+.variety-tips-row {
+  display: grid;
+  gap: 0.34rem;
+}
+
+.variety-card-tips {
+  margin: 0;
+  padding-left: 1.1rem;
+  display: grid;
+  gap: 0.22rem;
+  color: var(--muted);
+  font-size: 0.9rem;
 }
 
 .usage-chips {
