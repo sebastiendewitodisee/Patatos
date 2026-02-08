@@ -10,6 +10,7 @@
     "contact": "Contact",
     "go_home": "Terug naar start",
     "open_menu": "Menu openen",
+    "close_menu": "Menu sluiten",
     "language": "Taal",
     "theme": "Thema",
     "lang_fr": "FR",
@@ -30,6 +31,7 @@
     "all": "Alles",
     "upcoming": "Komt eraan",
     "todo": "Te doen",
+    "in_progress": "Bezig",
     "doing": "Bezig",
     "done": "Klaar"
   },
@@ -113,11 +115,10 @@
       "empty": "Geen taken in deze fase."
     },
     "update": {
-      "title": "Hoe updaten we de planning?",
-      "instruction_prefix": "Pas gewoon",
-      "instruction_suffix": "aan. Eén object = één gebeurtenis (volgorde, periode, status, type, fase, beschrijving).",
-      "rule": "Kleine regel: als een taak indicatief is, voeg altijd een veld `validation` toe.",
-      "example": "{\n  id: \"nieuwe-taak\",\n  order: 4,\n  period: \"April-Mei 2026\",\n  title: \"Nieuwe actie\",\n  type: \"suivi\",\n  phaseId: \"suivi\",\n  status: \"todo\",\n  isIndicative: true,\n  validation: \"Validatie: we bevestigen na terreincontrole.\",\n  description: \"Beschrijf wat we doen\"\n}"
+      "title": "Planning updaten",
+      "instruction_prefix": "Pas de events aan in",
+      "instruction_suffix": "Werk daarna de vertalingen bij in FR/NL onder `planning.events.<id>.*`.",
+      "rule": "Het veld `period` blijft technisch (FR) voor de logica. Als `isIndicative` true is, vul `validation` in."
     },
     "phases": {
       "preparation": "Voorbereiding",

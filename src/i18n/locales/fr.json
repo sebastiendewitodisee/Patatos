@@ -10,6 +10,7 @@
     "contact": "Contact",
     "go_home": "Retour à l'accueil",
     "open_menu": "Ouvrir le menu",
+    "close_menu": "Fermer le menu",
     "language": "Langue",
     "theme": "Thème",
     "lang_fr": "FR",
@@ -30,6 +31,7 @@
     "all": "Tous",
     "upcoming": "À venir",
     "todo": "À faire",
+    "in_progress": "En cours",
     "doing": "En cours",
     "done": "Fait"
   },
@@ -113,11 +115,10 @@
       "empty": "Aucune tâche dans cette phase."
     },
     "update": {
-      "title": "Comment mettre à jour le planning ?",
-      "instruction_prefix": "Modifie simplement",
-      "instruction_suffix": "Un objet = un événement (ordre, période, statut, type, phase, description).",
-      "rule": "Mini règle: si une tâche est indicative, ajoute toujours un champ `validation`.",
-      "example": "{\n  id: \"nouvelle-tache\",\n  order: 4,\n  period: \"Avril-Mai 2026\",\n  title: \"Nouvelle action\",\n  type: \"suivi\",\n  phaseId: \"suivi\",\n  status: \"todo\",\n  isIndicative: true,\n  validation: \"Validation: on confirme apres inspection terrain.\",\n  description: \"Decrire ce qu'on fait\"\n}"
+      "title": "Mettre a jour le planning",
+      "instruction_prefix": "Modifie les evenements dans",
+      "instruction_suffix": "Puis aligne les traductions FR/NL sous `planning.events.<id>.*`.",
+      "rule": "Le champ `period` reste technique (FR) pour la logique. Si `isIndicative` est true, renseigne `validation`."
     },
     "phases": {
       "preparation": "Préparation",

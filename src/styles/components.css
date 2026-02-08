@@ -11,9 +11,9 @@
   min-height: 4.4rem;
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  gap: 1rem;
+  gap: 0.72rem;
   position: relative;
+  flex-wrap: nowrap;
 }
 
 .brand {
@@ -22,6 +22,15 @@
   gap: 0.6rem;
   font-family: "Sora", "Gill Sans", sans-serif;
   font-weight: 700;
+  min-width: 0;
+  flex: 1 1 auto;
+}
+
+.brand-label {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 14rem;
 }
 
 .brand-mark {
@@ -40,6 +49,7 @@
   gap: 0.25rem;
   flex-wrap: wrap;
   justify-content: flex-end;
+  margin-left: auto;
 }
 
 .nav-link {
@@ -66,7 +76,21 @@
   display: inline-flex;
   align-items: center;
   gap: 0.3rem;
-  margin-left: 0.35rem;
+}
+
+.header-controls {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.32rem;
+  flex: 0 0 auto;
+}
+
+.header-controls .lang-switch {
+  margin-left: 0;
+}
+
+.theme-label-mobile {
+  display: none;
 }
 
 .lang-btn {
@@ -1134,21 +1158,80 @@ th {
 }
 
 @media (max-width: 880px) {
+  .header-inner {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto auto;
+    align-items: center;
+    gap: 0.45rem;
+    min-height: 4.4rem;
+  }
+
+  .brand {
+    min-width: 0;
+  }
+
+  .brand-label {
+    max-width: 7rem;
+    font-size: 0.9rem;
+  }
+
+  .header-controls {
+    gap: 0.28rem;
+    margin-left: 0;
+    flex-wrap: nowrap;
+    justify-self: end;
+    position: relative;
+    z-index: 60;
+  }
+
+  .header-theme-switch .lang-btn,
+  .header-language-switch .lang-btn {
+    min-width: 2rem;
+    padding: 0.24rem 0.42rem;
+    font-size: 0.76rem;
+  }
+
+  .header-theme-switch .lang-btn {
+    min-width: 2.15rem;
+    padding: 0.24rem 0.36rem;
+  }
+
+  .theme-label-desktop {
+    display: none;
+  }
+
+  .theme-label-mobile {
+    display: inline;
+    font-size: 0.94rem;
+    line-height: 1;
+  }
+
   .burger-btn {
     display: inline-flex;
+    margin-left: 0;
+    flex-shrink: 0;
+    justify-self: end;
+    position: relative;
+    z-index: 61;
   }
 
   .site-nav {
     display: none;
+    margin-left: 0;
     position: absolute;
-    top: calc(100% - 0.1rem);
+    top: 100%;
     left: 0;
     right: 0;
-    border-radius: 0 0 0.9rem 0.9rem;
+    margin-top: 0.34rem;
+    border-radius: 0.9rem;
     border: 1px solid var(--line);
-    border-top: 0;
     background: rgba(8, 13, 20, 0.96);
     padding: 0.6rem;
+    z-index: 40;
+    max-height: calc(100dvh - 5.4rem);
+    overflow: auto;
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
   }
 
   .site-nav.is-open {
@@ -1157,12 +1240,8 @@ th {
   }
 
   .nav-link {
+    display: block;
     padding: 0.55rem 0.7rem;
-  }
-
-  .lang-switch {
-    margin-left: 0;
-    margin-top: 0.3rem;
   }
 
   .filter-fields {
@@ -1228,6 +1307,10 @@ th {
 }
 
 @media (max-width: 520px) {
+  .brand-label {
+    max-width: 4.4rem;
+  }
+
   .lightbox-nav {
     width: 40px;
     height: 40px;

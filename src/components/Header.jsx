@@ -1,4 +1,4 @@
-﻿import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Link, NavLink, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { DEFAULT_LANG, setLangToUrl, setStoredLang } from "../i18n";
@@ -46,15 +46,13 @@ function applyTheme(theme) {
 function Header() {
   const { pathname } = useLocation();
   const { t, i18n } = useTranslation();
+  const headerRef = useRef(null);
+  const navRef = useRef(null);
   const [openAtPath, setOpenAtPath] = useState(null);
   const [theme, setTheme] = useState(() => getStoredTheme() || getSystemTheme());
   const [hasThemePreference, setHasThemePreference] = useState(() => Boolean(getStoredTheme()));
   const isOpen = openAtPath === pathname;
   const currentLang = i18n.resolvedLanguage || i18n.language || DEFAULT_LANG;
-
-  if (import.meta.env.DEV) {
-    console.log("HEADER_RENDER_VERSION_2026-02-08_A", { isOpen });
-  }
 
   const languageItems = useMemo(
     () => [
@@ -85,6 +83,62 @@ function Header() {
 
     window.addEventListener("keydown", onKeyDown);
     return () => window.removeEventListener("keydown", onKeyDown);
+  }, [isOpen]);
+
+  useEffect(() => {
+    if (!isOpen || typeof document === "undefined") {
+      return undefined;
+    }
+
+    const onPointerDown = (event) => {
+      const headerEl = headerRef.current;
+      if (headerEl && !headerEl.contains(event.target)) {
+        setOpenAtPath(null);
+      }
+    };
+
+    document.addEventListener("pointerdown", onPointerDown);
+    return () => document.removeEventListener("pointerdown", onPointerDown);
+  }, [isOpen]);
+
+  useEffect(() => {
+    if (!isOpen || typeof window === "undefined") {
+      return undefined;
+    }
+
+    const mediaQuery = window.matchMedia("(min-width: 881px)");
+    const onViewportChange = (event) => {
+      if (event.matches) {
+        setOpenAtPath(null);
+      }
+    };
+
+    if (typeof mediaQuery.addEventListener === "function") {
+      mediaQuery.addEventListener("change", onViewportChange);
+      return () => mediaQuery.removeEventListener("change", onViewportChange);
+    }
+
+    mediaQuery.addListener(onViewportChange);
+    return () => mediaQuery.removeListener(onViewportChange);
+  }, [isOpen]);
+
+  useEffect(() => {
+    if (!isOpen || typeof window === "undefined") {
+      return undefined;
+    }
+
+    const frame = window.requestAnimationFrame(() => {
+      if (!window.matchMedia("(max-width: 880px)").matches) {
+        return;
+      }
+
+      const firstLink = navRef.current?.querySelector("a");
+      if (firstLink instanceof HTMLElement) {
+        firstLink.focus();
+      }
+    });
+
+    return () => window.cancelAnimationFrame(frame);
   }, [isOpen]);
 
   useEffect(() => {
@@ -146,26 +200,16 @@ function Header() {
   };
 
   return (
-    <header className="site-header">
+    <header ref={headerRef} className="site-header">
       <div className="container header-inner">
         <Link to="/" className="brand" aria-label={t("nav.go_home")} onClick={() => setOpenAtPath(null)}>
           <span className="brand-mark" aria-hidden="true">
-            🥔
+            {"\u{1F954}"}
           </span>
           <span className="brand-label">{t("nav.brand")}</span>
         </Link>
 
-        {import.meta.env.DEV ? (
-          <span
-            className="muted-text"
-            style={{ fontSize: "0.62rem", lineHeight: 1, whiteSpace: "nowrap" }}
-            data-dev-header-version="HEADER_VERSION_2026-02-08_A"
-          >
-            HEADER_VERSION_2026-02-08_A
-          </span>
-        ) : null}
-
-        <nav id="main-navigation" className={`site-nav${isOpen ? " is-open" : ""}`}>
+        <nav ref={navRef} id="main-navigation" className={`site-nav${isOpen ? " is-open" : ""}`}>
           {navItems.map((item) => (
             <NavLink
               key={item.to}
@@ -191,7 +235,7 @@ function Header() {
               >
                 <span className="theme-label-desktop">{themeItem.label}</span>
                 <span className="theme-label-mobile" aria-hidden="true">
-                  {themeItem.value === "dark" ? "🌙" : "☀️"}
+                  {themeItem.value === "dark" ? "\u{1F319}" : "\u2600\uFE0F"}
                 </span>
               </button>
             ))}
@@ -217,7 +261,7 @@ function Header() {
           className={`burger-btn${isOpen ? " is-open" : ""}`}
           aria-expanded={isOpen}
           aria-controls="main-navigation"
-          aria-label={t("nav.open_menu")}
+          aria-label={isOpen ? t("nav.close_menu") : t("nav.open_menu")}
           onClick={() => setOpenAtPath(isOpen ? null : pathname)}
         >
           <span />
