@@ -15,7 +15,7 @@ function Organisation() {
       <section className="section section-tight">
         <h1>Organisation 🌱</h1>
         <p className="section-intro">
-          On reste souples, mais on garde un cadre simple pour avancer sans friction.
+          Objectif: rester souples entre potes, mais assez carrés pour que le planning avance vraiment.
         </p>
       </section>
 
@@ -26,6 +26,7 @@ function Organisation() {
               <li key={task}>{task}</li>
             ))}
           </ul>
+          <p className="muted-text">On se répartit les rôles selon les dispos, puis on met à jour le planning central.</p>
         </Card>
       </section>
 

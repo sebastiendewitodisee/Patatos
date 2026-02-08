@@ -5,6 +5,7 @@ import Filters from "../components/Filters";
 import Timeline from "../components/Timeline";
 import {
   PHASE_ORDER,
+  PLANNING_SEASON,
   STATUS_META,
   STATUS_OPTIONS,
   TYPE_META,
@@ -13,9 +14,11 @@ import {
 import {
   formatDateFr,
   getChecklistByPhase,
+  getEventScheduleLabel,
   getLastUpdatedEvent,
   getPlanningProgress,
   getUpcomingEvent,
+  isEventIndicative,
   sortEventsByDate,
 } from "../utils/planning";
 
@@ -49,7 +52,7 @@ function Planning() {
       const matchesType = typeFilter === "all" || event.type === typeFilter;
       const matchesSearch =
         loweredSearch.length === 0 ||
-        [event.title, event.description, event.responsibles?.join(" ")]
+        [event.title, event.description, event.responsibles?.join(" "), event.period]
           .filter(Boolean)
           .join(" ")
           .toLowerCase()
@@ -63,16 +66,15 @@ function Planning() {
     <div className="container page-block planning-page">
       <section className="section section-tight">
         <h1>Planning central 🗓️</h1>
-        <p className="section-intro">
-          C&apos;est la page la plus importante: elle évolue au fil des sessions et sert de référence pour toute la team.
-        </p>
+        <p className="section-intro">Référence commune de la team pour la saison en cours.</p>
+        <p className="muted-text">{PLANNING_SEASON}</p>
 
         <div className="grid three-columns summary-grid">
           <Card title="Prochaine étape">
             {upcomingEvent ? (
               <>
                 <p className="summary-title">{upcomingEvent.title}</p>
-                <p className="muted-text">{formatDateFr(upcomingEvent.date)}</p>
+                <p className="muted-text">{getEventScheduleLabel(upcomingEvent)}</p>
               </>
             ) : (
               <p>Aucun événement à venir.</p>
@@ -83,7 +85,7 @@ function Planning() {
             {lastUpdate ? (
               <>
                 <p className="summary-title">{lastUpdate.title}</p>
-                <p className="muted-text">{formatDateFr(lastUpdate.updatedAt ?? lastUpdate.date)}</p>
+                <p className="muted-text">{formatDateFr(lastUpdate.updatedAt)}</p>
               </>
             ) : (
               <p>Pas encore de mise à jour.</p>
@@ -93,7 +95,7 @@ function Planning() {
           <Card title="Progression">
             <p className="summary-title">{progress.percent}%</p>
             <p className="muted-text">
-              {progress.done} tâche(s) faite(s) · {progress.remaining} à faire
+              {progress.done} tâche(s) faite(s) · {progress.remaining} restante(s)
             </p>
             <div className="progress-track" aria-hidden="true">
               <span style={{ width: `${progress.percent}%` }} />
@@ -104,6 +106,9 @@ function Planning() {
 
       <section className="section">
         <h2>Timeline des événements</h2>
+        <p className="muted-text">
+          Format saison: les étapes sont affichées par période (ex: Mars–Avril), pas par date exacte.
+        </p>
         <Filters
           statusFilter={statusFilter}
           onStatusChange={setStatusFilter}
@@ -125,14 +130,15 @@ function Planning() {
               {phaseBlock.tasks.length ? (
                 <ul className="checklist">
                   {phaseBlock.tasks.map((task) => {
-                    const status = STATUS_META[task.status] ?? STATUS_META["a-faire"];
+                    const status = STATUS_META[task.status] ?? STATUS_META.todo;
 
                     return (
                       <li key={task.id} className="checklist-item">
-                        <span className={`checkbox ${task.status === "fait" ? "is-checked" : ""}`} aria-hidden="true" />
+                        <span className={`checkbox ${task.status === "done" ? "is-checked" : ""}`} aria-hidden="true" />
                         <div>
                           <p>{task.title}</p>
                           <Badge tone={status.tone}>{status.label}</Badge>
+                          {isEventIndicative(task) ? <p className="muted-text">{task.period ?? "Indicatif"}</p> : null}
                         </div>
                       </li>
                     );
@@ -147,23 +153,22 @@ function Planning() {
       </section>
 
       <section className="section">
-        <h2>Comment on met à jour le planning ?</h2>
+        <h2>Comment mettre à jour le planning ?</h2>
         <Card>
           <p>
-            Modifie simplement le fichier <code>src/data/planning.js</code>. Chaque ligne correspond à un événement
-            (date, statut, type, description...).
-          </p>
-          <p className="muted-text">
-            Le choix est volontairement simple: pas de backend, juste des fichiers versionnés dans le repo.
+            Modifie simplement <code>src/data/planning.js</code>. Un objet = un événement (ordre, période, statut,
+            type, phase, description).
           </p>
           <pre className="code-block">{`{
   id: "nouvelle-tache",
-  date: "2026-04-25",
-  title: "Nouvelle action (indicatif)",
+  order: 4,
+  period: "Avril–Mai 2026 (indicatif)",
+  title: "Nouvelle action",
   type: "suivi",
-  status: "a-faire",
+  status: "todo",
   phase: "Suivi",
-  description: "Décrire ce qu'il faut faire"
+  isIndicative: true,
+  description: "Décrire ce qu'on fait"
 }`}</pre>
         </Card>
       </section>

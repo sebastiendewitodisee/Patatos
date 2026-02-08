@@ -2,26 +2,26 @@
   {
     question: "C'est quoi le but du projet ?",
     answer:
-      "Faire une récolte entre potes, apprendre ensemble et partager les patates dans une ambiance simple et organisée.",
+      "Faire une récolte entre potes, apprendre au passage et partager le résultat sans pression inutile.",
   },
   {
     question: "On doit venir tout le temps ?",
     answer:
-      "Non. Tu viens quand tu peux: même une petite aide ponctuelle fait avancer l'équipe.",
+      "Non. Tu participes quand tu peux. Même un passage court ou une seule mission aide vraiment le groupe.",
   },
   {
     question: "On récolte quand ?",
     answer:
-      "Les périodes affichées sont indicatives. On ajuste selon la météo, la variété et les observations sur place.",
+      "Les périodes dans le planning sont indicatives. On confirme la fenêtre réelle selon météo, feuillage et tests sur place.",
   },
   {
     question: "Comment on s'organise ?",
     answer:
-      "Le planning central donne les étapes et les statuts; ensuite on se coordonne via le groupe pour répartir les passages.",
+      "Le planning central sert de base: statuts clairs, responsables visibles, puis coordination via le groupe pour les sessions.",
   },
   {
     question: "Précoces vs conservation: c'est quoi la différence ?",
     answer:
-      "Les précoces se mangent plus tôt, les variétés de conservation restent plus longtemps et se gardent mieux après récolte.",
+      "En général, les précoces se mangent plus tôt. Les variétés de conservation restent en place plus longtemps et se gardent mieux.",
   },
 ];

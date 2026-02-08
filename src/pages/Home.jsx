@@ -2,7 +2,13 @@
 import Badge from "../components/Badge";
 import Card from "../components/Card";
 import { planningEvents, STATUS_META } from "../data/planning";
-import { formatDateFr, getLatestUpdates, getUpcomingEvent } from "../utils/planning";
+import {
+  formatDateFr,
+  getEventScheduleLabel,
+  getLatestUpdates,
+  getUpcomingEvent,
+  isEventIndicative,
+} from "../utils/planning";
 
 function Home() {
   const latestUpdates = getLatestUpdates(planningEvents, 3);
@@ -16,18 +22,18 @@ function Home() {
           Opération Récolte <span aria-hidden="true">🥔</span>
         </h1>
         <p className="hero-copy">
-          Un projet entre potes, fun mais organisé: on prépare, on plante, on suit, puis on partage la récolte.
+          Projet entre potes, cadré sans prise de tête: on suit les étapes, on ajuste ensemble et on avance proprement.
         </p>
 
         <div className="cta-row">
           <Link to="/planning" className="btn btn-primary">
-            Aller au planning
+            Voir le planning central
           </Link>
           <Link to="/equipe" className="btn">
-            Aller à l&apos;équipe
+            Voir l&apos;équipe
           </Link>
           <Link to="/varietes" className="btn btn-ghost">
-            Aller aux variétés
+            Voir les variétés
           </Link>
         </div>
       </section>
@@ -35,14 +41,10 @@ function Home() {
       <section className="section">
         <h2>Le concept</h2>
         <div className="grid three-columns">
-          <Card title="Simple">
-            Un planning clair, une checklist et des infos qui vont à l&apos;essentiel.
-          </Card>
-          <Card title="Fun">
-            Une ambiance entre potes, avec nos mascottes patates et un peu de bonne humeur 🌱
-          </Card>
+          <Card title="Simple">Un seul planning partagé, mis à jour au fil des sessions.</Card>
+          <Card title="Fun">Ambiance cool, entraide et petites patates mascottes 🌱</Card>
           <Card title="Efficace">
-            Chaque étape est visible pour éviter les oublis et avancer ensemble.
+            On priorise l&apos;utile: qui fait quoi, à peu près quand, et ce qu&apos;il reste à confirmer.
           </Card>
         </div>
       </section>
@@ -51,11 +53,11 @@ function Home() {
         <h2>Dernières mises à jour</h2>
         <div className="grid three-columns">
           {latestUpdates.map((item) => {
-            const status = STATUS_META[item.status] ?? STATUS_META["a-faire"];
+            const status = STATUS_META[item.status] ?? STATUS_META.todo;
 
             return (
               <Card key={item.id} title={item.title}>
-                <p className="muted-text">Mis à jour le {formatDateFr(item.updatedAt ?? item.date)}</p>
+                <p className="muted-text">Mis à jour le {formatDateFr(item.updatedAt)}</p>
                 <Badge tone={status.tone}>{status.label}</Badge>
               </Card>
             );
@@ -69,7 +71,10 @@ function Home() {
           {upcomingEvent ? (
             <>
               <p className="next-event-title">{upcomingEvent.title}</p>
-              <p className="muted-text">Prévu le {formatDateFr(upcomingEvent.date)}</p>
+              <p className="muted-text">{getEventScheduleLabel(upcomingEvent)}</p>
+              {isEventIndicative(upcomingEvent) ? (
+                <p className="muted-text">Repère indicatif: on valide sur place selon la météo et les plants.</p>
+              ) : null}
               <p>{upcomingEvent.description}</p>
             </>
           ) : (

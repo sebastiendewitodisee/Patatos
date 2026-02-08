@@ -7,8 +7,7 @@ function Varietes() {
       <section className="section section-tight">
         <h1>Variétés 🥔</h1>
         <p className="section-intro">
-          On garde une vue simple: distinction précoces vs conservation, et on confirme les détails au fur et à
-          mesure.
+          On garde ici une vue claire de la liste. Les infos non vérifiées restent marquées "à confirmer".
         </p>
       </section>
 
@@ -16,16 +15,24 @@ function Varietes() {
         <div className="grid two-columns">
           <Card title="Précoces">
             <p>
-              Les variétés précoces se récoltent plus tôt, souvent pour une conso rapide. Elles sont top pour les
-              premières frites 🍟.
+              Les variétés précoces servent en général à récolter plus tôt pour une conso rapide.
             </p>
           </Card>
           <Card title="Conservation">
             <p>
-              Les variétés de conservation restent plus longtemps en terre et tiennent mieux sur la durée en stock.
+              Les variétés de conservation sont plutôt prévues pour une récolte plus tardive et un stockage plus long.
             </p>
           </Card>
         </div>
+      </section>
+
+      <section className="section">
+        <Card>
+          <p>
+            Important: on n'invente pas les détails. Tant que le type ou la période n'est pas vérifié, on laisse
+            "à confirmer".
+          </p>
+        </Card>
       </section>
 
       <section className="section">
@@ -37,7 +44,7 @@ function Varietes() {
                 <th>Variété</th>
                 <th>Type</th>
                 <th>Récolte</th>
-                <th>Note</th>
+                <th>Notes</th>
               </tr>
             </thead>
             <tbody>
@@ -46,7 +53,7 @@ function Varietes() {
                   <td>{item.name}</td>
                   <td>{item.type}</td>
                   <td>{item.harvest}</td>
-                  <td>{item.note}</td>
+                  <td>{item.notes}</td>
                 </tr>
               ))}
             </tbody>

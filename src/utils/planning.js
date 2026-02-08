@@ -7,6 +7,19 @@
   return Number.isNaN(parsed.getTime()) ? null : parsed;
 }
 
+function hasIndicativeKeyword(value) {
+  return typeof value === "string" && value.toLowerCase().includes("indicatif");
+}
+
+function getEventOrder(event) {
+  if (Number.isFinite(event.order)) {
+    return event.order;
+  }
+
+  const datedOrder = parsePlanningDate(event.date)?.getTime();
+  return datedOrder ?? Number.MAX_SAFE_INTEGER;
+}
+
 export function formatDateFr(dateValue) {
   const parsed = parsePlanningDate(dateValue);
   if (!parsed) {
@@ -20,31 +33,49 @@ export function formatDateFr(dateValue) {
   });
 }
 
+export function getEventScheduleLabel(event) {
+  if (event.period) {
+    return event.period;
+  }
+
+  if (event.date) {
+    return formatDateFr(event.date);
+  }
+
+  return "Période à confirmer";
+}
+
+export function isEventIndicative(event) {
+  return Boolean(event.isIndicative || hasIndicativeKeyword(event.period) || hasIndicativeKeyword(event.title));
+}
+
 export function sortEventsByDate(events, order = "asc") {
   const sorted = [...events].sort((a, b) => {
-    const aDate = parsePlanningDate(a.date)?.getTime() ?? 0;
-    const bDate = parsePlanningDate(b.date)?.getTime() ?? 0;
-    return aDate - bDate;
+    const aOrder = getEventOrder(a);
+    const bOrder = getEventOrder(b);
+
+    if (aOrder === bOrder) {
+      const aUpdated = parsePlanningDate(a.updatedAt)?.getTime() ?? 0;
+      const bUpdated = parsePlanningDate(b.updatedAt)?.getTime() ?? 0;
+      return aUpdated - bUpdated;
+    }
+
+    return aOrder - bOrder;
   });
 
   return order === "desc" ? sorted.reverse() : sorted;
 }
 
-export function getUpcomingEvent(events, referenceDate = new Date()) {
-  const startOfDay = new Date(referenceDate);
-  startOfDay.setHours(0, 0, 0, 0);
-
-  return sortEventsByDate(events).find((event) => {
-    const eventDate = parsePlanningDate(event.date);
-    return eventDate && eventDate >= startOfDay && event.status !== "fait";
-  });
+export function getUpcomingEvent(events) {
+  const sorted = sortEventsByDate(events);
+  return sorted.find((event) => event.status !== "done") ?? null;
 }
 
 export function getLastUpdatedEvent(events) {
   return [...events]
     .sort((a, b) => {
-      const aDate = parsePlanningDate(a.updatedAt ?? a.date)?.getTime() ?? 0;
-      const bDate = parsePlanningDate(b.updatedAt ?? b.date)?.getTime() ?? 0;
+      const aDate = parsePlanningDate(a.updatedAt)?.getTime() ?? 0;
+      const bDate = parsePlanningDate(b.updatedAt)?.getTime() ?? 0;
       return bDate - aDate;
     })
     .at(0);
@@ -53,8 +84,8 @@ export function getLastUpdatedEvent(events) {
 export function getLatestUpdates(events, limit = 3) {
   return [...events]
     .sort((a, b) => {
-      const aDate = parsePlanningDate(a.updatedAt ?? a.date)?.getTime() ?? 0;
-      const bDate = parsePlanningDate(b.updatedAt ?? b.date)?.getTime() ?? 0;
+      const aDate = parsePlanningDate(a.updatedAt)?.getTime() ?? 0;
+      const bDate = parsePlanningDate(b.updatedAt)?.getTime() ?? 0;
       return bDate - aDate;
     })
     .slice(0, limit);
@@ -62,7 +93,7 @@ export function getLatestUpdates(events, limit = 3) {
 
 export function getPlanningProgress(events) {
   const total = events.length;
-  const done = events.filter((event) => event.status === "fait").length;
+  const done = events.filter((event) => event.status === "done").length;
   const remaining = Math.max(total - done, 0);
   const percent = total === 0 ? 0 : Math.round((done / total) * 100);
 

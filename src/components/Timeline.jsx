@@ -1,6 +1,6 @@
 ﻿import Badge from "./Badge";
 import { STATUS_META, TYPE_META } from "../data/planning";
-import { formatDateFr } from "../utils/planning";
+import { getEventScheduleLabel, isEventIndicative } from "../utils/planning";
 
 function Timeline({ events }) {
   if (!events.length) {
@@ -14,12 +14,12 @@ function Timeline({ events }) {
   return (
     <ol className="timeline-list">
       {events.map((event) => {
-        const status = STATUS_META[event.status] ?? STATUS_META["a-faire"];
+        const status = STATUS_META[event.status] ?? STATUS_META.todo;
         const type = TYPE_META[event.type] ?? TYPE_META.preparation;
 
         return (
           <li key={event.id} className="timeline-item">
-            <span className="timeline-date">{formatDateFr(event.date)}</span>
+            <span className="timeline-date">{getEventScheduleLabel(event)}</span>
             <article className="timeline-card">
               <div className="timeline-head">
                 <h3>{event.title}</h3>
@@ -30,6 +30,10 @@ function Timeline({ events }) {
               </div>
 
               <p>{event.description}</p>
+
+              {isEventIndicative(event) ? (
+                <p className="timeline-meta">Repère indicatif: on ajuste selon la météo et l'état des plants.</p>
+              ) : null}
 
               {event.responsibles?.length ? (
                 <p className="timeline-meta">
