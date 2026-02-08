@@ -121,19 +121,16 @@
 
 .header-theme-switch .lang-btn,
 .header-language-switch .lang-btn {
-  min-width: 2.2rem;
-}
-
-.header-theme-switch .lang-btn {
+  width: 2.625rem;
+  min-width: 2.625rem;
+  height: 2.275rem;
+  box-sizing: border-box;
+  padding: 0.3rem 0.56rem;
+  border-radius: 0.62rem;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-}
-
-.theme-toggle-btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
+  line-height: 1;
 }
 
 .burger-btn {
@@ -1267,9 +1264,17 @@ th {
 
   .header-theme-switch .lang-btn,
   .header-language-switch .lang-btn {
+    width: 2rem;
     min-width: 2rem;
+    height: 1.78rem;
+    box-sizing: border-box;
     padding: 0.24rem 0.42rem;
     font-size: 0.76rem;
+    border-radius: 0.62rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
   }
 
   .burger-btn {
