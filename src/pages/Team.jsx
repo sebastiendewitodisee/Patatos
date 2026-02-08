@@ -25,7 +25,7 @@ function Team() {
   }
 
   return (
-    <div className="container page-block">
+    <div className="container page-block team-page">
       <section className="section section-tight">
         <h1>{t("team.title")}</h1>
         <p className="section-intro">{t("team.intro")}</p>
@@ -54,19 +54,20 @@ function Team() {
               <div key={member.id} className="team-card-shell" tabIndex={0}>
                 <Card className="team-card">
                   <div className="team-card-head">
-                    {hasImage ? (
-                      <img
-                        src={imgSrc}
-                        alt={member.name}
-                        className="team-avatar"
-                        loading="lazy"
-                        onError={() => handleImageError(member.id)}
-                      />
-                    ) : (
-                      <span className="team-avatar-fallback" aria-hidden="true">
-                        🥔
-                      </span>
-                    )}
+                    <div className="team-avatar">
+                      {hasImage ? (
+                        <img
+                          src={imgSrc}
+                          alt={member.name}
+                          loading="lazy"
+                          onError={() => handleImageError(member.id)}
+                        />
+                      ) : (
+                        <span className="team-avatar-fallback" aria-hidden="true">
+                          🥔
+                        </span>
+                      )}
+                    </div>
 
                     <div className="team-card-body">
                       <h2 className="team-name">{member.name}</h2>

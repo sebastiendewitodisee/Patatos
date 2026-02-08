@@ -522,29 +522,45 @@
   font-size: 1.1rem;
 }
 
-.team-avatar {
-  width: 72px;
-  height: 72px;
+.team-page .team-avatar {
+  width: 84px;
+  height: 84px;
   border-radius: 999px;
-  border: 1px solid rgba(255, 255, 255, 0.14);
-  background: radial-gradient(circle at top, rgba(255, 255, 255, 0.11), rgba(255, 255, 255, 0.05));
   overflow: hidden;
-  flex-shrink: 0;
-  object-fit: cover;
-}
-
-.team-avatar-fallback {
-  width: 72px;
-  height: 72px;
-  border-radius: 999px;
-  border: 1px solid var(--line);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  background: radial-gradient(circle at top, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.06));
+  box-shadow:
+    0 10px 30px rgba(0, 0, 0, 0.35),
+    0 0 0 1px rgba(101, 179, 255, 0.12);
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  background: radial-gradient(circle at top, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.06));
+  flex: 0 0 auto;
+}
+
+.team-page .team-avatar img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  object-position: 50% 20%;
+}
+
+.team-page .team-avatar-fallback {
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  max-height: none;
+  border: 0;
+  border-radius: 999px;
+  display: inline-flex;
+  overflow: hidden;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.06);
   font-size: 28px;
   line-height: 1;
-  flex-shrink: 0;
+  flex: 0 0 auto;
 }
 
 .team-focus-line {
@@ -913,6 +929,11 @@ th {
 
   .team-stats-grid {
     grid-template-columns: 1fr;
+  }
+
+  .team-page .team-avatar {
+    width: 72px;
+    height: 72px;
   }
 
   .footer-inner {
