@@ -468,6 +468,7 @@ th {
   pointer-events: auto;
   position: relative;
   z-index: 2;
+  touch-action: manipulation;
 }
 
 .image-button img {

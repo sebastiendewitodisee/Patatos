@@ -1,4 +1,5 @@
 ﻿import { useEffect, useState } from "react";
+import { createPortal } from "react-dom";
 import Badge from "../components/Badge";
 import Card from "../components/Card";
 import { varieties } from "../data/varieties";
@@ -117,6 +118,34 @@ function Varietes() {
     updateFocusParam(focus);
   };
 
+  const openLightbox = (event, imageSource, imageAlt, imageTitle) => {
+    event.preventDefault();
+    event.stopPropagation();
+    setLightbox({ src: imageSource, alt: imageAlt, title: imageTitle });
+  };
+
+  const lightboxModal = lightbox ? (
+    <div
+      className="lightbox-overlay"
+      role="dialog"
+      aria-modal="true"
+      aria-label={`Image ${lightbox.title}`}
+      onMouseDown={(event) => {
+        if (event.target === event.currentTarget) {
+          setLightbox(null);
+        }
+      }}
+    >
+      <div className="lightbox-content">
+        <button type="button" className="lightbox-close" onClick={() => setLightbox(null)} aria-label="Fermer">
+          ✕
+        </button>
+        <img className="lightbox-image" src={lightbox.src} alt={lightbox.alt} />
+        <p className="lightbox-caption">{lightbox.title}</p>
+      </div>
+    </div>
+  ) : null;
+
   return (
     <div className="container page-block">
       <section className="section section-tight">
@@ -198,11 +227,7 @@ function Varietes() {
                         type="button"
                         className="image-button"
                         aria-label={`Agrandir l'image de ${item.name}`}
-                        onClick={(event) => {
-                          event.preventDefault();
-                          event.stopPropagation();
-                          setLightbox({ src: imgSrc, alt: imageAlt, title: item.name });
-                        }}
+                        onClick={(event) => openLightbox(event, imgSrc, imageAlt, item.name)}
                       >
                         <img
                           src={imgSrc}
@@ -268,32 +293,7 @@ function Varietes() {
         </Card>
       </section>
 
-      {lightbox ? (
-        <div
-          className="lightbox-overlay"
-          role="dialog"
-          aria-modal="true"
-          aria-label={`Image ${lightbox.title}`}
-          onMouseDown={(event) => {
-            if (event.target === event.currentTarget) {
-              setLightbox(null);
-            }
-          }}
-        >
-          <div className="lightbox-content">
-            <button
-              type="button"
-              className="lightbox-close"
-              onClick={() => setLightbox(null)}
-              aria-label="Fermer"
-            >
-              ✕
-            </button>
-            <img className="lightbox-image" src={lightbox.src} alt={lightbox.alt} />
-            <p className="lightbox-caption">{lightbox.title}</p>
-          </div>
-        </div>
-      ) : null}
+      {lightboxModal ? createPortal(lightboxModal, document.body) : null}
     </div>
   );
 }
