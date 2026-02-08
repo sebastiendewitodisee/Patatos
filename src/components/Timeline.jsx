@@ -2,6 +2,22 @@
 import { STATUS_META, TYPE_META } from "../data/planning";
 import { getEventScheduleLabel, getIndicativeValidationMessage, isEventIndicative } from "../utils/planning";
 
+function getResponsiblesDisplay(responsibles) {
+  if (!responsibles?.length) {
+    return null;
+  }
+
+  if (responsibles[0] === "Toute la team") {
+    return { isTeam: true, principal: "Toute la team", extra: 0 };
+  }
+
+  return {
+    isTeam: false,
+    principal: responsibles[0],
+    extra: Math.max(responsibles.length - 1, 0),
+  };
+}
+
 function Timeline({ events }) {
   if (!events.length) {
     return (
@@ -16,6 +32,7 @@ function Timeline({ events }) {
       {events.map((event) => {
         const status = STATUS_META[event.status] ?? STATUS_META.todo;
         const type = TYPE_META[event.type] ?? TYPE_META.preparation;
+        const responsiblesDisplay = getResponsiblesDisplay(event.responsibles);
 
         return (
           <li key={event.id} className="timeline-item">
@@ -36,9 +53,17 @@ function Timeline({ events }) {
                 <p className="timeline-meta">{getIndicativeValidationMessage(event)}</p>
               ) : null}
 
-              {event.responsibles?.length ? (
+              {responsiblesDisplay ? (
                 <p className="timeline-meta">
-                  Responsable(s) : <strong>{event.responsibles.join(", ")}</strong>
+                  Responsable :{" "}
+                  {responsiblesDisplay.isTeam ? (
+                    responsiblesDisplay.principal
+                  ) : (
+                    <>
+                      <strong>{responsiblesDisplay.principal}</strong>
+                      {responsiblesDisplay.extra > 0 ? ` (+${responsiblesDisplay.extra})` : ""}
+                    </>
+                  )}
                 </p>
               ) : null}
             </article>
