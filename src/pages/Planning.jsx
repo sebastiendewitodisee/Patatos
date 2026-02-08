@@ -80,6 +80,42 @@ function Planning() {
     });
   }, [phaseFilter, search, sortedEvents, statusFilter, typeFilter]);
 
+  const ratio = sortedEvents.length ? Math.round((filteredEvents.length / sortedEvents.length) * 100) : 0;
+  const trimmedSearch = search.trim();
+  const activeChips = [];
+
+  if (statusFilter !== "all") {
+    activeChips.push({
+      key: `status-${statusFilter}`,
+      label: `Statut: ${STATUS_META[statusFilter]?.label ?? statusFilter}`,
+      onClear: () => setStatusFilter("all"),
+    });
+  }
+
+  if (typeFilter !== "all") {
+    activeChips.push({
+      key: `type-${typeFilter}`,
+      label: `Type: ${TYPE_META[typeFilter]?.label ?? typeFilter}`,
+      onClear: () => setTypeFilter("all"),
+    });
+  }
+
+  if (phaseFilter !== "all") {
+    activeChips.push({
+      key: `phase-${phaseFilter}`,
+      label: `Phase: ${phaseFilter}`,
+      onClear: () => setPhaseFilter("all"),
+    });
+  }
+
+  if (trimmedSearch) {
+    activeChips.push({
+      key: `search-${trimmedSearch.toLowerCase()}`,
+      label: `Recherche: ${trimmedSearch}`,
+      onClear: () => setSearch(""),
+    });
+  }
+
   return (
     <div className="container page-block planning-page">
       <section className="section section-tight">
@@ -154,10 +190,38 @@ function Planning() {
           onReset={resetFilters}
           isResetDisabled={isResetDisabled}
         />
-        <div className="muted-text planning-results">
-          <strong>{filteredEvents.length}</strong> résultat(s) · sur {sortedEvents.length}
+        <div className="planning-results sticky-results">
+          <p className="muted-text">
+            <strong>{filteredEvents.length}</strong> résultat(s) · sur {sortedEvents.length}
+          </p>
+
+          <div className="result-bar" aria-hidden="true">
+            <span style={{ width: `${ratio}%` }} />
+          </div>
+
+          {activeChips.length ? (
+            <div className="active-filters" aria-label="Filtres actifs">
+              {activeChips.map((chip) => (
+                <button
+                  key={chip.key}
+                  type="button"
+                  className="active-chip"
+                  onClick={chip.onClear}
+                  aria-label={`Retirer filtre ${chip.label}`}
+                >
+                  {chip.label} <span aria-hidden="true">✕</span>
+                </button>
+              ))}
+              <button type="button" className="active-chip active-chip-clearall" onClick={resetFilters}>
+                Tout effacer
+              </button>
+            </div>
+          ) : (
+            <p className="muted-text planning-hint">Aucun filtre actif.</p>
+          )}
+
           {filteredEvents.length === 0 ? (
-            <p className="muted-text">Aucun résultat: essaie de reset les filtres ou enlève un mot-clé.</p>
+            <p className="muted-text planning-zero">Aucun résultat: essaie de reset les filtres ou enlève un mot-clé.</p>
           ) : null}
         </div>
         <Timeline events={filteredEvents} />
