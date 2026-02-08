@@ -1,6 +1,6 @@
-ï»¿import Badge from "./Badge";
+import Badge from "./Badge";
 import { STATUS_META, TYPE_META } from "../data/planning";
-import { getEventScheduleLabel, getIndicativeValidationMessage, isEventIndicative } from "../utils/planning";
+import { getEffectiveStatus, getEventScheduleLabel, getIndicativeValidationMessage, isEventIndicative } from "../utils/planning";
 
 function getResponsiblesDisplay(responsibles) {
   if (!responsibles?.length) {
@@ -22,7 +22,7 @@ function Timeline({ events }) {
   if (!events.length) {
     return (
       <div className="empty-state">
-        <p>Aucun Ã©vÃ©nement ne correspond aux filtres actuels.</p>
+        <p>Aucun événement ne correspond aux filtres actuels.</p>
       </div>
     );
   }
@@ -30,13 +30,14 @@ function Timeline({ events }) {
   return (
     <ol className="timeline-list">
       {events.map((event) => {
-        const status = STATUS_META[event.status] ?? STATUS_META.todo;
+        const effectiveStatus = getEffectiveStatus(event);
+        const status = STATUS_META[effectiveStatus] ?? STATUS_META.todo;
         const type = TYPE_META[event.type] ?? TYPE_META.preparation;
         const responsiblesDisplay = getResponsiblesDisplay(event.responsibles);
 
         return (
           <li key={event.id} className="timeline-item">
-            <span className="timeline-date">PÃ©riode: {getEventScheduleLabel(event)}</span>
+            <span className="timeline-date">Période: {getEventScheduleLabel(event)}</span>
             <article className="timeline-card">
               <div className="timeline-head">
                 <h3>{event.title}</h3>

@@ -14,6 +14,7 @@ import {
 import {
   formatDateFr,
   getChecklistByPhase,
+  getEffectiveStatus,
   getEventScheduleLabel,
   getIndicativeValidationMessage,
   getLastUpdatedEvent,
@@ -65,7 +66,13 @@ function Planning() {
     const loweredSearch = search.trim().toLowerCase();
 
     return sortedEvents.filter((event) => {
-      const matchesStatus = statusFilter === "all" || event.status === statusFilter;
+      const effectiveStatus = getEffectiveStatus(event);
+      const matchesStatus =
+        statusFilter === "all" ||
+        (statusFilter === "done" && event.status === "done") ||
+        (statusFilter === "doing" && event.status === "doing") ||
+        (statusFilter === "todo" && effectiveStatus === "todo") ||
+        (statusFilter === "upcoming" && effectiveStatus === "upcoming");
       const matchesPhase = phaseFilter === "all" || event.phase === phaseFilter;
       const matchesType = typeFilter === "all" || event.type === typeFilter;
       const matchesSearch =
@@ -235,7 +242,8 @@ function Planning() {
               {phaseBlock.tasks.length ? (
                 <ul className="checklist">
                   {phaseBlock.tasks.map((task) => {
-                    const status = STATUS_META[task.status] ?? STATUS_META.todo;
+                    const effectiveStatus = getEffectiveStatus(task);
+                    const status = STATUS_META[effectiveStatus] ?? STATUS_META.todo;
 
                     return (
                       <li key={task.id} className="checklist-item">

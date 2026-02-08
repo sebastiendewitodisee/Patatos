@@ -1,10 +1,79 @@
-ï»¿function parsePlanningDate(dateValue) {
+function parsePlanningDate(dateValue) {
   if (!dateValue) {
     return null;
   }
 
   const parsed = new Date(`${dateValue}T12:00:00`);
   return Number.isNaN(parsed.getTime()) ? null : parsed;
+}
+
+const MONTH_INDEX_BY_NAME = {
+  janvier: 0,
+  fevrier: 1,
+  mars: 2,
+  avril: 3,
+  mai: 4,
+  juin: 5,
+  juillet: 6,
+  aout: 7,
+  septembre: 8,
+  octobre: 9,
+  novembre: 10,
+  decembre: 11,
+};
+
+function stripAccents(value) {
+  return value.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+}
+
+function normalizePeriodLabel(periodValue) {
+  return stripAccents(periodValue.toLowerCase())
+    .replace(/\([^)]*\)/g, " ")
+    .replace(/[–—]/g, "-")
+    .replace(/\b1er\b/g, "1")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+function getMonthIndex(monthName) {
+  if (!monthName) {
+    return null;
+  }
+
+  return MONTH_INDEX_BY_NAME[monthName] ?? null;
+}
+
+function getLastDayOfMonth(year, monthIndex) {
+  return new Date(year, monthIndex + 1, 0).getDate();
+}
+
+function clampDay(year, monthIndex, dayValue) {
+  const lastDay = getLastDayOfMonth(year, monthIndex);
+  const numericDay = Number(dayValue);
+
+  if (!Number.isFinite(numericDay)) {
+    return 1;
+  }
+
+  return Math.min(Math.max(Math.trunc(numericDay), 1), lastDay);
+}
+
+function createRange(year, monthIndex, startDay, endDay) {
+  const safeStart = clampDay(year, monthIndex, startDay);
+  const safeEnd = clampDay(year, monthIndex, endDay);
+  const normalizedStart = Math.min(safeStart, safeEnd);
+  const normalizedEnd = Math.max(safeStart, safeEnd);
+
+  return {
+    start: new Date(year, monthIndex, normalizedStart, 12, 0, 0, 0),
+    end: new Date(year, monthIndex, normalizedEnd, 12, 0, 0, 0),
+  };
+}
+
+function normalizeReferenceDate(dateValue) {
+  const resolvedDate = dateValue instanceof Date ? new Date(dateValue) : new Date();
+  resolvedDate.setHours(12, 0, 0, 0);
+  return resolvedDate;
 }
 
 function hasIndicativeKeyword(value) {
@@ -23,7 +92,7 @@ function getEventOrder(event) {
 export function formatDateFr(dateValue) {
   const parsed = parsePlanningDate(dateValue);
   if (!parsed) {
-    return "Date Ã  confirmer";
+    return "Date à confirmer";
   }
 
   return parsed.toLocaleDateString("fr-FR", {
@@ -42,7 +111,7 @@ export function getEventScheduleLabel(event) {
     return formatDateFr(event.date);
   }
 
-  return "PÃ©riode Ã  confirmer";
+  return "Période à confirmer";
 }
 
 export function isEventIndicative(event) {
@@ -54,7 +123,127 @@ export function getIndicativeValidationMessage(event) {
     return "";
   }
 
-  return event.validation ?? "Validation: on confirme aprÃ¨s inspection terrain et mÃ©tÃ©o.";
+  return event.validation ?? "Validation: on confirme après inspection terrain et météo.";
+}
+
+export function parsePeriodRange(periodValue) {
+  if (typeof periodValue !== "string" || periodValue.trim().length === 0) {
+    return null;
+  }
+
+  const normalized = normalizePeriodLabel(periodValue);
+  let match = normalized.match(/^(\d{1,2})\s*-\s*(\d{1,2})\s+([a-z]+)\s+(\d{4})$/);
+
+  if (match) {
+    const [, startDay, endDay, monthName, yearValue] = match;
+    const monthIndex = getMonthIndex(monthName);
+    const year = Number(yearValue);
+
+    if (monthIndex !== null && Number.isFinite(year)) {
+      return createRange(year, monthIndex, startDay, endDay);
+    }
+  }
+
+  match = normalized.match(/^debut\s+([a-z]+)\s+(\d{4})$/);
+
+  if (match) {
+    const [, monthName, yearValue] = match;
+    const monthIndex = getMonthIndex(monthName);
+    const year = Number(yearValue);
+
+    if (monthIndex !== null && Number.isFinite(year)) {
+      return createRange(year, monthIndex, 1, 10);
+    }
+  }
+
+  match = normalized.match(/^fin\s+([a-z]+)\s+(\d{4})$/);
+
+  if (match) {
+    const [, monthName, yearValue] = match;
+    const monthIndex = getMonthIndex(monthName);
+    const year = Number(yearValue);
+
+    if (monthIndex !== null && Number.isFinite(year)) {
+      return createRange(year, monthIndex, 20, getLastDayOfMonth(year, monthIndex));
+    }
+  }
+
+  match = normalized.match(/^([a-z]+)\s*-\s*([a-z]+)\s+(\d{4})$/);
+
+  if (match) {
+    const [, startMonthName, endMonthName, yearValue] = match;
+    const startMonthIndex = getMonthIndex(startMonthName);
+    const endMonthIndex = getMonthIndex(endMonthName);
+    const startYear = Number(yearValue);
+
+    if (startMonthIndex !== null && endMonthIndex !== null && Number.isFinite(startYear)) {
+      const endYear = endMonthIndex < startMonthIndex ? startYear + 1 : startYear;
+      const start = new Date(startYear, startMonthIndex, 1, 12, 0, 0, 0);
+      const end = new Date(endYear, endMonthIndex, getLastDayOfMonth(endYear, endMonthIndex), 12, 0, 0, 0);
+      return { start, end };
+    }
+  }
+
+  match = normalized.match(/^([a-z]+)\s+(\d{4})\s*-\s*([a-z]+)\s+(\d{4})$/);
+
+  if (match) {
+    const [, startMonthName, startYearValue, endMonthName, endYearValue] = match;
+    const startMonthIndex = getMonthIndex(startMonthName);
+    const endMonthIndex = getMonthIndex(endMonthName);
+    const startYear = Number(startYearValue);
+    const endYear = Number(endYearValue);
+
+    if (
+      startMonthIndex !== null &&
+      endMonthIndex !== null &&
+      Number.isFinite(startYear) &&
+      Number.isFinite(endYear) &&
+      endYear >= startYear
+    ) {
+      const start = new Date(startYear, startMonthIndex, 1, 12, 0, 0, 0);
+      const end = new Date(endYear, endMonthIndex, getLastDayOfMonth(endYear, endMonthIndex), 12, 0, 0, 0);
+      return { start, end };
+    }
+  }
+
+  match = normalized.match(/^([a-z]+)\s+(\d{4})$/);
+
+  if (match) {
+    const [, monthName, yearValue] = match;
+    const monthIndex = getMonthIndex(monthName);
+    const year = Number(yearValue);
+
+    if (monthIndex !== null && Number.isFinite(year)) {
+      return createRange(year, monthIndex, 1, getLastDayOfMonth(year, monthIndex));
+    }
+  }
+
+  return null;
+}
+
+export function getEffectiveStatus(event, referenceDate = new Date()) {
+  if (event?.status === "done") {
+    return "done";
+  }
+
+  if (event?.status === "doing") {
+    return "doing";
+  }
+
+  if (!event?.period) {
+    return event?.status === "upcoming" ? "upcoming" : "todo";
+  }
+
+  const periodRange = parsePeriodRange(event.period);
+
+  if (!periodRange) {
+    return event?.status === "upcoming" ? "upcoming" : "todo";
+  }
+
+  const reference = normalizeReferenceDate(referenceDate).getTime();
+  const periodStart = normalizeReferenceDate(periodRange.start).getTime();
+
+  return reference < periodStart ? "upcoming" : "todo";
 }
 
 export function sortEventsByDate(events, order = "asc") {
@@ -76,7 +265,7 @@ export function sortEventsByDate(events, order = "asc") {
 
 export function getUpcomingEvent(events) {
   const sorted = sortEventsByDate(events);
-  return sorted.find((event) => event.status !== "done") ?? null;
+  return sorted.find((event) => getEffectiveStatus(event) !== "done") ?? null;
 }
 
 export function getLastUpdatedEvent(events) {
