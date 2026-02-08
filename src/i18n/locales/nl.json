@@ -17,6 +17,8 @@
     "theme_light": "Licht",
     "theme_dark": "Donker",
     "toggle_theme": "Thema wisselen",
+    "switch_to_light": "Schakel naar lichte modus",
+    "switch_to_dark": "Schakel naar donkere modus",
     "switch_to_fr": "Schakel naar Frans",
     "switch_to_nl": "Schakel naar Nederlands"
   },

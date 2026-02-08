@@ -62,8 +62,8 @@ function Header() {
 
   const themeItems = useMemo(
     () => [
-      { value: "dark", label: t("nav.theme_dark") },
-      { value: "light", label: t("nav.theme_light") },
+      { value: "dark", label: t("nav.theme_dark"), ariaLabel: t("nav.switch_to_dark") },
+      { value: "light", label: t("nav.theme_light"), ariaLabel: t("nav.switch_to_light") },
     ],
     [t]
   );
@@ -204,13 +204,14 @@ function Header() {
             ))}
           </div>
 
-          <div className="lang-switch" role="group" aria-label={t("nav.theme")}>
+          <div className="lang-switch theme-switch" role="group" aria-label={t("nav.theme")}>
             {themeItems.map((themeItem) => (
               <button
                 key={themeItem.value}
                 type="button"
                 className={`lang-btn${theme === themeItem.value ? " is-active" : ""}`}
-                aria-label={`${t("nav.toggle_theme")}: ${themeItem.label}`}
+                aria-label={themeItem.ariaLabel}
+                aria-pressed={theme === themeItem.value}
                 onClick={() => handleThemeChange(themeItem.value)}
               >
                 {themeItem.label}

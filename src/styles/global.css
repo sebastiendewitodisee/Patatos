@@ -69,11 +69,14 @@ body,
 
 html {
   scroll-behavior: smooth;
+  background-color: var(--bg);
+  color: var(--text);
 }
 
 body {
   margin: 0;
   color: var(--text);
+  background-color: var(--bg);
   font-family: "Nunito", "Trebuchet MS", sans-serif;
   background:
     radial-gradient(1200px 700px at 8% -12%, var(--bg-glow-1), transparent 58%),
@@ -222,29 +225,35 @@ textarea {
   padding: 0.65rem 0.75rem;
 }
 
-/* Dropdown menu (options) — lisible en thème sombre */
+/* Dropdown menu (options) — priorité à la lisibilité cross-browser */
 .select option,
 .select optgroup {
-  background-color: var(--field-option-bg);
-  color: var(--field-option-text);
+  background-color: #ffffff;
+  color: #111318;
+}
+
+:root:not(.theme-light) .select option,
+:root:not(.theme-light) .select optgroup {
+  background-color: #ffffff;
+  color: #111318;
 }
 
 /* Option sélectionnée/active — sobre et lisible */
 .select option:checked {
-  background-color: var(--field-option-active);
-  color: var(--field-option-text);
+  background-color: #dbe8fb;
+  color: #111318;
 }
 
 .select option:hover,
 .select option:focus {
-  background-color: var(--field-option-hover);
-  color: var(--field-option-text);
+  background-color: #eef3ff;
+  color: #111318;
 }
 
 /* Aide Chrome/Windows pour un menu natif cohérent */
 select.select {
   background-color: var(--field-bg);
-  color: var(--field-option-text);
+  color: var(--text);
   color-scheme: inherit;
 }
 

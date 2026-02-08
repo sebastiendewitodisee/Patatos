@@ -17,6 +17,8 @@
     "theme_light": "Clair",
     "theme_dark": "Sombre",
     "toggle_theme": "Basculer le thème",
+    "switch_to_light": "Passer en mode clair",
+    "switch_to_dark": "Passer en mode sombre",
     "switch_to_fr": "Passer en français",
     "switch_to_nl": "Passer en néerlandais"
   },
