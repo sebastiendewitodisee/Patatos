@@ -216,18 +216,20 @@ function Header() {
               />
             )}
           </span>
-          {wordmarkFailed ? (
-            <span className="brand-wordmark-fallback">{t("nav.brand")}</span>
-          ) : (
-            <img
-              className="brand-wordmark"
-              src={wordmarkPngSrc}
-              alt={t("nav.brand_wordmark_alt")}
-              loading="eager"
-              decoding="async"
-              onError={() => setWordmarkFailed(true)}
-            />
-          )}
+          <span className="brand-wordmark-wrap">
+            {wordmarkFailed ? (
+              <span className="brand-wordmark-fallback">{t("nav.brand")}</span>
+            ) : (
+              <img
+                className="brand-wordmark"
+                src={wordmarkPngSrc}
+                alt={t("nav.brand_wordmark_alt")}
+                loading="eager"
+                decoding="async"
+                onError={() => setWordmarkFailed(true)}
+              />
+            )}
+          </span>
         </Link>
 
         <nav ref={navRef} id="main-navigation" className={`site-nav${isOpen ? " is-open" : ""}`}>
