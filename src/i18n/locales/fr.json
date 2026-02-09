@@ -631,6 +631,35 @@
       "feedback": "Formulaire local-only enregistré en UI. À brancher plus tard."
     }
   },
+  "admin": {
+    "title": "Admin",
+    "subtitle": "Espace d'authentification pour preparer la future gestion de contenu.",
+    "status_title": "Statut",
+    "status_unconfigured": "Supabase non configure.",
+    "status_unconfigured_help": "Ajoute VITE_SUPABASE_URL et VITE_SUPABASE_ANON_KEY pour activer l'authentification.",
+    "status_loading": "Verification de la session...",
+    "status_ready": "Supabase est configure. Connecte-toi pour continuer.",
+    "status_connected": "Connecte.",
+    "status_not_connected": "Non connecte.",
+    "connected_as": "Connecte en tant que {{email}}.",
+    "form_title": "Connexion",
+    "email_label": "Email",
+    "email_placeholder": "admin@patatos.be",
+    "password_label": "Mot de passe",
+    "password_placeholder": "Mot de passe",
+    "login": "Se connecter",
+    "login_loading": "Connexion...",
+    "logout": "Se deconnecter",
+    "logout_loading": "Deconnexion...",
+    "logged_in_message": "Session active. Tu peux te deconnecter ci-dessous.",
+    "form_disabled_hint": "Le formulaire est desactive tant que Supabase n'est pas configure.",
+    "errors": {
+      "invalid_credentials": "Email ou mot de passe invalide.",
+      "email_not_confirmed": "Email non confirme. Verifie ta boite mail.",
+      "network": "Connexion impossible a Supabase pour le moment.",
+      "generic": "Impossible de se connecter pour le moment. Reessaie dans un instant."
+    }
+  },
   "legal": {
     "title": "Mentions légales",
     "p1": "Site interne du projet Team Patates Patatos.",

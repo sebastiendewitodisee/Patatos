@@ -1,5 +1,6 @@
 ﻿import { Route, Routes } from "react-router-dom";
 import Layout from "./components/Layout";
+import Admin from "./pages/Admin";
 import Contact from "./pages/Contact";
 import Faq from "./pages/Faq";
 import Home from "./pages/Home";
@@ -21,6 +22,7 @@ function App() {
         <Route path="organisation" element={<Organisation />} />
         <Route path="faq" element={<Faq />} />
         <Route path="contact" element={<Contact />} />
+        <Route path="admin" element={<Admin />} />
         <Route path="legal" element={<Legal />} />
         <Route path="*" element={<NotFound />} />
       </Route>

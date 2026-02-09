@@ -631,6 +631,35 @@
       "feedback": "Lokaal formulier in de UI opgeslagen. Later te koppelen."
     }
   },
+  "admin": {
+    "title": "Admin",
+    "subtitle": "Authenticatiezone om toekomstig contentbeheer voor te bereiden.",
+    "status_title": "Status",
+    "status_unconfigured": "Supabase is niet geconfigureerd.",
+    "status_unconfigured_help": "Voeg VITE_SUPABASE_URL en VITE_SUPABASE_ANON_KEY toe om authenticatie te activeren.",
+    "status_loading": "Sessie wordt gecontroleerd...",
+    "status_ready": "Supabase is geconfigureerd. Meld je aan om verder te gaan.",
+    "status_connected": "Verbonden.",
+    "status_not_connected": "Niet verbonden.",
+    "connected_as": "Verbonden als {{email}}.",
+    "form_title": "Aanmelden",
+    "email_label": "E-mail",
+    "email_placeholder": "admin@patatos.be",
+    "password_label": "Wachtwoord",
+    "password_placeholder": "Wachtwoord",
+    "login": "Inloggen",
+    "login_loading": "Inloggen...",
+    "logout": "Uitloggen",
+    "logout_loading": "Uitloggen...",
+    "logged_in_message": "Sessie actief. Je kunt hieronder uitloggen.",
+    "form_disabled_hint": "Het formulier is uitgeschakeld zolang Supabase niet is geconfigureerd.",
+    "errors": {
+      "invalid_credentials": "Ongeldig e-mail of wachtwoord.",
+      "email_not_confirmed": "E-mail niet bevestigd. Controleer je mailbox.",
+      "network": "Kan nu geen verbinding maken met Supabase.",
+      "generic": "Aanmelden is nu niet mogelijk. Probeer het zo opnieuw."
+    }
+  },
   "legal": {
     "title": "Juridische vermeldingen",
     "p1": "Interne site van het project Team Patates Patatos.",

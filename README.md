@@ -11,6 +11,39 @@ npm run dev
 
 App locale (par défaut): `http://127.0.0.1:5173`
 
+## Admin (Supabase)
+
+Le site est statique (GitHub Pages), donc l'auth Admin passe par Supabase (email/mot de passe).
+
+### 1) Créer le projet Supabase
+
+1. Aller sur `https://supabase.com`, créer un projet.
+2. Dans `Project Settings > API`, récupérer:
+   - `Project URL`
+   - `anon public key`
+
+### 2) Configurer les variables d'environnement
+
+Copier `.env.example` en `.env` (local) et renseigner:
+
+```bash
+VITE_SUPABASE_URL=
+VITE_SUPABASE_ANON_KEY=
+```
+
+Pour le build GitHub Pages via Actions, définir les mêmes valeurs côté GitHub (`Settings > Secrets and variables > Actions`) et les injecter comme variables d'environnement dans le workflow.
+
+### 3) Lancer en local
+
+```bash
+npm i
+npm run dev
+```
+
+Route Admin: `/#/admin`
+
+Important: sans `VITE_SUPABASE_URL` et `VITE_SUPABASE_ANON_KEY`, la page Admin reste accessible mais en mode désactivé (message explicite), et le build continue de passer.
+
 ## Langue (FR/NL) avec HashRouter
 
 Priorité de résolution de la langue:
@@ -43,6 +76,7 @@ Le build est généré dans `dist/`.
 ## Structure principale
 
 - `src/pages/`: pages de routes (`/`, `/planning`, `/equipe`, `/varietes`, `/organisation`, `/faq`, `/contact`, `/legal`)
+- `src/pages/`: pages de routes (`/`, `/planning`, `/equipe`, `/varietes`, `/organisation`, `/faq`, `/contact`, `/admin`, `/legal`)
 - `src/components/`: layout global + composants UI réutilisables
 - `src/data/`: données éditables du site
 - `src/utils/planning.js`: fonctions de calcul (prochaine étape, progression, dernières updates)
