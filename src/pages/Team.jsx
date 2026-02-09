@@ -125,13 +125,13 @@ function Team() {
   }
 
   return (
-    <div className="container page-block team-page">
+    <div className="container page page-block team-page">
       <section className="section section-tight team-hero">
         <div className="team-hero-inner">
           <div className="team-hero-layout">
             <div className="team-hero-copy">
               <span className="team-hero-badge">{t("team.hero.badge")}</span>
-              <h1 className="team-hero-title">{t("team.title")}</h1>
+              <h1 className="team-hero-title page-title">{t("team.title")}</h1>
               <p className="team-hero-sub">{t("team.intro")}</p>
 
               <div className="team-chip-row" aria-label={t("team.hero.chips_aria")}>
@@ -151,10 +151,10 @@ function Team() {
         </div>
       </section>
 
-      <section className="section">
+      <section className="section stack">
         <div className="team-members-head">
           <h2 className="section-title">{t("team.sections.members_title")}</h2>
-          <p className="muted-text">{t("team.sections.members_subtitle")}</p>
+          <p className="section-subtitle muted-text">{t("team.sections.members_subtitle")}</p>
         </div>
 
         <div className="team-filters" aria-label={t("team.filters.title")}>

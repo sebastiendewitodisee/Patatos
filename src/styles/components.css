@@ -403,21 +403,21 @@
 
 .card {
   border: 1px solid var(--line);
-  border-radius: var(--radius);
-  box-shadow: var(--shadow);
+  border-radius: var(--card-radius);
+  box-shadow: var(--card-shadow);
   background: linear-gradient(165deg, var(--card-strong), var(--card));
-  padding: 1rem;
+  padding: var(--card-pad);
   animation: rise-in 0.7s ease both;
 }
 
 .card-title {
-  margin-bottom: 0.45rem;
+  margin-bottom: var(--title-gap);
   font-size: 1.05rem;
 }
 
 .card-content {
   display: grid;
-  gap: 0.55rem;
+  gap: var(--stack-gap);
 }
 
 .next-event-card {
@@ -531,6 +531,25 @@
   padding: 0.35rem 0.65rem;
   cursor: pointer;
   font-weight: 700;
+}
+
+.chip-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  align-items: center;
+}
+
+.chip {
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--text);
+  border-radius: 999px;
+  padding: 0.3rem 0.6rem;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .filter-chip.is-active {
@@ -1119,25 +1138,29 @@
 
 .table-wrap {
   border: 1px solid var(--line);
-  border-radius: var(--radius);
+  border-radius: var(--card-radius);
   overflow: auto;
-  background: rgba(255, 255, 255, 0.06);
+  background: linear-gradient(165deg, var(--card-strong), var(--card));
 }
 
-table {
+.table-wrap > table,
+.table {
   width: 100%;
   border-collapse: collapse;
   min-width: 640px;
 }
 
-th,
-td {
+.table-wrap th,
+.table-wrap td,
+.table th,
+.table td {
   text-align: left;
-  padding: 0.7rem 0.72rem;
+  padding: 0.72rem 0.8rem;
   border-bottom: 1px solid rgba(255, 255, 255, 0.12);
 }
 
-th {
+.table-wrap th,
+.table th {
   font-family: "Sora", "Gill Sans", sans-serif;
   font-size: 0.92rem;
 }

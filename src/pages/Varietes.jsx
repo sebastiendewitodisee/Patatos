@@ -367,20 +367,20 @@ function Varietes() {
   ) : null;
 
   return (
-    <div className="container page-block">
-      <section className="section section-tight">
-        <h1>{t("varieties.title")}</h1>
-        <p className="section-intro">{t("varieties.intro")}</p>
+    <div className="container page page-block varieties-page">
+      <section className="section section-tight stack">
+        <h1 className="page-title">{t("varieties.title")}</h1>
+        <p className="section-intro page-subtitle">{t("varieties.intro")}</p>
       </section>
 
-      <section className="section">
-        <Card title={t("varieties.season_title") }>
+      <section className="section stack">
+        <Card title={t("varieties.season_title")}>
           <p>{t("varieties.season_text")}</p>
         </Card>
       </section>
 
-      <section className="section">
-        <h2>{t("varieties.details_title")}</h2>
+      <section className="section stack">
+        <h2 className="section-title">{t("varieties.details_title")}</h2>
         <div className="grid three-columns">
           {varietyItems.map((item) => {
             const showPlaceholder = !item.hasImage;
@@ -473,10 +473,10 @@ function Varietes() {
         </div>
       </section>
 
-      <section className="section anchor-offset" id={RECAP_ID}>
-        <h2>{t("varieties.recap_title")}</h2>
+      <section className="section stack anchor-offset" id={RECAP_ID}>
+        <h2 className="section-title">{t("varieties.recap_title")}</h2>
         <div className="table-wrap">
-          <table>
+          <table className="table">
             <thead>
               <tr>
                 <th>{t("varieties.table.name")}</th>
@@ -510,8 +510,8 @@ function Varietes() {
         </div>
       </section>
 
-      <section className="section">
-        <h2>{t("varieties.harvest_tips_title")}</h2>
+      <section className="section stack">
+        <h2 className="section-title">{t("varieties.harvest_tips_title")}</h2>
         <Card>
           <ul className="tips-list">
             <li>{t("varieties.harvest_tips.t1")}</li>
@@ -521,8 +521,8 @@ function Varietes() {
         </Card>
       </section>
 
-      <section className="section">
-        <h2>{t("varieties.storage_tips_title")}</h2>
+      <section className="section stack">
+        <h2 className="section-title">{t("varieties.storage_tips_title")}</h2>
         <Card>
           <ul className="tips-list">
             <li>{t("varieties.storage_tips.t1")}</li>

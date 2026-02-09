@@ -54,10 +54,10 @@ function Home() {
   const locale = i18n.resolvedLanguage?.startsWith("nl") ? "nl-BE" : "fr-BE";
 
   return (
-    <div className="container page-block home-page">
+    <div className="container page page-block home-page">
       <section className="hero-panel">
         <p className="eyebrow">{t("home.eyebrow")}</p>
-        <h1>
+        <h1 className="page-title">
           {t("home.title")} <span aria-hidden="true">🥔</span>
         </h1>
         <p className="hero-copy">{t("home.subtitle")}</p>
@@ -79,8 +79,8 @@ function Home() {
         </div>
       </section>
 
-      <section className="section">
-        <h2>{t("home.concept_title")}</h2>
+      <section className="section stack">
+        <h2 className="section-title">{t("home.concept_title")}</h2>
         <div className="grid three-columns">
           <Card title={t("home.concept_simple_title")}>{t("home.concept_simple_text")}</Card>
           <Card title={t("home.concept_fun_title")}>{t("home.concept_fun_text")}</Card>
@@ -88,8 +88,8 @@ function Home() {
         </div>
       </section>
 
-      <section className="section">
-        <h2>{t("home.latest_updates_title")}</h2>
+      <section className="section stack">
+        <h2 className="section-title">{t("home.latest_updates_title")}</h2>
         <div className="grid three-columns">
           {latestUpdates.map((item) => {
             const statusKey = getEffectiveStatus(item);
@@ -105,8 +105,8 @@ function Home() {
         </div>
       </section>
 
-      <section className="section">
-        <h2>{t("home.next_title")}</h2>
+      <section className="section stack">
+        <h2 className="section-title">{t("home.next_title")}</h2>
         <Card className="next-event-card">
           {upcomingEvent ? (
             <>

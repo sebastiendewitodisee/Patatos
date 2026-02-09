@@ -14,13 +14,13 @@ function Organisation() {
   const { t } = useTranslation();
 
   return (
-    <div className="container page-block">
-      <section className="section section-tight">
-        <h1>{t("organisation.title")}</h1>
-        <p className="section-intro">{t("organisation.intro")}</p>
+    <div className="container page page-block">
+      <section className="section section-tight stack">
+        <h1 className="page-title">{t("organisation.title")}</h1>
+        <p className="section-intro page-subtitle">{t("organisation.intro")}</p>
       </section>
 
-      <section className="section">
+      <section className="section stack">
         <Card title={t("organisation.tasks_title")}>
           <ul className="task-list">
             {taskKeys.map((taskKey) => (
@@ -31,7 +31,7 @@ function Organisation() {
         </Card>
       </section>
 
-      <section className="section">
+      <section className="section stack">
         <Card className="highlight-card">
           <p className="highlight-line">{t("organisation.highlight_questions")}</p>
           <p className="highlight-line">{t("organisation.highlight_join")}</p>

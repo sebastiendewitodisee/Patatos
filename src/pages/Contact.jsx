@@ -22,13 +22,13 @@ function Contact() {
   };
 
   return (
-    <div className="container page-block">
-      <section className="section section-tight">
-        <h1>{t("contact.title")}</h1>
-        <p className="section-intro">{t("contact.intro")}</p>
+    <div className="container page page-block">
+      <section className="section section-tight stack">
+        <h1 className="page-title">{t("contact.title")}</h1>
+        <p className="section-intro page-subtitle">{t("contact.intro")}</p>
       </section>
 
-      <section className="section">
+      <section className="section stack">
         <Card title={t("contact.whatsapp.title")}>
           <p>
             {t("contact.whatsapp.link_label")} <strong>{t("contact.whatsapp.placeholder")}</strong>
@@ -39,7 +39,7 @@ function Contact() {
         </Card>
       </section>
 
-      <section className="section">
+      <section className="section stack">
         <Card title={t("contact.form.title")}>
           <form className="contact-form" onSubmit={handleSubmit}>
             <label htmlFor="name">{t("contact.form.name_label")}</label>

@@ -5,12 +5,12 @@ function Legal() {
   const { t } = useTranslation();
 
   return (
-    <div className="container page-block">
-      <section className="section section-tight">
-        <h1>{t("legal.title")}</h1>
+    <div className="container page page-block">
+      <section className="section section-tight stack">
+        <h1 className="page-title">{t("legal.title")}</h1>
       </section>
 
-      <section className="section">
+      <section className="section stack">
         <Card>
           <p>{t("legal.p1")}</p>
           <p>{t("legal.p2")}</p>

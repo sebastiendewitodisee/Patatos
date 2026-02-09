@@ -5,13 +5,13 @@ function Faq() {
   const { t } = useTranslation();
 
   return (
-    <div className="container page-block">
-      <section className="section section-tight">
-        <h1>{t("faq.title")}</h1>
-        <p className="section-intro">{t("faq.intro")}</p>
+    <div className="container page page-block">
+      <section className="section section-tight stack">
+        <h1 className="page-title">{t("faq.title")}</h1>
+        <p className="section-intro page-subtitle">{t("faq.intro")}</p>
       </section>
 
-      <section className="section">
+      <section className="section stack">
         <div className="faq-list">
           {faqItems.map((item) => (
             <details key={item.id} className="faq-item">

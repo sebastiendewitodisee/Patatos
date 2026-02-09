@@ -27,6 +27,15 @@
   --chrome-bg: rgba(8, 13, 20, 0.78);
   --chrome-bg-solid: rgba(8, 13, 20, 0.96);
   --footer-bg: rgba(8, 13, 20, 0.56);
+  --page-max: 1100px;
+  --page-pad-x: clamp(0.6rem, 3vw, 1.25rem);
+  --section-pad-y: clamp(1.1rem, 3vw, 1.8rem);
+  --section-pad-y-tight: clamp(0.8rem, 2.2vw, 1.2rem);
+  --stack-gap: clamp(0.75rem, 2vw, 1.05rem);
+  --card-pad: clamp(0.85rem, 2.2vw, 1.15rem);
+  --card-radius: 18px;
+  --card-shadow: var(--shadow);
+  --title-gap: 0.5rem;
 }
 
 :root.theme-light {
@@ -137,25 +146,45 @@ textarea {
 }
 
 .container {
-  width: min(1120px, calc(100% - 2rem));
+  width: min(var(--page-max), calc(100% - (var(--page-pad-x) * 2)));
   margin-inline: auto;
 }
 
+.page,
 .page-block {
-  padding-block: 2rem 3.5rem;
+  padding-block: var(--section-pad-y) calc(var(--section-pad-y) * 1.9);
 }
 
 .section {
-  margin-top: 2rem;
+  margin-top: var(--section-pad-y);
 }
 
 .section-tight {
-  margin-top: 0.8rem;
+  margin-top: var(--section-pad-y-tight);
+}
+
+.stack {
+  display: flex;
+  flex-direction: column;
+  gap: var(--stack-gap);
+}
+
+.page-title {
+  letter-spacing: -0.01em;
+}
+
+.section-title {
+  letter-spacing: -0.01em;
 }
 
 .section-intro {
-  margin-top: 0.65rem;
+  margin-top: var(--title-gap);
   max-width: 75ch;
+  color: var(--muted);
+}
+
+.page-subtitle,
+.section-subtitle {
   color: var(--muted);
 }
 
@@ -176,7 +205,7 @@ textarea {
 
 .grid {
   display: grid;
-  gap: 1rem;
+  gap: var(--stack-gap);
 }
 
 .three-columns {
@@ -308,13 +337,5 @@ textarea {
   .two-columns,
   .three-columns {
     grid-template-columns: 1fr;
-  }
-
-  .container {
-    width: min(1120px, calc(100% - 1.2rem));
-  }
-
-  .page-block {
-    padding-block: 1.4rem 2.4rem;
   }
 }

@@ -160,11 +160,11 @@ function Planning() {
   }
 
   return (
-    <div className="container page-block planning-page">
-      <section className="section section-tight">
-        <h1>{t("planning.title")}</h1>
-        <p className="section-intro">{t("planning.intro")}</p>
-        <p className="muted-text">{t("planning.season")}</p>
+    <div className="container page page-block planning-page">
+      <section className="section section-tight stack">
+        <h1 className="page-title">{t("planning.title")}</h1>
+        <p className="section-intro page-subtitle">{t("planning.intro")}</p>
+        <p className="section-subtitle muted-text">{t("planning.season")}</p>
 
         <Card title={t("planning.rules_title")}>
           <ul className="tips-list">
@@ -215,9 +215,9 @@ function Planning() {
         </div>
       </section>
 
-      <section className="section">
-        <h2>{t("planning.timeline.title")}</h2>
-        <p className="muted-text">{t("planning.timeline.intro")}</p>
+      <section className="section stack">
+        <h2 className="section-title">{t("planning.timeline.title")}</h2>
+        <p className="section-subtitle muted-text">{t("planning.timeline.intro")}</p>
         <Filters
           statusFilter={statusFilter}
           onStatusChange={setStatusFilter}
@@ -265,8 +265,8 @@ function Planning() {
         <Timeline events={filteredEvents} />
       </section>
 
-      <section className="section">
-        <h2>{t("planning.checklist.title")}</h2>
+      <section className="section stack">
+        <h2 className="section-title">{t("planning.checklist.title")}</h2>
         <div className="grid two-columns">
           {checklist.map((phaseBlock) => (
             <Card key={phaseBlock.phase} title={getPhaseLabel(phaseBlock.phase, t)}>
@@ -307,8 +307,8 @@ function Planning() {
         </div>
       </section>
 
-      <section className="section">
-        <h2>{t("planning.update.title")}</h2>
+      <section className="section stack">
+        <h2 className="section-title">{t("planning.update.title")}</h2>
         <Card>
           <p>
             {t("planning.update.instruction_prefix")} <code>src/data/planning.js</code>. {t("planning.update.instruction_suffix")}
