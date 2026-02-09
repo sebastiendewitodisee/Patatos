@@ -151,7 +151,7 @@ textarea {
 }
 
 .page,
-.page-block {
+.page-block:not(.page) {
   padding-block: var(--section-pad-y) calc(var(--section-pad-y) * 1.9);
 }
 
@@ -337,5 +337,13 @@ textarea {
   .two-columns,
   .three-columns {
     grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 420px) {
+  :root {
+    --section-pad-y: clamp(0.9rem, 2.8vw, 1.1rem);
+    --section-pad-y-tight: clamp(0.62rem, 2vw, 0.85rem);
+    --stack-gap: clamp(0.65rem, 2vw, 0.9rem);
   }
 }
