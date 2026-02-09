@@ -1772,6 +1772,17 @@ th {
     padding: 0.85rem;
   }
 
+  .header-inner {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto auto;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .brand {
+    min-width: 0;
+  }
+
   .brand-wordmark-wrap {
     display: block;
     width: clamp(220px, 72vw, 360px);
@@ -1782,9 +1793,13 @@ th {
   }
 
   .header-controls {
-    flex-direction: column;
-    gap: 0.2rem;
+    display: inline-flex;
+    flex-direction: row;
+    gap: 0.35rem;
     align-items: center;
+    margin-left: 0;
+    flex-wrap: nowrap;
+    justify-self: end;
   }
 
   .brand {
