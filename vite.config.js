@@ -5,7 +5,7 @@ import react from "@vitejs/plugin-react";
 // En CI GitHub, on récupère le nom réel du repo pour gérer la casse (patatos/Patatos).
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, ".", "");
-  const repoName = env.GITHUB_REPOSITORY?.split("/")[1] ?? "patatos";
+  const repoName = env.GITHUB_REPOSITORY?.split("/")[1] ?? "Patatos";
 
   return {
     plugins: [react()],
