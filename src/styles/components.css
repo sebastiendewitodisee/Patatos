@@ -1560,6 +1560,7 @@ th {
 
   .brand {
     min-width: 0;
+    gap: 0.52rem;
   }
 
   .brand-mark {
@@ -1584,8 +1585,11 @@ th {
   }
 
   .brand-wordmark-wrap {
-    width: clamp(240px, 45vw, 360px);
-    height: 51px;
+    width: clamp(260px, 58vw, 390px);
+    height: 58px;
+    max-width: 100%;
+    flex: 0 1 auto;
+    min-width: 0;
   }
 
   .brand-wordmark-fallback {
@@ -1770,15 +1774,29 @@ th {
 
   .brand-wordmark-wrap {
     display: block;
-    width: clamp(180px, 63vw, 285px);
-    height: 42px;
+    width: clamp(220px, 72vw, 360px);
+    height: 54px;
+    max-width: 100%;
+    flex: 0 1 auto;
+    min-width: 0;
+  }
+
+  .header-controls {
+    flex-direction: column;
+    gap: 0.2rem;
+    align-items: center;
+  }
+
+  .brand {
+    gap: 0.44rem;
   }
 }
 
 @media (max-width: 360px) {
   .brand-wordmark-wrap {
-    width: 165px;
-    height: 39px;
+    width: clamp(198px, 75vw, 310px);
+    height: 50px;
+    max-width: 100%;
   }
 }
 
