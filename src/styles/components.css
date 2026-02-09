@@ -1785,11 +1785,12 @@ th {
 
   .brand-wordmark-wrap {
     display: block;
-    width: clamp(220px, 72vw, 360px);
+    width: clamp(220px, 70vw, 360px);
     height: 54px;
     max-width: 100%;
     flex: 0 1 auto;
     min-width: 0;
+    overflow: hidden;
   }
 
   .header-controls {
@@ -1800,6 +1801,12 @@ th {
     margin-left: 0;
     flex-wrap: nowrap;
     justify-self: end;
+    flex: 0 0 auto;
+  }
+
+  .burger-btn {
+    position: relative;
+    z-index: 61;
   }
 
   .brand {
