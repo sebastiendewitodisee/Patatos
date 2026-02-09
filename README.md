@@ -48,6 +48,12 @@ Le build est généré dans `dist/`.
 - `src/utils/planning.js`: fonctions de calcul (prochaine étape, progression, dernières updates)
 - `src/styles/`: styles globaux et composants
 
+## UI guidelines (Design system)
+
+Guide court pour les tokens d'espacement et les classes communes:
+
+- `docs/ui.md`
+
 ## Mettre à jour le planning
 
 Le planning central est dans `src/data/planning.js`.
