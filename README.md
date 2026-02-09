@@ -53,6 +53,7 @@ Le build est généré dans `dist/`.
 Guide court pour les tokens d'espacement et les classes communes:
 
 - [docs/ui.md](docs/ui.md)
+- [AGENTS.md](AGENTS.md)
 
 ## Mettre à jour le planning
 
