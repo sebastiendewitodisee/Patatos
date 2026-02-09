@@ -8,6 +8,9 @@ Harmoniser l'UI (marges, paddings, typos, composants visuels) avec des tokens CS
 
 Les tokens sont définis dans `src/styles/global.css`:
 
+- Classes layout/typo (page/section/stack/titles) : `src/styles/global.css`
+- Composants (cards/tables/chips + détails) : `src/styles/components.css`
+
 - `--page-max`
 - `--page-pad-x`
 - `--section-pad-y`
