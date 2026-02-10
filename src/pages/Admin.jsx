@@ -155,6 +155,9 @@ function Admin() {
                 <a className="btn btn-ghost" href="#/admin/posts">
                   {t("adminNav.manage_posts")}
                 </a>
+                <a className="btn btn-ghost" href="#/admin/comments">
+                  {t("adminNav.manage_comments")}
+                </a>
               </div>
               <button
                 type="button"

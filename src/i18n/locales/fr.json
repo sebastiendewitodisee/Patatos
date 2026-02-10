@@ -694,7 +694,8 @@
   },
   "adminNav": {
     "manage_planning": "Gerer le planning",
-    "manage_posts": "Gerer les posts"
+    "manage_posts": "Gerer les posts",
+    "manage_comments": "Gerer les commentaires"
   },
   "adminPosts": {
     "title": "Admin posts",
@@ -732,6 +733,35 @@
     "errors": {
       "slug_taken": "Ce slug existe deja. Choisis un slug unique.",
       "generic": "Operation impossible pour le moment. Verifie slug, titre et contenu.",
+      "network": "Reseau indisponible. Verifie la connexion et reessaie."
+    }
+  },
+  "adminComments": {
+    "title": "Admin commentaires",
+    "subtitle": "Moderation des commentaires pour la langue active.",
+    "disabled_title": "Admin desactive",
+    "disabled_body": "Supabase n'est pas configure. La moderation est indisponible.",
+    "need_login": "Connecte-toi d'abord depuis la page Admin pour moderer les commentaires.",
+    "go_to_admin": "Aller a /admin",
+    "loading": "Chargement des commentaires...",
+    "filters": {
+      "all": "Tous",
+      "pending": "En attente",
+      "approved": "Approuves"
+    },
+    "empty": "Aucun commentaire pour ce filtre.",
+    "post_label": "Post: {{value}}",
+    "approve": "Approuver",
+    "approving": "Approbation...",
+    "delete": "Supprimer",
+    "deleting": "Suppression...",
+    "confirm_delete": "Supprimer ce commentaire ?",
+    "status": {
+      "pending": "En attente",
+      "approved": "Approuve"
+    },
+    "errors": {
+      "generic": "Operation impossible pour le moment.",
       "network": "Reseau indisponible. Verifie la connexion et reessaie."
     }
   },

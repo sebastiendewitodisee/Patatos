@@ -694,7 +694,8 @@
   },
   "adminNav": {
     "manage_planning": "Planning beheren",
-    "manage_posts": "Posts beheren"
+    "manage_posts": "Posts beheren",
+    "manage_comments": "Reacties beheren"
   },
   "adminPosts": {
     "title": "Admin posts",
@@ -732,6 +733,35 @@
     "errors": {
       "slug_taken": "Deze slug bestaat al. Kies een unieke slug.",
       "generic": "Bewerking is nu niet mogelijk. Controleer slug, titel en inhoud.",
+      "network": "Netwerk niet beschikbaar. Controleer de verbinding en probeer opnieuw."
+    }
+  },
+  "adminComments": {
+    "title": "Admin reacties",
+    "subtitle": "Moderatie van reacties voor de actieve taal.",
+    "disabled_title": "Admin uitgeschakeld",
+    "disabled_body": "Supabase is niet geconfigureerd. Moderatie is niet beschikbaar.",
+    "need_login": "Meld je eerst aan via de Admin-pagina om reacties te modereren.",
+    "go_to_admin": "Ga naar /admin",
+    "loading": "Reacties laden...",
+    "filters": {
+      "all": "Alles",
+      "pending": "In afwachting",
+      "approved": "Goedgekeurd"
+    },
+    "empty": "Geen reacties voor dit filter.",
+    "post_label": "Post: {{value}}",
+    "approve": "Goedkeuren",
+    "approving": "Goedkeuren...",
+    "delete": "Verwijderen",
+    "deleting": "Verwijderen...",
+    "confirm_delete": "Deze reactie verwijderen?",
+    "status": {
+      "pending": "In afwachting",
+      "approved": "Goedgekeurd"
+    },
+    "errors": {
+      "generic": "Bewerking is nu niet mogelijk.",
       "network": "Netwerk niet beschikbaar. Controleer de verbinding en probeer opnieuw."
     }
   },
