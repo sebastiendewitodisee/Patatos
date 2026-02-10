@@ -692,6 +692,49 @@
       "network": "Netwerk niet beschikbaar. Controleer de verbinding en probeer opnieuw."
     }
   },
+  "adminNav": {
+    "manage_planning": "Planning beheren",
+    "manage_posts": "Posts beheren"
+  },
+  "adminPosts": {
+    "title": "Admin posts",
+    "subtitle": "Minimale beheerpagina voor Supabase-content in de actieve taal.",
+    "disabled_title": "Admin uitgeschakeld",
+    "disabled_body": "Supabase is niet geconfigureerd. Posts beheren is niet beschikbaar.",
+    "need_login": "Meld je eerst aan via de Admin-pagina om posts te beheren.",
+    "go_to_admin": "Ga naar /admin",
+    "connected_as": "Aangemeld als {{email}}.",
+    "loading": "Laden...",
+    "empty": "Geen posts voor deze taal.",
+    "new": "Nieuwe post",
+    "new_draft": "Nieuwe draft",
+    "save": "Opslaan",
+    "saving": "Opslaan...",
+    "delete": "Verwijderen",
+    "deleting": "Verwijderen...",
+    "confirm_delete": "Deze post verwijderen?",
+    "slug_placeholder": "mijn-post",
+    "title_placeholder": "Titel van de post",
+    "excerpt_placeholder": "Korte samenvatting",
+    "body_placeholder": "Inhoud van de post",
+    "fields": {
+      "lang": "Taal",
+      "slug": "Slug",
+      "title": "Titel",
+      "excerpt": "Samenvatting",
+      "body": "Inhoud",
+      "published": "Gepubliceerd"
+    },
+    "meta": {
+      "created_at": "Aangemaakt op: {{value}}",
+      "updated_at": "Bijgewerkt op: {{value}}"
+    },
+    "errors": {
+      "slug_taken": "Deze slug bestaat al. Kies een unieke slug.",
+      "generic": "Bewerking is nu niet mogelijk. Controleer slug, titel en inhoud.",
+      "network": "Netwerk niet beschikbaar. Controleer de verbinding en probeer opnieuw."
+    }
+  },
   "legal": {
     "title": "Juridische vermeldingen",
     "p1": "Interne site van het project Team Patates Patatos.",

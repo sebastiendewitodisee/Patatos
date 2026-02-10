@@ -148,6 +148,14 @@ function Admin() {
           {isAuthenticated ? (
             <div className="stack">
               <p>{t("admin.logged_in_message")}</p>
+              <div className="chip-row">
+                <a className="btn btn-ghost" href="#/admin/planning">
+                  {t("adminNav.manage_planning")}
+                </a>
+                <a className="btn btn-ghost" href="#/admin/posts">
+                  {t("adminNav.manage_posts")}
+                </a>
+              </div>
               <button
                 type="button"
                 className="btn btn-primary"

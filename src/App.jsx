@@ -13,6 +13,7 @@ import Varietes from "./pages/Varietes";
 
 const Admin = lazy(() => import("./pages/Admin"));
 const AdminPlanning = lazy(() => import("./pages/AdminPlanning"));
+const AdminPosts = lazy(() => import("./pages/AdminPosts"));
 
 function App() {
   return (
@@ -30,6 +31,14 @@ function App() {
           element={
             <Suspense fallback={null}>
               <AdminPlanning />
+            </Suspense>
+          }
+        />
+        <Route
+          path="admin/posts"
+          element={
+            <Suspense fallback={null}>
+              <AdminPosts />
             </Suspense>
           }
         />

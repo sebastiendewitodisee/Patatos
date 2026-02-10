@@ -692,6 +692,49 @@
       "network": "Reseau indisponible. Verifie la connexion et reessaie."
     }
   },
+  "adminNav": {
+    "manage_planning": "Gerer le planning",
+    "manage_posts": "Gerer les posts"
+  },
+  "adminPosts": {
+    "title": "Admin posts",
+    "subtitle": "Gestion minimale des contenus Supabase pour la langue active.",
+    "disabled_title": "Admin desactive",
+    "disabled_body": "Supabase n'est pas configure. La gestion des posts est indisponible.",
+    "need_login": "Connecte-toi d'abord depuis la page Admin pour gerer les posts.",
+    "go_to_admin": "Aller a /admin",
+    "connected_as": "Connecte en tant que {{email}}.",
+    "loading": "Chargement...",
+    "empty": "Aucun post pour cette langue.",
+    "new": "Nouveau post",
+    "new_draft": "Nouveau brouillon",
+    "save": "Enregistrer",
+    "saving": "Enregistrement...",
+    "delete": "Supprimer",
+    "deleting": "Suppression...",
+    "confirm_delete": "Supprimer ce post ?",
+    "slug_placeholder": "mon-post",
+    "title_placeholder": "Titre du post",
+    "excerpt_placeholder": "Resume court",
+    "body_placeholder": "Contenu du post",
+    "fields": {
+      "lang": "Langue",
+      "slug": "Slug",
+      "title": "Titre",
+      "excerpt": "Resume",
+      "body": "Contenu",
+      "published": "Publie"
+    },
+    "meta": {
+      "created_at": "Cree le: {{value}}",
+      "updated_at": "Mis a jour le: {{value}}"
+    },
+    "errors": {
+      "slug_taken": "Ce slug existe deja. Choisis un slug unique.",
+      "generic": "Operation impossible pour le moment. Verifie slug, titre et contenu.",
+      "network": "Reseau indisponible. Verifie la connexion et reessaie."
+    }
+  },
   "legal": {
     "title": "Mentions légales",
     "p1": "Site interne du projet Team Patates Patatos.",
