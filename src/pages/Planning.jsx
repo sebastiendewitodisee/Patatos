@@ -85,8 +85,18 @@ function normalizeRemoteStatus(status) {
   return "todo";
 }
 
+function normalizeRemotePhaseId(phaseId) {
+  if (typeof phaseId !== "string") {
+    return "preparation";
+  }
+
+  const normalized = phaseId.trim().toLowerCase();
+  return PHASE_ORDER.includes(normalized) ? normalized : "preparation";
+}
+
 function mapRemotePlanningItem(item, index) {
   const parsedOrder = Number(item?.sort_order);
+  const normalizedPhaseId = normalizeRemotePhaseId(item?.phase_id);
 
   return {
     id: item?.id ?? `remote-${index + 1}`,
@@ -96,9 +106,9 @@ function mapRemotePlanningItem(item, index) {
     title: item?.title ?? "",
     description: item?.description ?? "",
     status: normalizeRemoteStatus(item?.status),
-    type: "preparation",
-    phaseId: "preparation",
-    phase: "preparation",
+    type: item?.type ?? "task",
+    phaseId: normalizedPhaseId,
+    phase: normalizedPhaseId,
     responsibles: [],
     isTeam: true,
   };

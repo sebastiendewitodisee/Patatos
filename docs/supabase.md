@@ -17,6 +17,23 @@ Le script cree 3 tables avec RLS:
 - `comments`: commentaires publics avec moderation (`is_approved`)
 - `planning_items`: elements de planning publics
 
+## Migrations
+
+Si la base est deja initialisee, executer ensuite les migrations SQL versionnees:
+
+1. Ouvrir `SQL Editor`.
+2. Coller `supabase/migrations/001_planning_items_phase.sql`.
+3. Executer le script.
+
+Cette migration ajoute `phase_id` (et `type`) pour `planning_items`.
+
+Exemple insert:
+
+```sql
+insert into public.planning_items (lang, phase_id, type, title, description, period, status, sort_order)
+values ('fr', 'plantation', 'task', 'Preparation du sol', 'Ameublir et preparer les lignes', 'Semaine 12', 'todo', 10);
+```
+
 ## Creer un compte admin
 
 Dans `Auth > Users`, creer (ou inviter) un utilisateur admin.
