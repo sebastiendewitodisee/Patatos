@@ -735,6 +735,23 @@
       "network": "Reseau indisponible. Verifie la connexion et reessaie."
     }
   },
+  "posts": {
+    "title": "Posts",
+    "subtitle": "Actualites publiques de la team Patatos.",
+    "loading": "Chargement des posts...",
+    "empty": "Aucun post publie pour le moment.",
+    "unavailable_title": "Posts indisponibles",
+    "unavailable_body": "Supabase n'est pas configure ou momentanement indisponible.",
+    "read_more": "Lire le post"
+  },
+  "post": {
+    "back_to_list": "Retour a la liste des posts",
+    "loading": "Chargement du post...",
+    "not_found_title": "Post introuvable",
+    "not_found_body": "Ce post n'existe pas ou n'est pas publie.",
+    "unavailable_title": "Post indisponible",
+    "unavailable_body": "Supabase n'est pas configure ou momentanement indisponible."
+  },
   "legal": {
     "title": "Mentions légales",
     "p1": "Site interne du projet Team Patates Patatos.",

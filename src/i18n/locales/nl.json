@@ -735,6 +735,23 @@
       "network": "Netwerk niet beschikbaar. Controleer de verbinding en probeer opnieuw."
     }
   },
+  "posts": {
+    "title": "Posts",
+    "subtitle": "Publieke updates van de Patatos-team.",
+    "loading": "Posts laden...",
+    "empty": "Nog geen gepubliceerde posts.",
+    "unavailable_title": "Posts niet beschikbaar",
+    "unavailable_body": "Supabase is niet geconfigureerd of tijdelijk niet bereikbaar.",
+    "read_more": "Post lezen"
+  },
+  "post": {
+    "back_to_list": "Terug naar de posts",
+    "loading": "Post laden...",
+    "not_found_title": "Post niet gevonden",
+    "not_found_body": "Deze post bestaat niet of is niet gepubliceerd.",
+    "unavailable_title": "Post niet beschikbaar",
+    "unavailable_body": "Supabase is niet geconfigureerd of tijdelijk niet bereikbaar."
+  },
   "legal": {
     "title": "Juridische vermeldingen",
     "p1": "Interne site van het project Team Patates Patatos.",

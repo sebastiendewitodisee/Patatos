@@ -14,6 +14,8 @@ import Varietes from "./pages/Varietes";
 const Admin = lazy(() => import("./pages/Admin"));
 const AdminPlanning = lazy(() => import("./pages/AdminPlanning"));
 const AdminPosts = lazy(() => import("./pages/AdminPosts"));
+const Posts = lazy(() => import("./pages/Posts"));
+const Post = lazy(() => import("./pages/Post"));
 
 function App() {
   return (
@@ -21,6 +23,22 @@ function App() {
       <Route path="/" element={<Layout />}>
         <Route index element={<Home />} />
         <Route path="planning" element={<Planning />} />
+        <Route
+          path="posts"
+          element={
+            <Suspense fallback={null}>
+              <Posts />
+            </Suspense>
+          }
+        />
+        <Route
+          path="posts/:slug"
+          element={
+            <Suspense fallback={null}>
+              <Post />
+            </Suspense>
+          }
+        />
         <Route path="equipe" element={<Team />} />
         <Route path="varietes" element={<Varietes />} />
         <Route path="organisation" element={<Organisation />} />
