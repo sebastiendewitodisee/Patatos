@@ -660,6 +660,38 @@
       "generic": "Aanmelden is nu niet mogelijk. Probeer het zo opnieuw."
     }
   },
+  "adminPlanning": {
+    "title": "Admin planning",
+    "subtitle": "Minimale beheerpagina voor Supabase-planningitems in de actieve taal.",
+    "disabled_title": "Admin uitgeschakeld",
+    "disabled_body": "Supabase is niet geconfigureerd. Planningbeheer is niet beschikbaar.",
+    "need_login": "Meld je eerst aan via de Admin-pagina om planningitems te beheren.",
+    "go_to_admin": "Ga naar /admin",
+    "connected_as": "Aangemeld als {{email}}.",
+    "loading": "Laden...",
+    "empty": "Geen items voor deze taal.",
+    "add": "Item toevoegen",
+    "save": "Opslaan",
+    "saving": "Opslaan...",
+    "delete": "Verwijderen",
+    "deleting": "Verwijderen...",
+    "confirm_delete": "Dit item verwijderen?",
+    "type_task": "Taak",
+    "fields": {
+      "phase": "Fase",
+      "status": "Status",
+      "type": "Type",
+      "title": "Titel",
+      "description": "Beschrijving",
+      "period": "Periode",
+      "sort_order": "Volgorde",
+      "actions": "Acties"
+    },
+    "errors": {
+      "generic": "Bewerking is nu niet mogelijk.",
+      "network": "Netwerk niet beschikbaar. Controleer de verbinding en probeer opnieuw."
+    }
+  },
   "legal": {
     "title": "Juridische vermeldingen",
     "p1": "Interne site van het project Team Patates Patatos.",

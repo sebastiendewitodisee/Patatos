@@ -660,6 +660,38 @@
       "generic": "Impossible de se connecter pour le moment. Reessaie dans un instant."
     }
   },
+  "adminPlanning": {
+    "title": "Admin planning",
+    "subtitle": "Gestion minimale des items planning Supabase pour la langue active.",
+    "disabled_title": "Admin desactive",
+    "disabled_body": "Supabase n'est pas configure. La gestion planning est indisponible.",
+    "need_login": "Connecte-toi d'abord depuis la page Admin pour gerer le planning.",
+    "go_to_admin": "Aller a /admin",
+    "connected_as": "Connecte en tant que {{email}}.",
+    "loading": "Chargement...",
+    "empty": "Aucun item pour cette langue.",
+    "add": "Ajouter un item",
+    "save": "Enregistrer",
+    "saving": "Enregistrement...",
+    "delete": "Supprimer",
+    "deleting": "Suppression...",
+    "confirm_delete": "Supprimer cet item ?",
+    "type_task": "Tache",
+    "fields": {
+      "phase": "Phase",
+      "status": "Statut",
+      "type": "Type",
+      "title": "Titre",
+      "description": "Description",
+      "period": "Periode",
+      "sort_order": "Ordre",
+      "actions": "Actions"
+    },
+    "errors": {
+      "generic": "Operation impossible pour le moment.",
+      "network": "Reseau indisponible. Verifie la connexion et reessaie."
+    }
+  },
   "legal": {
     "title": "Mentions légales",
     "p1": "Site interne du projet Team Patates Patatos.",

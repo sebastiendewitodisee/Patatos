@@ -12,6 +12,7 @@ import Team from "./pages/Team";
 import Varietes from "./pages/Varietes";
 
 const Admin = lazy(() => import("./pages/Admin"));
+const AdminPlanning = lazy(() => import("./pages/AdminPlanning"));
 
 function App() {
   return (
@@ -24,6 +25,14 @@ function App() {
         <Route path="organisation" element={<Organisation />} />
         <Route path="faq" element={<Faq />} />
         <Route path="contact" element={<Contact />} />
+        <Route
+          path="admin/planning"
+          element={
+            <Suspense fallback={null}>
+              <AdminPlanning />
+            </Suspense>
+          }
+        />
         <Route
           path="admin"
           element={
