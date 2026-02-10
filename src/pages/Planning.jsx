@@ -92,7 +92,7 @@ function mapRemotePlanningItem(item, index) {
     id: item?.id ?? `remote-${index + 1}`,
     order: Number.isFinite(parsedOrder) ? parsedOrder : index + 1,
     period: item?.period ?? "",
-    updatedAt: "",
+    updatedAt: item?.updated_at ?? "",
     title: item?.title ?? "",
     description: item?.description ?? "",
     status: normalizeRemoteStatus(item?.status),

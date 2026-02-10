@@ -17,7 +17,7 @@ export async function fetchPlanningItemsFromSupabase(lang) {
     const resolvedLang = normalizeLang(lang);
     const { data, error } = await supabase
       .from("planning_items")
-      .select("id, lang, title, description, period, status, sort_order")
+      .select("id, lang, title, description, period, status, sort_order, updated_at")
       .eq("lang", resolvedLang)
       .order("sort_order", { ascending: true });
 
