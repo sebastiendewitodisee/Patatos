@@ -33,4 +33,8 @@ Le site lit ces variables (deja documentees dans `.env.example`):
 - `VITE_SUPABASE_URL`
 - `VITE_SUPABASE_ANON_KEY`
 
+En local, creer un fichier `.env.local` a la racine et y renseigner
+`VITE_SUPABASE_URL` et `VITE_SUPABASE_ANON_KEY` depuis `Supabase > Settings > API`.
+Apres modification des variables d'environnement, redemarrer `npm run dev`.
+
 Sans ces variables, la route `/admin` reste desactivee cote UI, sans casser le build.
