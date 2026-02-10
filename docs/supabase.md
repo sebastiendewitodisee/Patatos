@@ -1,0 +1,33 @@
+# Supabase setup (Patatos)
+
+## Prerequis
+
+- Creer un projet Supabase.
+- Garder les secrets cote Supabase/GitHub uniquement (ne rien committer).
+
+## Installer le schema
+
+1. Ouvrir `SQL Editor` dans Supabase.
+2. Coller le contenu de `supabase/schema.sql`.
+3. Executer le script.
+
+Le script cree 3 tables avec RLS:
+
+- `content_posts`: posts de contenu (visibles publiquement seulement si `published = true`)
+- `comments`: commentaires publics avec moderation (`is_approved`)
+- `planning_items`: elements de planning publics
+
+## Creer un compte admin
+
+Dans `Auth > Users`, creer (ou inviter) un utilisateur admin.
+
+Les operations d'ecriture (`insert/update/delete`) sont reservees aux users `authenticated`.
+
+## Variables d'environnement du site
+
+Le site lit ces variables (deja documentees dans `.env.example`):
+
+- `VITE_SUPABASE_URL`
+- `VITE_SUPABASE_ANON_KEY`
+
+Sans ces variables, la route `/admin` reste desactivee cote UI, sans casser le build.
