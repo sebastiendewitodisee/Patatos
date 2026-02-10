@@ -1,6 +1,6 @@
-﻿import { Route, Routes } from "react-router-dom";
+import { Suspense, lazy } from "react";
+import { Route, Routes } from "react-router-dom";
 import Layout from "./components/Layout";
-import Admin from "./pages/Admin";
 import Contact from "./pages/Contact";
 import Faq from "./pages/Faq";
 import Home from "./pages/Home";
@@ -10,6 +10,8 @@ import Organisation from "./pages/Organisation";
 import Planning from "./pages/Planning";
 import Team from "./pages/Team";
 import Varietes from "./pages/Varietes";
+
+const Admin = lazy(() => import("./pages/Admin"));
 
 function App() {
   return (
@@ -22,7 +24,14 @@ function App() {
         <Route path="organisation" element={<Organisation />} />
         <Route path="faq" element={<Faq />} />
         <Route path="contact" element={<Contact />} />
-        <Route path="admin" element={<Admin />} />
+        <Route
+          path="admin"
+          element={
+            <Suspense fallback={null}>
+              <Admin />
+            </Suspense>
+          }
+        />
         <Route path="legal" element={<Legal />} />
         <Route path="*" element={<NotFound />} />
       </Route>
