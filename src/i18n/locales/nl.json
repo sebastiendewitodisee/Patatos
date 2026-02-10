@@ -782,6 +782,24 @@
     "unavailable_title": "Post niet beschikbaar",
     "unavailable_body": "Supabase is niet geconfigureerd of tijdelijk niet bereikbaar."
   },
+  "commentForm": {
+    "title": "Reacties",
+    "subtitle": "Nieuwe reacties wachten op moderatie.",
+    "unavailable_title": "Reacties niet beschikbaar",
+    "unavailable_body": "Supabase is niet geconfigureerd of tijdelijk niet bereikbaar.",
+    "author_label": "Jouw naam",
+    "author_placeholder": "Bijv: Sebastien",
+    "message_label": "Jouw reactie",
+    "message_placeholder": "Deel hier je reactie...",
+    "submit": "Verzenden",
+    "submitting": "Verzenden...",
+    "success": "Bedankt! Je reactie wacht op goedkeuring.",
+    "errors": {
+      "required": "Vul de verplichte velden in met geldige waarden.",
+      "network": "Netwerk niet beschikbaar. Probeer het zo opnieuw.",
+      "generic": "Kan de reactie nu niet verzenden."
+    }
+  },
   "legal": {
     "title": "Juridische vermeldingen",
     "p1": "Interne site van het project Team Patates Patatos.",

@@ -782,6 +782,24 @@
     "unavailable_title": "Post indisponible",
     "unavailable_body": "Supabase n'est pas configure ou momentanement indisponible."
   },
+  "commentForm": {
+    "title": "Commentaires",
+    "subtitle": "Les nouveaux commentaires sont en attente de moderation.",
+    "unavailable_title": "Commentaires indisponibles",
+    "unavailable_body": "Supabase n'est pas configure ou momentanement indisponible.",
+    "author_label": "Ton nom",
+    "author_placeholder": "Ex: Sebastien",
+    "message_label": "Ton commentaire",
+    "message_placeholder": "Partage ton avis ici...",
+    "submit": "Envoyer",
+    "submitting": "Envoi...",
+    "success": "Merci ! Ton commentaire est en attente de validation.",
+    "errors": {
+      "required": "Remplis les champs obligatoires avec des valeurs valides.",
+      "network": "Reseau indisponible. Reessaie dans un instant.",
+      "generic": "Impossible d'envoyer le commentaire pour le moment."
+    }
+  },
   "legal": {
     "title": "Mentions légales",
     "p1": "Site interne du projet Team Patates Patatos.",

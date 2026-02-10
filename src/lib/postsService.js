@@ -20,6 +20,16 @@ function sanitizeSlug(value) {
     .replace(/^-+|-+$/g, "");
 }
 
+function getCreateCommentErrorKey(error) {
+  const message = String(error?.message ?? "").toLowerCase();
+
+  if (message.includes("network") || message.includes("fetch")) {
+    return "commentForm.errors.network";
+  }
+
+  return "commentForm.errors.generic";
+}
+
 export async function fetchPublishedPosts(lang) {
   if (!isSupabaseConfigured || !supabase) {
     return null;
@@ -77,5 +87,49 @@ export async function fetchPublishedPostBySlug(lang, slug) {
     return data ?? null;
   } catch {
     return null;
+  }
+}
+
+export async function createComment({ lang, slug, postId, authorName, message }) {
+  if (!isSupabaseConfigured || !supabase) {
+    return { ok: false, errorKey: "commentForm.unavailable_body" };
+  }
+
+  try {
+    const resolvedLang = normalizeUiLang(lang);
+    const resolvedSlug = sanitizeSlug(slug);
+    const resolvedPostId = String(postId ?? "").trim();
+    const resolvedAuthor = String(authorName ?? "").trim();
+    const resolvedMessage = String(message ?? "").trim();
+
+    if (!resolvedPostId || !resolvedAuthor || !resolvedMessage) {
+      return { ok: false, errorKey: "commentForm.errors.required" };
+    }
+
+    if (resolvedAuthor.length > 120 || resolvedMessage.length > 2000) {
+      return { ok: false, errorKey: "commentForm.errors.required" };
+    }
+
+    if (!resolvedLang || !resolvedSlug) {
+      return { ok: false, errorKey: "commentForm.errors.generic" };
+    }
+
+    const { error } = await supabase
+      .from("comments")
+      .insert({
+        post_id: resolvedPostId,
+        author_name: resolvedAuthor,
+        message: resolvedMessage,
+      })
+      .select("id")
+      .single();
+
+    if (error) {
+      return { ok: false, errorKey: getCreateCommentErrorKey(error) };
+    }
+
+    return { ok: true };
+  } catch {
+    return { ok: false, errorKey: "commentForm.errors.generic" };
   }
 }
