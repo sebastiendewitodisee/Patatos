@@ -56,6 +56,12 @@ create table if not exists public.planning_items (
   constraint planning_items_title_not_empty check (char_length(btrim(title)) > 0)
 );
 
+alter table public.planning_items
+drop constraint if exists planning_items_lang_check;
+
+alter table public.planning_items
+add constraint planning_items_lang_check check (lang in ('fr', 'nl'));
+
 create unique index if not exists idx_content_posts_slug on public.content_posts (slug);
 create index if not exists idx_content_posts_published on public.content_posts (published);
 create index if not exists idx_comments_post_id on public.comments (post_id);

@@ -23,6 +23,9 @@ Dans `Auth > Users`, creer (ou inviter) un utilisateur admin.
 
 Les operations d'ecriture (`insert/update/delete`) sont reservees aux users `authenticated`.
 
+Note admin: un utilisateur `authenticated` peut aussi lire tous les drafts (`content_posts`)
+et tous les commentaires non approuves (`comments`) pour moderation.
+
 ## Variables d'environnement du site
 
 Le site lit ces variables (deja documentees dans `.env.example`):
