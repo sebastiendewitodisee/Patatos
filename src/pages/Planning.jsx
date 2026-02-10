@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import Badge from "../components/Badge";
 import Card from "../components/Card";
@@ -63,12 +63,56 @@ function getResponsiblesSearchText(event, t) {
     .join(" ");
 }
 
+function normalizeUiLang(lang) {
+  if (typeof lang !== "string") {
+    return "fr";
+  }
+
+  return lang.toLowerCase().startsWith("nl") ? "nl" : "fr";
+}
+
+function normalizeRemoteStatus(status) {
+  if (typeof status !== "string") {
+    return "todo";
+  }
+
+  const normalized = status.trim().toLowerCase();
+
+  if (normalized === "done" || normalized === "todo" || normalized === "doing" || normalized === "in_progress") {
+    return normalized;
+  }
+
+  return "todo";
+}
+
+function mapRemotePlanningItem(item, index) {
+  const parsedOrder = Number(item?.sort_order);
+
+  return {
+    id: item?.id ?? `remote-${index + 1}`,
+    order: Number.isFinite(parsedOrder) ? parsedOrder : index + 1,
+    period: item?.period ?? "",
+    updatedAt: "",
+    title: item?.title ?? "",
+    description: item?.description ?? "",
+    status: normalizeRemoteStatus(item?.status),
+    type: "preparation",
+    phaseId: "preparation",
+    phase: "preparation",
+    responsibles: [],
+    isTeam: true,
+  };
+}
+
 function Planning() {
   const { t, i18n } = useTranslation();
   const [statusFilter, setStatusFilter] = useState("all");
   const [phaseFilter, setPhaseFilter] = useState("all");
   const [search, setSearch] = useState("");
-  const locale = i18n.resolvedLanguage?.startsWith("nl") ? "nl-BE" : "fr-BE";
+  const [remoteItems, setRemoteItems] = useState(null);
+  const [remoteLang, setRemoteLang] = useState("");
+  const currentLang = normalizeUiLang(i18n.resolvedLanguage || i18n.language);
+  const locale = currentLang === "nl" ? "nl-BE" : "fr-BE";
   const dateFallback = t("planning.fallbacks.date_tbc");
   const periodFallback = t("planning.fallbacks.period_tbc");
   const validationFallback = t("planning.fallbacks.validation");
@@ -81,11 +125,59 @@ function Planning() {
 
   const isResetDisabled = phaseFilter === "all" && statusFilter === "all" && search.trim().length === 0;
 
-  const sortedEvents = useMemo(() => sortEventsByDate(planningEvents), []);
-  const progress = useMemo(() => getPlanningProgress(planningEvents), []);
-  const upcomingEvent = useMemo(() => getUpcomingEvent(planningEvents), []);
-  const lastUpdate = useMemo(() => getLastUpdatedEvent(planningEvents), []);
-  const checklist = useMemo(() => getChecklistByPhase(planningEvents, PHASE_ORDER), []);
+  useEffect(() => {
+    let cancelled = false;
+
+    const loadRemoteItems = async () => {
+      try {
+        const { fetchPlanningItemsFromSupabase } = await import("../lib/planningService");
+        const items = await fetchPlanningItemsFromSupabase(currentLang);
+
+        if (cancelled) {
+          return;
+        }
+
+        if (items === null) {
+          setRemoteLang(currentLang);
+          setRemoteItems(null);
+          return;
+        }
+
+        if (items.length === 0) {
+          setRemoteLang(currentLang);
+          setRemoteItems([]);
+          return;
+        }
+
+        setRemoteLang(currentLang);
+        setRemoteItems(items.map(mapRemotePlanningItem));
+      } catch {
+        if (cancelled) {
+          return;
+        }
+
+        setRemoteLang(currentLang);
+        setRemoteItems(null);
+      }
+    };
+
+    loadRemoteItems();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [currentLang]);
+
+  const planningSourceEvents = useMemo(() => {
+    const hasRemoteItems = remoteLang === currentLang && Array.isArray(remoteItems) && remoteItems.length > 0;
+    return hasRemoteItems ? remoteItems : planningEvents;
+  }, [currentLang, remoteItems, remoteLang]);
+
+  const sortedEvents = useMemo(() => sortEventsByDate(planningSourceEvents), [planningSourceEvents]);
+  const progress = useMemo(() => getPlanningProgress(planningSourceEvents), [planningSourceEvents]);
+  const upcomingEvent = useMemo(() => getUpcomingEvent(planningSourceEvents), [planningSourceEvents]);
+  const lastUpdate = useMemo(() => getLastUpdatedEvent(planningSourceEvents), [planningSourceEvents]);
+  const checklist = useMemo(() => getChecklistByPhase(planningSourceEvents, PHASE_ORDER), [planningSourceEvents]);
 
   const statusOptions = useMemo(
     () =>
