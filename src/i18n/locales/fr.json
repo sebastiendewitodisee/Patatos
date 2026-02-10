@@ -782,6 +782,13 @@
     "unavailable_title": "Post indisponible",
     "unavailable_body": "Supabase n'est pas configure ou momentanement indisponible."
   },
+  "commentsList": {
+    "title": "Commentaires approuves",
+    "loading": "Chargement des commentaires...",
+    "empty": "Aucun commentaire pour l'instant.",
+    "meta_by": "Par {{name}}",
+    "meta_on": "le {{date}}"
+  },
   "commentForm": {
     "title": "Commentaires",
     "subtitle": "Les nouveaux commentaires sont en attente de moderation.",

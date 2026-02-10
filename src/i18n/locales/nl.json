@@ -782,6 +782,13 @@
     "unavailable_title": "Post niet beschikbaar",
     "unavailable_body": "Supabase is niet geconfigureerd of tijdelijk niet bereikbaar."
   },
+  "commentsList": {
+    "title": "Goedgekeurde reacties",
+    "loading": "Reacties laden...",
+    "empty": "Nog geen reacties.",
+    "meta_by": "Door {{name}}",
+    "meta_on": "op {{date}}"
+  },
   "commentForm": {
     "title": "Reacties",
     "subtitle": "Nieuwe reacties wachten op moderatie.",

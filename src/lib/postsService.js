@@ -1,6 +1,7 @@
 import { isSupabaseConfigured, supabase } from "./supabaseClient";
 
 const POSTS_SELECT_COLUMNS = "id, slug, lang, title, excerpt, body, created_at, updated_at";
+const APPROVED_COMMENTS_SELECT_COLUMNS = "id, author_name, message, created_at";
 
 function normalizeUiLang(lang) {
   if (typeof lang !== "string") {
@@ -131,5 +132,38 @@ export async function createComment({ lang, slug, postId, authorName, message })
     return { ok: true };
   } catch {
     return { ok: false, errorKey: "commentForm.errors.generic" };
+  }
+}
+
+export async function fetchApprovedCommentsByPostId(postId) {
+  if (!isSupabaseConfigured || !supabase) {
+    return null;
+  }
+
+  try {
+    const resolvedPostId = String(postId ?? "").trim();
+
+    if (!resolvedPostId) {
+      return [];
+    }
+
+    const { data, error } = await supabase
+      .from("comments")
+      .select(APPROVED_COMMENTS_SELECT_COLUMNS)
+      .eq("post_id", resolvedPostId)
+      .eq("is_approved", true)
+      .order("created_at", { ascending: false });
+
+    if (error) {
+      return null;
+    }
+
+    if (!Array.isArray(data) || data.length === 0) {
+      return [];
+    }
+
+    return data;
+  } catch {
+    return null;
   }
 }
