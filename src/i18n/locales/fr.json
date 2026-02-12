@@ -91,6 +91,10 @@
   "planning": {
     "season": "Saison 2026 (Belgique)",
     "title": "Planning central 🗓️",
+    "hero": {
+      "subtitle": "Toutes les étapes de la saison, au même endroit.",
+      "hint": "Après chaque session, on met à jour le statut."
+    },
     "intro": "Référence commune de la team pour la saison en cours.",
     "rules_title": "Règles Patatos",
     "rules": {

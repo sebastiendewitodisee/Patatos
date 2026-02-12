@@ -91,6 +91,10 @@
   "planning": {
     "season": "Seizoen 2026 (België)",
     "title": "Centrale planning 🗓️",
+    "hero": {
+      "subtitle": "Alle stappen van het seizoen op één plek.",
+      "hint": "Na elke sessie werken we de status bij."
+    },
     "intro": "Gezamenlijk referentiepunt van het team voor het lopende seizoen.",
     "rules_title": "Patatos-regels",
     "rules": {

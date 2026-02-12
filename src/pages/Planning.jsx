@@ -271,6 +271,17 @@ function Planning() {
     <div className="container page page-block planning-page">
       <section className="section section-tight stack">
         <h1 className="page-title">{t("planning.title")}</h1>
+        <Card>
+          <p className="section-subtitle muted-text">{t("planning.hero.subtitle")}</p>
+          <div className="timeline-badges">
+            {PHASE_ORDER.map((phaseId) => (
+              <Badge key={phaseId} tone="neutral">
+                {getPhaseLabel(phaseId, t)}
+              </Badge>
+            ))}
+          </div>
+          <p className="muted-text">{t("planning.hero.hint")}</p>
+        </Card>
 
         <div className="grid three-columns summary-grid">
           <Card title={t("planning.summary.next")}>
