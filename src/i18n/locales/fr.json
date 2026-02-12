@@ -112,6 +112,14 @@
       "period_tbc": "Période à confirmer",
       "validation": "Validation: on confirme après inspection terrain et météo."
     },
+    "status": {
+      "all": "Tous",
+      "upcoming": "À venir",
+      "todo": "À faire",
+      "in_progress": "En cours",
+      "done": "Fait"
+    },
+    "late": "\u26A0 En retard",
     "timeline": {
       "title": "Timeline des événements",
       "intro": "Chaque carte affiche une période saisonnière. Les tâches indicatives incluent une règle de validation.",

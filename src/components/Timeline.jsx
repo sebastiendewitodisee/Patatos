@@ -54,6 +54,12 @@ function getEventValidationText(event, t, validationFallback) {
   return event?.validationKey ? t(event.validationKey, { defaultValue: fallbackLabel }) : fallbackLabel;
 }
 
+function getPlanningStatusLabel(status, t) {
+  return t(`planning.status.${status}`, {
+    defaultValue: t(`status.${status}`, { defaultValue: status }),
+  });
+}
+
 function Timeline({ events }) {
   const { t } = useTranslation();
   const dateFallback = t("planning.fallbacks.date_tbc");
@@ -88,10 +94,10 @@ function Timeline({ events }) {
               <div className="timeline-head">
                 <h3>{getEventText(event, "titleKey", "title", t)}</h3>
                 <div className="timeline-badges">
-                  <Badge tone={status.tone}>{t(`status.${phaseStatus.status}`)}</Badge>
+                  <Badge tone={status.tone}>{getPlanningStatusLabel(phaseStatus.status, t)}</Badge>
                   <Badge tone={type.tone}>{t(`planning.types.${event.type}`)}</Badge>
                   {isEventIndicative(event) ? <Badge tone="neutral">{t("planning.timeline.indicative")}</Badge> : null}
-                  {isLate ? <Badge tone="late">{t("planning.timeline.late")}</Badge> : null}
+                  {isLate ? <Badge tone="late">{t("planning.late")}</Badge> : null}
                 </div>
               </div>
 

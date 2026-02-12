@@ -27,6 +27,12 @@ function getPhaseLabel(phaseId, t) {
   return t(`planning.phases.${phaseId}`, { defaultValue: phaseId });
 }
 
+function getPlanningStatusLabel(status, t) {
+  return t(`planning.status.${status}`, {
+    defaultValue: t(`status.${status}`, { defaultValue: status }),
+  });
+}
+
 function getEventText(event, keyName, fallbackKeyName, t) {
   const translationKey = event?.[keyName];
   const fallbackValue = fallbackKeyName ? event?.[fallbackKeyName] : "";
@@ -193,7 +199,7 @@ function Planning() {
     () =>
       STATUS_OPTIONS.map((option) => ({
         value: option.value,
-        label: t(`status.${option.value}`),
+        label: getPlanningStatusLabel(option.value, t),
       })),
     [t]
   );
@@ -240,7 +246,7 @@ function Planning() {
   if (statusFilter !== "all") {
     activeChips.push({
       key: `status-${statusFilter}`,
-      label: t("planning.filters.active_status", { value: t(`status.${statusFilter}`) }),
+      label: t("planning.filters.active_status", { value: getPlanningStatusLabel(statusFilter, t) }),
       onClear: () => setStatusFilter("all"),
     });
   }
@@ -373,9 +379,9 @@ function Planning() {
                         <div>
                           <p>{getEventText(task, "titleKey", "title", t)}</p>
                           <div className="timeline-badges">
-                            <Badge tone={status.tone}>{t(`status.${phaseStatus.status}`)}</Badge>
+                            <Badge tone={status.tone}>{getPlanningStatusLabel(phaseStatus.status, t)}</Badge>
                             {isEventIndicative(task) ? <Badge tone="neutral">{t("planning.timeline.indicative")}</Badge> : null}
-                            {phaseStatus.isLate ? <Badge tone="late">{t("planning.timeline.late")}</Badge> : null}
+                            {phaseStatus.isLate ? <Badge tone="late">{t("planning.late")}</Badge> : null}
                           </div>
                           <p className="muted-text">
                             {t("common.period_with_value", {

@@ -112,6 +112,14 @@
       "period_tbc": "Periode te bevestigen",
       "validation": "Validatie: we bevestigen na terreincontrole en op basis van het weer."
     },
+    "status": {
+      "all": "Alles",
+      "upcoming": "Komt eraan",
+      "todo": "Te doen",
+      "in_progress": "Bezig",
+      "done": "Klaar"
+    },
+    "late": "\u26A0 Te laat",
     "timeline": {
       "title": "Tijdlijn van gebeurtenissen",
       "intro": "Elke kaart toont een seizoensperiode. Indicatieve taken bevatten een validatieregel.",
