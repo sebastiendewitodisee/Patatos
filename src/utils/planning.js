@@ -293,7 +293,7 @@ function getEventDateRange(event) {
   return { start: normalizedDate, end: normalizedDate };
 }
 
-export function getPhaseStatus(event, referenceDate = new Date()) {
+export function getPlanningStatus(event, referenceDate = new Date()) {
   const manualStatus = normalizeManualStatus(event?.status);
 
   if (manualStatus === "done") {
@@ -323,12 +323,16 @@ export function getPhaseStatus(event, referenceDate = new Date()) {
   return { status: "todo", isLate: true };
 }
 
+export function getPhaseStatus(event, referenceDate = new Date()) {
+  return getPlanningStatus(event, referenceDate);
+}
+
 export function getEffectiveStatus(event, referenceDate = new Date()) {
-  return getPhaseStatus(event, referenceDate).status;
+  return getPlanningStatus(event, referenceDate).status;
 }
 
 export function isEventLate(event, now = new Date()) {
-  return getPhaseStatus(event, now).isLate;
+  return getPlanningStatus(event, now).isLate;
 }
 
 export function sortEventsByDate(events, order = "asc") {

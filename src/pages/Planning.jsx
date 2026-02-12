@@ -10,7 +10,7 @@ import {
   getChecklistByPhase,
   getEventPhaseId,
   getEventScheduleLabel,
-  getPhaseStatus,
+  getPlanningStatus,
   getIndicativeValidationMessage,
   getLastUpdatedEvent,
   getPlanningProgress,
@@ -210,7 +210,7 @@ function Planning() {
     const loweredSearch = search.trim().toLowerCase();
 
     return sortedEvents.filter((event) => {
-      const phaseStatus = getPhaseStatus(event);
+      const phaseStatus = getPlanningStatus(event);
       const eventPhaseId = getEventPhaseId(event);
       const matchesStatus = statusFilter === "all" || phaseStatus.status === statusFilter;
       const matchesPhase = phaseFilter === "all" || eventPhaseId === phaseFilter;
@@ -364,7 +364,7 @@ function Planning() {
               {phaseBlock.tasks.length ? (
                 <ul className="checklist">
                   {phaseBlock.tasks.map((task) => {
-                    const phaseStatus = getPhaseStatus(task);
+                    const phaseStatus = getPlanningStatus(task);
                     const status = STATUS_META[phaseStatus.status] ?? STATUS_META.todo;
 
                     return (

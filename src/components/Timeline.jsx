@@ -3,7 +3,7 @@ import Badge from "./Badge";
 import { RESPONSIBLE_TBD_TOKEN, STATUS_META, TYPE_META } from "../data/planning";
 import {
   getEventScheduleLabel,
-  getPhaseStatus,
+  getPlanningStatus,
   getIndicativeValidationMessage,
   isEventIndicative,
 } from "../utils/planning";
@@ -71,7 +71,7 @@ function Timeline({ events }) {
   return (
     <ol className="timeline-list">
       {events.map((event) => {
-        const phaseStatus = getPhaseStatus(event);
+        const phaseStatus = getPlanningStatus(event);
         const status = STATUS_META[phaseStatus.status] ?? STATUS_META.todo;
         const type = TYPE_META[event.type] ?? TYPE_META.preparation;
         const responsiblesDisplay = getResponsiblesDisplay(event);
