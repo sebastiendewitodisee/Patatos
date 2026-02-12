@@ -48,6 +48,8 @@ function Post() {
   const [isLoading, setIsLoading] = useState(isSupabaseEnabled);
   const [approvedComments, setApprovedComments] = useState(null);
   const [isCommentsLoading, setIsCommentsLoading] = useState(false);
+  const [cooldownUntil, setCooldownUntil] = useState(0);
+  const [cooldownSecondsLeft, setCooldownSecondsLeft] = useState(0);
   const [honeypot, setHoneypot] = useState("");
   const [authorName, setAuthorName] = useState("");
   const [message, setMessage] = useState("");
@@ -55,6 +57,72 @@ function Post() {
   const [commentErrorKey, setCommentErrorKey] = useState("");
   const [commentErrorSeconds, setCommentErrorSeconds] = useState(null);
   const [commentSuccessKey, setCommentSuccessKey] = useState("");
+
+  const isCooldownActive = cooldownUntil > 0 && cooldownSecondsLeft > 0;
+  const cooldownDisplaySeconds = cooldownSecondsLeft || COOLDOWN_SECONDS;
+
+  useEffect(() => {
+    const hydrateCooldown = async () => {
+      let storedUntil = 0;
+
+      try {
+        const storedValue = localStorage.getItem(STORAGE_KEY);
+        const parsedValue = Number.parseInt(storedValue ?? "0", 10);
+        storedUntil = Number.isFinite(parsedValue) ? parsedValue : 0;
+      } catch {
+        storedUntil = 0;
+      }
+
+      const now = Date.now();
+
+      if (storedUntil > now) {
+        setCooldownUntil(storedUntil);
+        setCooldownSecondsLeft(Math.max(1, Math.ceil((storedUntil - now) / 1000)));
+        return;
+      }
+
+      setCooldownUntil(0);
+      setCooldownSecondsLeft(0);
+
+      try {
+        localStorage.removeItem(STORAGE_KEY);
+      } catch {
+        // Ignore storage cleanup errors.
+      }
+    };
+
+    hydrateCooldown();
+  }, []);
+
+  useEffect(() => {
+    if (cooldownUntil <= Date.now()) {
+      return undefined;
+    }
+
+    const timerId = window.setInterval(() => {
+      const secondsLeft = Math.max(0, Math.ceil((cooldownUntil - Date.now()) / 1000));
+
+      if (secondsLeft <= 0) {
+        window.clearInterval(timerId);
+        setCooldownUntil(0);
+        setCooldownSecondsLeft(0);
+
+        try {
+          localStorage.removeItem(STORAGE_KEY);
+        } catch {
+          // Ignore storage cleanup errors.
+        }
+
+        return;
+      }
+
+      setCooldownSecondsLeft(secondsLeft);
+    }, 1000);
+
+    return () => {
+      window.clearInterval(timerId);
+    };
+  }, [cooldownUntil]);
 
   useEffect(() => {
     if (!isSupabaseEnabled) {
@@ -131,20 +199,13 @@ function Post() {
       return;
     }
 
-    let cooldownUntil = 0;
-
-    try {
-      const storedValue = localStorage.getItem(STORAGE_KEY);
-      const parsedValue = Number.parseInt(storedValue ?? "0", 10);
-      cooldownUntil = Number.isFinite(parsedValue) ? parsedValue : 0;
-    } catch {
-      cooldownUntil = 0;
-    }
-
     const now = Date.now();
 
     if (cooldownUntil > now) {
-      const secondsRemaining = Math.max(1, Math.ceil((cooldownUntil - now) / 1000));
+      const secondsRemaining = Math.max(
+        1,
+        cooldownSecondsLeft || Math.ceil((cooldownUntil - now) / 1000)
+      );
       setCommentErrorKey("commentForm.errors.cooldown");
       setCommentErrorSeconds(secondsRemaining);
       setCommentSuccessKey("");
@@ -183,9 +244,13 @@ function Post() {
     }
 
     try {
-      localStorage.setItem(STORAGE_KEY, String(Date.now() + COOLDOWN_SECONDS * 1000));
+      const newCooldownUntil = Date.now() + COOLDOWN_SECONDS * 1000;
+      setCooldownUntil(newCooldownUntil);
+      setCooldownSecondsLeft(COOLDOWN_SECONDS);
+      localStorage.setItem(STORAGE_KEY, String(newCooldownUntil));
     } catch {
-      // Ignore localStorage failures; submit already succeeded.
+      setCooldownUntil(Date.now() + COOLDOWN_SECONDS * 1000);
+      setCooldownSecondsLeft(COOLDOWN_SECONDS);
     }
 
     const refreshedComments = await fetchApprovedCommentsByPostId(post.id);
@@ -319,10 +384,20 @@ function Post() {
                       required
                     />
 
-                    <button type="submit" className="btn btn-primary" disabled={isSubmittingComment}>
+                    <button
+                      type="submit"
+                      className="btn btn-primary"
+                      disabled={isSubmittingComment || isCooldownActive}
+                    >
                       {isSubmittingComment ? t("commentForm.submitting") : t("commentForm.submit")}
                     </button>
                   </form>
+
+                  {isCooldownActive ? (
+                    <p className="muted-text" role="status">
+                      {t("commentForm.errors.cooldown", { seconds: cooldownDisplaySeconds })}
+                    </p>
+                  ) : null}
 
                   {commentSuccessKey ? <p className="form-feedback">{t(commentSuccessKey)}</p> : null}
                   {commentErrorKey ? (
