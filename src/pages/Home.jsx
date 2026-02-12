@@ -1,4 +1,5 @@
 ﻿import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import Badge from "../components/Badge";
 import Card from "../components/Card";
@@ -43,15 +44,56 @@ function getEventValidationText(event, t, validationFallback) {
   return event?.validationKey ? t(event.validationKey, { defaultValue: fallbackLabel }) : fallbackLabel;
 }
 
+function getPostPreviewText(post) {
+  const excerpt = String(post?.excerpt ?? "").trim();
+  if (excerpt) {
+    return excerpt;
+  }
+
+  const body = String(post?.body ?? "").trim();
+  if (!body) {
+    return "";
+  }
+
+  return body.length > 160 ? `${body.slice(0, 157)}...` : body;
+}
+
 function Home() {
   const { t, i18n } = useTranslation();
+  const [latestPosts, setLatestPosts] = useState(null);
+  const [isLatestPostsLoading, setIsLatestPostsLoading] = useState(true);
   const groupPhotoSrc = `${import.meta.env.BASE_URL}team/team.png`;
   const latestUpdates = getLatestUpdates(planningEvents, 3);
   const upcomingEvent = getUpcomingEvent(planningEvents);
   const dateFallback = t("planning.fallbacks.date_tbc");
   const periodFallback = t("planning.fallbacks.period_tbc");
   const validationFallback = t("planning.fallbacks.validation");
-  const locale = i18n.resolvedLanguage?.startsWith("nl") ? "nl-BE" : "fr-BE";
+  const isDutch = i18n.resolvedLanguage?.startsWith("nl");
+  const locale = isDutch ? "nl-BE" : "fr-BE";
+  const currentLang = isDutch ? "nl" : "fr";
+
+  useEffect(() => {
+    let cancelled = false;
+
+    const loadLatestPosts = async () => {
+      setIsLatestPostsLoading(true);
+      const { fetchLatestPublishedPosts } = await import("../lib/postsService");
+      const posts = await fetchLatestPublishedPosts(currentLang, 3);
+
+      if (cancelled) {
+        return;
+      }
+
+      setLatestPosts(posts);
+      setIsLatestPostsLoading(false);
+    };
+
+    loadLatestPosts();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [currentLang]);
 
   return (
     <div className="container page page-block home-page">
@@ -125,6 +167,44 @@ function Home() {
             <p>{t("home.no_upcoming")}</p>
           )}
         </Card>
+      </section>
+
+      <section className="section stack">
+        <h2 className="section-title">{t("home.blog_title")}</h2>
+        <p className="section-subtitle muted-text">{t("home.blog_subtitle")}</p>
+
+        {isLatestPostsLoading ? <p className="muted-text">{t("home.blog_loading")}</p> : null}
+
+        {!isLatestPostsLoading && latestPosts === null ? (
+          <p className="muted-text">{t("home.blog_unavailable")}</p>
+        ) : null}
+
+        {!isLatestPostsLoading && Array.isArray(latestPosts) && latestPosts.length === 0 ? (
+          <p className="muted-text">{t("home.blog_empty")}</p>
+        ) : null}
+
+        {!isLatestPostsLoading && Array.isArray(latestPosts) && latestPosts.length > 0 ? (
+          <div className="grid three-columns">
+            {latestPosts.map((post) => {
+              const previewText = getPostPreviewText(post);
+
+              return (
+                <Card key={post.id} title={post.title}>
+                  {previewText ? <p>{previewText}</p> : null}
+                  <Link to={`/posts/${post.slug}`} className="btn btn-ghost">
+                    {t("home.blog_read")}
+                  </Link>
+                </Card>
+              );
+            })}
+          </div>
+        ) : null}
+
+        <div className="cta-row">
+          <Link to="/posts" className="btn">
+            {t("home.blog_all")}
+          </Link>
+        </div>
       </section>
     </div>
   );

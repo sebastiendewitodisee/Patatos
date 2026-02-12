@@ -79,7 +79,14 @@
     "latest_updates_title": "Laatste updates",
     "updated_at": "Update: {{date}}",
     "next_title": "Volgende afspraak",
-    "no_upcoming": "Nog geen volgende gebeurtenis. Voeg er één toe in de planning."
+    "no_upcoming": "Nog geen volgende gebeurtenis. Voeg er één toe in de planning.",
+    "blog_title": "Nieuws / Blog",
+    "blog_subtitle": "De recentste gepubliceerde artikels van het team.",
+    "blog_loading": "Artikels laden...",
+    "blog_empty": "Nog geen gepubliceerde artikels.",
+    "blog_unavailable": "Nieuws is momenteel niet beschikbaar.",
+    "blog_read": "Lezen",
+    "blog_all": "Alle artikels bekijken"
   },
   "planning": {
     "season": "Seizoen 2026 (België)",

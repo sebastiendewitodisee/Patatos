@@ -79,7 +79,14 @@
     "latest_updates_title": "Dernières mises à jour",
     "updated_at": "Mise à jour: {{date}}",
     "next_title": "Prochain rendez-vous",
-    "no_upcoming": "Pas d'événement à venir pour le moment. Ajoute-en un dans le planning."
+    "no_upcoming": "Pas d'événement à venir pour le moment. Ajoute-en un dans le planning.",
+    "blog_title": "Actu / Blog",
+    "blog_subtitle": "Les derniers articles publies par la team.",
+    "blog_loading": "Chargement des articles...",
+    "blog_empty": "Pas encore d'articles publies.",
+    "blog_unavailable": "Actu indisponible pour le moment.",
+    "blog_read": "Lire",
+    "blog_all": "Voir tous les articles"
   },
   "planning": {
     "season": "Saison 2026 (Belgique)",

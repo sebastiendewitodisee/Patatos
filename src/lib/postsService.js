@@ -1,6 +1,7 @@
 import { isSupabaseConfigured, supabase } from "./supabaseClient";
 
 const POSTS_SELECT_COLUMNS = "id, slug, lang, title, excerpt, body, created_at, updated_at";
+const LATEST_POSTS_SELECT_COLUMNS = "id, slug, lang, title, excerpt, body, updated_at";
 const APPROVED_COMMENTS_SELECT_COLUMNS = "id, author_name, message, created_at";
 
 function normalizeUiLang(lang) {
@@ -44,6 +45,37 @@ export async function fetchPublishedPosts(lang) {
       .eq("lang", resolvedLang)
       .eq("published", true)
       .order("updated_at", { ascending: false });
+
+    if (error) {
+      return null;
+    }
+
+    if (!Array.isArray(data) || data.length === 0) {
+      return [];
+    }
+
+    return data;
+  } catch {
+    return null;
+  }
+}
+
+export async function fetchLatestPublishedPosts(lang, limit = 3) {
+  if (!isSupabaseConfigured || !supabase) {
+    return null;
+  }
+
+  try {
+    const resolvedLang = normalizeUiLang(lang);
+    const limitValue = Number.isFinite(Number(limit)) && Number(limit) > 0 ? Math.floor(Number(limit)) : 3;
+
+    const { data, error } = await supabase
+      .from("content_posts")
+      .select(LATEST_POSTS_SELECT_COLUMNS)
+      .eq("lang", resolvedLang)
+      .eq("published", true)
+      .order("updated_at", { ascending: false })
+      .limit(limitValue);
 
     if (error) {
       return null;
