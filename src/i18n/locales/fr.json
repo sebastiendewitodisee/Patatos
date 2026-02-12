@@ -161,7 +161,8 @@
       "title": "Mettre a jour le planning",
       "instruction_prefix": "Modifie les evenements dans",
       "instruction_suffix": "Puis aligne les traductions FR/NL sous `planning.events.<id>.*`.",
-      "rule": "Le champ `period` reste technique (FR) pour la logique. Si `isIndicative` est true, renseigne `validation`."
+      "rule": "Le champ `period` reste technique (FR) pour la logique. Si `isIndicative` est true, renseigne `validation`.",
+      "cta": "Modifier le planning"
     },
     "phases": {
       "preparation": "Préparation",

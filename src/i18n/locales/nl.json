@@ -161,7 +161,8 @@
       "title": "Planning updaten",
       "instruction_prefix": "Pas de events aan in",
       "instruction_suffix": "Werk daarna de vertalingen bij in FR/NL onder `planning.events.<id>.*`.",
-      "rule": "Het veld `period` blijft technisch (FR) voor de logica. Als `isIndicative` true is, vul `validation` in."
+      "rule": "Het veld `period` blijft technisch (FR) voor de logica. Als `isIndicative` true is, vul `validation` in.",
+      "cta": "Planning bewerken"
     },
     "phases": {
       "preparation": "Voorbereiding",

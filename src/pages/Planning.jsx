@@ -147,7 +147,12 @@ function Planning() {
   const [search, setSearch] = useState("");
   const [remoteItems, setRemoteItems] = useState(null);
   const [remoteLang, setRemoteLang] = useState("");
+  const [supabaseState, setSupabaseState] = useState({ enabled: false, client: null });
+  const [session, setSession] = useState(null);
+  const [isAdmin, setIsAdmin] = useState(false);
   const currentLang = normalizeUiLang(i18n.resolvedLanguage || i18n.language);
+  const isSupabaseEnabled = supabaseState.enabled;
+  const supabaseClient = supabaseState.client;
   const locale = currentLang === "nl" ? "nl-BE" : "fr-BE";
   const dateFallback = t("planning.fallbacks.date_tbc");
   const periodFallback = t("planning.fallbacks.period_tbc");
@@ -160,6 +165,104 @@ function Planning() {
   }
 
   const isResetDisabled = phaseFilter === "all" && statusFilter === "all" && search.trim().length === 0;
+
+  useEffect(() => {
+    let isActive = true;
+
+    const loadSupabaseClient = async () => {
+      try {
+        const { isSupabaseConfigured, supabase } = await import("../lib/supabaseClient");
+        if (!isActive) {
+          return;
+        }
+
+        const isEnabled = Boolean(isSupabaseConfigured && supabase);
+        setSupabaseState({ enabled: isEnabled, client: isEnabled ? supabase : null });
+      } catch {
+        if (!isActive) {
+          return;
+        }
+
+        setSupabaseState({ enabled: false, client: null });
+      }
+    };
+
+    loadSupabaseClient();
+
+    return () => {
+      isActive = false;
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!isSupabaseEnabled || !supabaseClient) {
+      setSession(null);
+      return undefined;
+    }
+
+    let isActive = true;
+
+    const loadSession = async () => {
+      const { data } = await supabaseClient.auth.getSession();
+
+      if (!isActive) {
+        return;
+      }
+
+      setSession(data?.session ?? null);
+    };
+
+    loadSession();
+
+    const { data } = supabaseClient.auth.onAuthStateChange((_event, nextSession) => {
+      if (!isActive) {
+        return;
+      }
+
+      setSession(nextSession ?? null);
+    });
+
+    return () => {
+      isActive = false;
+      data.subscription.unsubscribe();
+    };
+  }, [isSupabaseEnabled, supabaseClient]);
+
+  useEffect(() => {
+    let isActive = true;
+
+    const checkAdmin = async () => {
+      if (!isSupabaseEnabled || !supabaseClient || !session?.user?.id) {
+        if (isActive) {
+          setIsAdmin(false);
+        }
+        return;
+      }
+
+      const { data, error } = await supabaseClient
+        .from("app_admins")
+        .select("id")
+        .eq("user_id", session.user.id)
+        .maybeSingle();
+
+      if (!isActive) {
+        return;
+      }
+
+      if (error) {
+        setIsAdmin(false);
+        return;
+      }
+
+      setIsAdmin(Boolean(data?.id));
+    };
+
+    checkAdmin();
+
+    return () => {
+      isActive = false;
+    };
+  }, [isSupabaseEnabled, session?.user?.id, supabaseClient]);
 
   useEffect(() => {
     let cancelled = false;
@@ -445,6 +548,11 @@ function Planning() {
             {t("planning.update.instruction_prefix")} <code>src/data/planning.js</code>. {t("planning.update.instruction_suffix")}
           </p>
           <p className="muted-text">{t("planning.update.rule")}</p>
+          {isAdmin ? (
+            <a className="btn btn-primary" href="#/admin/planning">
+              {t("planning.update.cta")}
+            </a>
+          ) : null}
         </Card>
       </section>
     </div>
