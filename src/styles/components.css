@@ -201,6 +201,37 @@
   background: rgba(87, 223, 155, 0.18);
 }
 
+:root.theme-light .nav-link:hover {
+  border-color: rgba(20, 31, 54, 0.18);
+  background: rgba(20, 31, 54, 0.06);
+}
+
+:root.theme-light .nav-link.is-active {
+  border-color: rgba(31, 101, 216, 0.38);
+  background: rgba(31, 101, 216, 0.14);
+}
+
+:root.theme-light .lang-btn {
+  background: rgba(255, 255, 255, 0.94);
+}
+
+:root.theme-light .lang-btn:hover,
+:root.theme-light .theme-toggle-btn.is-style-light:hover {
+  border-color: rgba(20, 31, 54, 0.2);
+  background: #ffffff;
+}
+
+:root.theme-light .lang-btn.is-active {
+  border-color: rgba(31, 101, 216, 0.4);
+  background: rgba(31, 101, 216, 0.14);
+}
+
+:root.theme-light .theme-toggle-btn.is-style-dark,
+:root.theme-light .theme-toggle-btn.is-style-dark:hover {
+  border-color: rgba(31, 101, 216, 0.4);
+  background: rgba(31, 101, 216, 0.14);
+}
+
 .header-theme-switch .lang-btn,
 .header-language-switch .lang-btn {
   width: 2.625rem;
@@ -511,6 +542,31 @@
   border-color: rgba(255, 80, 80, 0.42);
 }
 
+:root.theme-light .badge-neutral {
+  background: rgba(15, 23, 42, 0.07);
+  border-color: rgba(15, 23, 42, 0.2);
+}
+
+:root.theme-light .badge-todo {
+  background: rgba(196, 65, 87, 0.12);
+  border-color: rgba(196, 65, 87, 0.34);
+}
+
+:root.theme-light .badge-progress {
+  background: rgba(175, 119, 34, 0.14);
+  border-color: rgba(175, 119, 34, 0.36);
+}
+
+:root.theme-light .badge-done {
+  background: rgba(31, 159, 102, 0.14);
+  border-color: rgba(31, 159, 102, 0.34);
+}
+
+:root.theme-light .badge-late {
+  background: rgba(196, 65, 87, 0.14);
+  border-color: rgba(196, 65, 87, 0.36);
+}
+
 .filters {
   margin-block: 0.95rem 1.1rem;
   display: grid;
@@ -632,6 +688,44 @@
   background: rgba(87, 223, 155, 0.15);
 }
 
+:root.theme-light .progress-track {
+  background: rgba(15, 23, 42, 0.1);
+}
+
+:root.theme-light .filter-chip,
+:root.theme-light .chip {
+  background: rgba(255, 255, 255, 0.94);
+}
+
+:root.theme-light .filter-chip.is-active {
+  background: rgba(31, 101, 216, 0.14);
+  border-color: rgba(31, 101, 216, 0.34);
+}
+
+:root.theme-light .sticky-results {
+  background: rgba(255, 255, 255, 0.94);
+  border-color: rgba(20, 31, 54, 0.16);
+  box-shadow: 0 12px 26px rgba(15, 23, 42, 0.12);
+}
+
+:root.theme-light .result-bar {
+  background: rgba(15, 23, 42, 0.08);
+}
+
+:root.theme-light .active-chip {
+  border-color: rgba(20, 31, 54, 0.2);
+  background: rgba(255, 255, 255, 0.95);
+}
+
+:root.theme-light .active-chip:hover {
+  background: #ffffff;
+}
+
+:root.theme-light .active-chip-clearall {
+  border-color: rgba(31, 101, 216, 0.38);
+  background: rgba(31, 101, 216, 0.14);
+}
+
 .planning-hint {
   margin: 0 0 0.55rem;
 }
@@ -705,6 +799,17 @@
   white-space: pre-line;
 }
 
+:root.theme-light .timeline-card {
+  background: linear-gradient(165deg, var(--card-strong), var(--card));
+}
+
+:root.theme-light .timeline-callout {
+  border-color: rgba(31, 101, 216, 0.2);
+  border-left-color: rgba(31, 101, 216, 0.46);
+  background: linear-gradient(145deg, rgba(31, 101, 216, 0.12), rgba(31, 159, 102, 0.06));
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.72);
+}
+
 .checklist {
   list-style: none;
   padding: 0;
@@ -729,6 +834,11 @@
   background: rgba(255, 255, 255, 0.07);
 }
 
+:root.theme-light .checkbox {
+  border-color: rgba(20, 31, 54, 0.32);
+  background: rgba(255, 255, 255, 0.9);
+}
+
 .checkbox.is-checked {
   border-color: rgba(87, 223, 155, 0.6);
   background: rgba(87, 223, 155, 0.48);
@@ -741,6 +851,10 @@
   background: rgba(0, 0, 0, 0.25);
   padding: 0.82rem;
   overflow-x: auto;
+}
+
+:root.theme-light .code-block {
+  background: rgba(15, 23, 42, 0.06);
 }
 
 .team-page .team-hero {

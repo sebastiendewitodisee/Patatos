@@ -27,6 +27,14 @@
   --chrome-bg: rgba(8, 13, 20, 0.78);
   --chrome-bg-solid: rgba(8, 13, 20, 0.96);
   --footer-bg: rgba(8, 13, 20, 0.56);
+  --focus-outline: rgba(87, 223, 155, 0.75);
+  --btn-bg: rgba(255, 255, 255, 0.08);
+  --btn-hover-bg: rgba(255, 255, 255, 0.14);
+  --btn-primary-border: rgba(87, 223, 155, 0.42);
+  --btn-primary-bg: rgba(87, 223, 155, 0.18);
+  --input-focus-border: rgba(87, 223, 155, 0.58);
+  --input-focus-ring: rgba(87, 223, 155, 0.2);
+  --header-divider-shadow: none;
   --page-max: 1100px;
   --page-pad-x: clamp(0.6rem, 3vw, 1.25rem);
   --section-pad-y: clamp(1.1rem, 3vw, 1.8rem);
@@ -40,30 +48,38 @@
 
 :root.theme-light {
   color-scheme: light;
-  --bg: #f6f7fb;
-  --bg-elev: rgba(255, 255, 255, 0.92);
-  --card: rgba(255, 255, 255, 0.75);
-  --card-strong: rgba(255, 255, 255, 0.92);
-  --line: rgba(17, 19, 24, 0.12);
-  --text: #111318;
-  --muted: rgba(17, 19, 24, 0.66);
-  --green: #2fbe7c;
-  --blue: #3c8fe6;
-  --amber: #d9a64e;
-  --danger: #d85767;
-  --shadow: 0 14px 35px rgba(17, 19, 24, 0.1);
-  --bg-glow-1: rgba(101, 179, 255, 0.18);
-  --bg-glow-2: rgba(87, 223, 155, 0.15);
-  --bg-glow-3: rgba(242, 195, 112, 0.15);
-  --field-bg: rgba(255, 255, 255, 0.86);
-  --field-option-bg: #f6f8fc;
-  --field-option-text: #111318;
-  --field-option-active: rgba(60, 143, 230, 0.24);
-  --field-option-hover: rgba(17, 19, 24, 0.08);
-  --btn-ghost-bg: rgba(255, 255, 255, 0.86);
-  --chrome-bg: rgba(246, 247, 251, 0.9);
-  --chrome-bg-solid: rgba(246, 247, 251, 0.98);
-  --footer-bg: rgba(246, 247, 251, 0.82);
+  --bg: #f3f7fc;
+  --bg-elev: rgba(255, 255, 255, 0.99);
+  --card: rgba(255, 255, 255, 0.96);
+  --card-strong: rgba(255, 255, 255, 0.995);
+  --line: rgba(20, 31, 54, 0.16);
+  --text: #0f172a;
+  --muted: rgba(30, 41, 59, 0.79);
+  --green: #1f9f66;
+  --blue: #1f65d8;
+  --amber: #af7722;
+  --danger: #c44157;
+  --shadow: 0 14px 32px rgba(15, 23, 42, 0.1);
+  --bg-glow-1: rgba(73, 145, 235, 0.12);
+  --bg-glow-2: rgba(39, 176, 116, 0.1);
+  --bg-glow-3: rgba(215, 156, 60, 0.1);
+  --field-bg: rgba(255, 255, 255, 0.98);
+  --field-option-bg: #ffffff;
+  --field-option-text: #0f172a;
+  --field-option-active: rgba(31, 101, 216, 0.18);
+  --field-option-hover: rgba(15, 23, 42, 0.08);
+  --btn-ghost-bg: rgba(255, 255, 255, 0.94);
+  --chrome-bg: rgba(246, 250, 255, 0.93);
+  --chrome-bg-solid: rgba(246, 250, 255, 0.985);
+  --footer-bg: rgba(243, 247, 252, 0.9);
+  --focus-outline: rgba(31, 101, 216, 0.62);
+  --btn-bg: rgba(255, 255, 255, 0.94);
+  --btn-hover-bg: #ffffff;
+  --btn-primary-border: rgba(31, 101, 216, 0.48);
+  --btn-primary-bg: rgba(31, 101, 216, 0.16);
+  --input-focus-border: rgba(31, 101, 216, 0.62);
+  --input-focus-ring: rgba(31, 101, 216, 0.2);
+  --header-divider-shadow: 0 1px 0 rgba(15, 23, 42, 0.05);
 }
 
 * {
@@ -131,7 +147,7 @@ textarea {
 }
 
 :focus-visible {
-  outline: 3px solid rgba(87, 223, 155, 0.75);
+  outline: 3px solid var(--focus-outline);
   outline-offset: 2px;
 }
 
@@ -223,7 +239,7 @@ textarea {
   gap: 0.4rem;
   border-radius: 0.8rem;
   border: 1px solid var(--line);
-  background: rgba(255, 255, 255, 0.08);
+  background: var(--btn-bg);
   padding: 0.64rem 1rem;
   font-weight: 700;
   cursor: pointer;
@@ -232,12 +248,12 @@ textarea {
 
 .btn:hover {
   transform: translateY(-1px);
-  background: rgba(255, 255, 255, 0.14);
+  background: var(--btn-hover-bg);
 }
 
 .btn-primary {
-  border-color: rgba(87, 223, 155, 0.42);
-  background: rgba(87, 223, 155, 0.18);
+  border-color: var(--btn-primary-border);
+  background: var(--btn-primary-bg);
 }
 
 .btn-ghost {
@@ -252,6 +268,15 @@ textarea {
   background: var(--field-bg);
   border-radius: 0.7rem;
   padding: 0.65rem 0.75rem;
+  transition: border-color 0.18s ease, box-shadow 0.18s ease, background 0.18s ease;
+}
+
+.input:focus,
+.select:focus,
+textarea:focus {
+  border-color: var(--input-focus-border);
+  box-shadow: 0 0 0 3px var(--input-focus-ring);
+  outline: none;
 }
 
 /* Dropdown menu (options) — priorité à la lisibilité cross-browser */
@@ -289,6 +314,7 @@ select.select {
 .theme-light .site-header {
   background: var(--chrome-bg);
   border-bottom-color: var(--line);
+  box-shadow: var(--header-divider-shadow);
 }
 
 .theme-light .site-footer {
