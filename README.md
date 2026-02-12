@@ -75,7 +75,6 @@ Le build est généré dans `dist/`.
 
 ## Structure principale
 
-- `src/pages/`: pages de routes (`/`, `/planning`, `/equipe`, `/varietes`, `/organisation`, `/faq`, `/contact`, `/legal`)
 - `src/pages/`: pages de routes (`/`, `/planning`, `/equipe`, `/varietes`, `/organisation`, `/faq`, `/contact`, `/admin`, `/legal`)
 - `src/components/`: layout global + composants UI réutilisables
 - `src/data/`: données éditables du site
