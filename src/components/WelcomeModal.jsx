@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { DEFAULT_LANG, hasSeenWelcome, markWelcomeSeen, setLangToUrl, setStoredLang } from "../i18n";
+import { applyLanguageSelection, DEFAULT_LANG, hasSeenWelcome, markWelcomeSeen } from "../i18n";
 
 function normalizeCurrentLang(lang) {
   if (typeof lang !== "string" || lang.trim().length === 0) {
@@ -47,13 +47,7 @@ function WelcomeModal({ openNonce = 0 }) {
     (lang) => {
       const nextLang = lang === "nl" ? "nl" : "fr";
       const currentLang = normalizeCurrentLang(i18n.resolvedLanguage || i18n.language || DEFAULT_LANG);
-
-      if (nextLang !== currentLang) {
-        i18n.changeLanguage(nextLang);
-      }
-
-      setStoredLang(nextLang);
-      setLangToUrl(nextLang);
+      applyLanguageSelection(nextLang, currentLang);
       closeModal();
     },
     [closeModal, i18n]

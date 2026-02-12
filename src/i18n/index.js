@@ -124,6 +124,23 @@ export function setLangToUrl(lang) {
   window.history.replaceState({}, "", nextPath);
 }
 
+export function applyLanguageSelection(lang, currentLang = "") {
+  const normalizedTargetLang = normalizeLang(lang);
+  if (!normalizedTargetLang) {
+    return;
+  }
+
+  const normalizedCurrentLang = normalizeLang(currentLang);
+
+  if (normalizedTargetLang === normalizedCurrentLang) {
+    setStoredLang(normalizedTargetLang);
+    setLangToUrl(normalizedTargetLang);
+    return;
+  }
+
+  i18n.changeLanguage(normalizedTargetLang);
+}
+
 function resolveInitialLang() {
   if (typeof window === "undefined") {
     return DEFAULT_LANG;

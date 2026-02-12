@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { Link, NavLink, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { DEFAULT_LANG, setLangToUrl, setStoredLang } from "../i18n";
+import { applyLanguageSelection, DEFAULT_LANG } from "../i18n";
 
 const THEME_STORAGE_KEY = "patatos_theme";
 const THEMES = ["dark", "light"];
@@ -177,12 +177,7 @@ function Header() {
       return;
     }
 
-    if (lang !== currentLangCode) {
-      i18n.changeLanguage(lang);
-    }
-
-    setStoredLang(lang);
-    setLangToUrl(lang);
+    applyLanguageSelection(lang, currentLangCode);
     setOpenAtPath(null);
   };
 

@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { DEFAULT_LANG, setLangToUrl, setStoredLang } from "../i18n";
+import { applyLanguageSelection, DEFAULT_LANG } from "../i18n";
 
 function Footer({ onReopenWelcome }) {
   const { t, i18n } = useTranslation();
@@ -12,12 +12,7 @@ function Footer({ onReopenWelcome }) {
       return;
     }
 
-    if (lang !== currentLangCode) {
-      i18n.changeLanguage(lang);
-    }
-
-    setStoredLang(lang);
-    setLangToUrl(lang);
+    applyLanguageSelection(lang, currentLangCode);
   };
 
   const handleReopenWelcome = () => {
