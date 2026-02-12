@@ -24,8 +24,12 @@ Si la base est deja initialisee, executer ensuite les migrations SQL versionnees
 1. Ouvrir `SQL Editor`.
 2. Coller `supabase/migrations/001_planning_items_phase.sql`.
 3. Executer le script.
+4. Coller `supabase/migrations/002_comments_edge_submit.sql`.
+5. Executer le script.
 
 Cette migration ajoute `phase_id` (et `type`) pour `planning_items`.
+La migration `002` retire l'insert `anon` direct sur `comments` et ajoute la table
+`comment_rate_limits` pour le cooldown cote Edge Function.
 
 Exemple insert:
 
@@ -33,6 +37,35 @@ Exemple insert:
 insert into public.planning_items (lang, phase_id, type, title, description, period, status, sort_order)
 values ('fr', 'plantation', 'task', 'Preparation du sol', 'Ameublir et preparer les lignes', 'Semaine 12', 'todo', 10);
 ```
+
+## Edge Function: submit-comment
+
+La soumission publique de commentaire doit passer par l'Edge Function
+`submit-comment` (et plus par un insert direct `anon` sur `comments`).
+
+### Deploiement
+
+Option CLI:
+
+1. `supabase functions deploy submit-comment --project-ref <project_ref>`
+2. Verifier que la fonction est active dans `Supabase > Edge Functions`.
+
+Option Dashboard:
+
+1. Creer une nouvelle function `submit-comment`.
+2. Coller le code de `supabase/functions/submit-comment/index.ts`.
+3. Deploy.
+
+### Secrets (cote Supabase uniquement)
+
+Ne jamais committer de secret. Configurer les variables cote Supabase:
+
+- `SUPABASE_URL`
+- `SUPABASE_SERVICE_ROLE_KEY`
+
+Via CLI (exemple):
+
+`supabase secrets set SUPABASE_URL=... SUPABASE_SERVICE_ROLE_KEY=... --project-ref <project_ref>`
 
 ## Creer un compte admin
 

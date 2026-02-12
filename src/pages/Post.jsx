@@ -233,13 +233,14 @@ function Post() {
       postId: post.id,
       authorName: trimmedAuthor,
       message: trimmedMessage,
+      honeypot,
     });
 
     setIsSubmittingComment(false);
 
     if (!result?.ok) {
       setCommentErrorKey(result?.errorKey ?? "commentForm.errors.generic");
-      setCommentErrorSeconds(null);
+      setCommentErrorSeconds(result?.errorSeconds ?? null);
       return;
     }
 

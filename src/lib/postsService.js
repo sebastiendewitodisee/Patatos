@@ -32,6 +32,144 @@ function getCreateCommentErrorKey(error) {
   return "commentForm.errors.generic";
 }
 
+function resolveCooldownSeconds(value) {
+  const parsedValue = Number(value);
+  if (!Number.isFinite(parsedValue) || parsedValue <= 0) {
+    return 60;
+  }
+
+  return Math.max(1, Math.ceil(parsedValue));
+}
+
+function getFunctionPayloadResult(payload, statusCode) {
+  const payloadError = String(payload?.error ?? payload?.code ?? "").toLowerCase();
+
+  if (statusCode === 429 || payloadError === "cooldown") {
+    return {
+      ok: false,
+      errorKey: "commentForm.errors.cooldown",
+      errorSeconds: resolveCooldownSeconds(payload?.seconds),
+      shouldFallbackToInsert: false,
+    };
+  }
+
+  if (statusCode === 400 || payloadError === "validation" || payloadError === "spam") {
+    return {
+      ok: false,
+      errorKey: "commentForm.errors.spam",
+      errorSeconds: null,
+      shouldFallbackToInsert: false,
+    };
+  }
+
+  return {
+    ok: false,
+    errorKey: "commentForm.errors.generic",
+    errorSeconds: null,
+    shouldFallbackToInsert: false,
+  };
+}
+
+async function getFunctionInvokeErrorResult(error) {
+  const message = String(error?.message ?? "").toLowerCase();
+  let statusCode = 0;
+  let payload = null;
+
+  try {
+    const responseContext = error?.context;
+    if (responseContext && typeof responseContext.status === "number") {
+      statusCode = responseContext.status;
+    }
+
+    if (responseContext && typeof responseContext.clone === "function") {
+      payload = await responseContext.clone().json();
+    }
+  } catch {
+    payload = null;
+  }
+
+  if (statusCode === 404 || (message.includes("404") && message.includes("function"))) {
+    return {
+      ok: false,
+      errorKey: "commentForm.errors.generic",
+      errorSeconds: null,
+      shouldFallbackToInsert: true,
+    };
+  }
+
+  if (statusCode === 429 || statusCode === 400 || payload) {
+    return getFunctionPayloadResult(payload, statusCode);
+  }
+
+  if (message.includes("network") || message.includes("fetch")) {
+    return {
+      ok: false,
+      errorKey: "commentForm.errors.network",
+      errorSeconds: null,
+      shouldFallbackToInsert: false,
+    };
+  }
+
+  return {
+    ok: false,
+    errorKey: "commentForm.errors.generic",
+    errorSeconds: null,
+    shouldFallbackToInsert: false,
+  };
+}
+
+async function createCommentViaDirectInsert({ postId, authorName, message }) {
+  const { error } = await supabase
+    .from("comments")
+    .insert({
+      post_id: postId,
+      author_name: authorName,
+      message,
+    })
+    .select("id")
+    .single();
+
+  if (error) {
+    return {
+      ok: false,
+      errorKey: getCreateCommentErrorKey(error),
+      errorSeconds: null,
+    };
+  }
+
+  return { ok: true };
+}
+
+async function createCommentViaEdgeFunction({ postId, authorName, message, honeypot }) {
+  try {
+    const { data, error } = await supabase.functions.invoke("submit-comment", {
+      body: {
+        post_id: postId,
+        author_name: authorName,
+        message,
+        honeypot: String(honeypot ?? ""),
+      },
+    });
+
+    if (!error) {
+      if (data?.ok === false) {
+        return getFunctionPayloadResult(data, 200);
+      }
+
+      return { ok: true };
+    }
+
+    return getFunctionInvokeErrorResult(error);
+  } catch {
+    return {
+      ok: false,
+      errorKey: "commentForm.errors.network",
+      errorSeconds: null,
+      shouldFallbackToInsert: false,
+    };
+  }
+}
+
 export async function fetchPublishedPosts(lang) {
   if (!isSupabaseConfigured || !supabase) {
     return null;
@@ -123,7 +261,7 @@ export async function fetchPublishedPostBySlug(lang, slug) {
   }
 }
 
-export async function createComment({ lang, slug, postId, authorName, message }) {
+export async function createComment({ lang, slug, postId, authorName, message, honeypot }) {
   if (!isSupabaseConfigured || !supabase) {
     return { ok: false, errorKey: "commentForm.unavailable_body" };
   }
@@ -147,21 +285,30 @@ export async function createComment({ lang, slug, postId, authorName, message })
       return { ok: false, errorKey: "commentForm.errors.generic" };
     }
 
-    const { error } = await supabase
-      .from("comments")
-      .insert({
-        post_id: resolvedPostId,
-        author_name: resolvedAuthor,
-        message: resolvedMessage,
-      })
-      .select("id")
-      .single();
+    const functionResult = await createCommentViaEdgeFunction({
+      postId: resolvedPostId,
+      authorName: resolvedAuthor,
+      message: resolvedMessage,
+      honeypot,
+    });
 
-    if (error) {
-      return { ok: false, errorKey: getCreateCommentErrorKey(error) };
+    if (functionResult?.ok) {
+      return { ok: true };
     }
 
-    return { ok: true };
+    if (functionResult?.shouldFallbackToInsert) {
+      return createCommentViaDirectInsert({
+        postId: resolvedPostId,
+        authorName: resolvedAuthor,
+        message: resolvedMessage,
+      });
+    }
+
+    return {
+      ok: false,
+      errorKey: functionResult?.errorKey ?? "commentForm.errors.generic",
+      errorSeconds: functionResult?.errorSeconds ?? null,
+    };
   } catch {
     return { ok: false, errorKey: "commentForm.errors.generic" };
   }
