@@ -719,7 +719,8 @@
   "adminNav": {
     "manage_planning": "Gerer le planning",
     "manage_posts": "Gerer les posts",
-    "manage_comments": "Gerer les commentaires"
+    "manage_comments": "Gerer les commentaires",
+    "manage_admins": "Gerer les admins"
   },
   "adminPosts": {
     "title": "Admin posts",
@@ -785,6 +786,31 @@
       "approved": "Approuve"
     },
     "errors": {
+      "generic": "Operation impossible pour le moment.",
+      "network": "Reseau indisponible. Verifie la connexion et reessaie."
+    }
+  },
+  "adminAdmins": {
+    "title": "Admin admins",
+    "subtitle": "Gestion de la whitelist des comptes admin.",
+    "disabled_title": "Admin desactive",
+    "disabled_body": "Supabase n'est pas configure. La gestion des admins est indisponible.",
+    "need_login": "Connecte-toi d'abord depuis la page Admin pour gerer les admins.",
+    "go_to_admin": "Aller a /admin",
+    "loading": "Chargement des admins...",
+    "empty": "Aucun admin dans la whitelist.",
+    "add": "Ajouter un admin",
+    "adding": "Ajout...",
+    "user_id_label": "User ID",
+    "user_id_placeholder": "UUID utilisateur Supabase",
+    "created_at_label": "Ajoute le",
+    "actions_label": "Actions",
+    "you_badge": "Vous",
+    "remove": "Retirer",
+    "removing": "Retrait...",
+    "confirm_remove": "Retirer cet admin ?",
+    "errors": {
+      "invalid_user_id": "UUID invalide. Verifie le format du user_id.",
       "generic": "Operation impossible pour le moment.",
       "network": "Reseau indisponible. Verifie la connexion et reessaie."
     }

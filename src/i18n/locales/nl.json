@@ -719,7 +719,8 @@
   "adminNav": {
     "manage_planning": "Planning beheren",
     "manage_posts": "Posts beheren",
-    "manage_comments": "Reacties beheren"
+    "manage_comments": "Reacties beheren",
+    "manage_admins": "Admins beheren"
   },
   "adminPosts": {
     "title": "Admin posts",
@@ -785,6 +786,31 @@
       "approved": "Goedgekeurd"
     },
     "errors": {
+      "generic": "Bewerking is nu niet mogelijk.",
+      "network": "Netwerk niet beschikbaar. Controleer de verbinding en probeer opnieuw."
+    }
+  },
+  "adminAdmins": {
+    "title": "Admin admins",
+    "subtitle": "Beheer van de admin-whitelist.",
+    "disabled_title": "Admin uitgeschakeld",
+    "disabled_body": "Supabase is niet geconfigureerd. Adminbeheer is niet beschikbaar.",
+    "need_login": "Meld je eerst aan via de Admin-pagina om admins te beheren.",
+    "go_to_admin": "Ga naar /admin",
+    "loading": "Admins laden...",
+    "empty": "Geen admins in de whitelist.",
+    "add": "Admin toevoegen",
+    "adding": "Toevoegen...",
+    "user_id_label": "User ID",
+    "user_id_placeholder": "Supabase user UUID",
+    "created_at_label": "Toegevoegd op",
+    "actions_label": "Acties",
+    "you_badge": "Jij",
+    "remove": "Verwijderen",
+    "removing": "Verwijderen...",
+    "confirm_remove": "Deze admin verwijderen?",
+    "errors": {
+      "invalid_user_id": "Ongeldige UUID. Controleer het user_id-formaat.",
       "generic": "Bewerking is nu niet mogelijk.",
       "network": "Netwerk niet beschikbaar. Controleer de verbinding en probeer opnieuw."
     }

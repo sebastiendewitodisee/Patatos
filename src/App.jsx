@@ -15,6 +15,7 @@ const Admin = lazy(() => import("./pages/Admin"));
 const AdminPlanning = lazy(() => import("./pages/AdminPlanning"));
 const AdminPosts = lazy(() => import("./pages/AdminPosts"));
 const AdminComments = lazy(() => import("./pages/AdminComments"));
+const AdminAdmins = lazy(() => import("./pages/AdminAdmins"));
 const Posts = lazy(() => import("./pages/Posts"));
 const Post = lazy(() => import("./pages/Post"));
 
@@ -66,6 +67,14 @@ function App() {
           element={
             <Suspense fallback={null}>
               <AdminComments />
+            </Suspense>
+          }
+        />
+        <Route
+          path="admin/admins"
+          element={
+            <Suspense fallback={null}>
+              <AdminAdmins />
             </Suspense>
           }
         />
