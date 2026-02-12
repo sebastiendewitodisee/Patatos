@@ -9,7 +9,8 @@
     "lint": "eslint .",
     "preview": "vite preview",
     "i18n:check": "node scripts/i18n-check.mjs",
-    "logo:transparent": "node scripts/make_transparent_logo.mjs"
+    "logo:transparent": "node scripts/make_transparent_logo.mjs",
+    "seed:planning": "node scripts/generate-planning-seed.mjs"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.95.3",
