@@ -107,6 +107,8 @@ function AdminPlanning() {
   const currentLang = normalizeUiLang(i18n.resolvedLanguage || i18n.language);
 
   const [session, setSession] = useState(null);
+  const [isAdmin, setIsAdmin] = useState(false);
+  const [isAdminLoading, setIsAdminLoading] = useState(false);
   const [isSessionLoading, setIsSessionLoading] = useState(isSupabaseEnabled);
   const [items, setItems] = useState([]);
   const [isItemsLoading, setIsItemsLoading] = useState(false);
@@ -153,7 +155,51 @@ function AdminPlanning() {
   }, [isSupabaseEnabled]);
 
   useEffect(() => {
-    if (!isSupabaseEnabled || !supabase || !session) {
+    let isActive = true;
+
+    const checkAdmin = async () => {
+      if (!isSupabaseEnabled || !supabase || !session?.user?.id) {
+        if (isActive) {
+          setIsAdmin(false);
+          setIsAdminLoading(false);
+        }
+        return;
+      }
+
+      if (isActive) {
+        setIsAdminLoading(true);
+      }
+
+      const { data, error } = await supabase
+        .from("app_admins")
+        .select("id")
+        .eq("user_id", session.user.id)
+        .maybeSingle();
+
+      if (!isActive) {
+        return;
+      }
+
+      if (error) {
+        setIsAdmin(false);
+        setErrorKey(getRequestErrorKey(error));
+        setIsAdminLoading(false);
+        return;
+      }
+
+      setIsAdmin(Boolean(data?.id));
+      setIsAdminLoading(false);
+    };
+
+    checkAdmin();
+
+    return () => {
+      isActive = false;
+    };
+  }, [isSupabaseEnabled, session?.user?.id]);
+
+  useEffect(() => {
+    if (!isSupabaseEnabled || !supabase || !session || !isAdmin) {
       return undefined;
     }
 
@@ -204,7 +250,7 @@ function AdminPlanning() {
     return () => {
       isActive = false;
     };
-  }, [currentLang, isSupabaseEnabled, session]);
+  }, [currentLang, isAdmin, isSupabaseEnabled, session]);
 
   const isAuthenticated = Boolean(session);
   const isBusy = useMemo(
@@ -373,7 +419,7 @@ function AdminPlanning() {
             <p>{t("adminPlanning.disabled_body")}</p>
           </Card>
         </section>
-      ) : isSessionLoading ? (
+      ) : isSessionLoading || isAdminLoading ? (
         <section className="section stack">
           <Card title={t("adminPlanning.title")}>
             <p>{t("adminPlanning.loading")}</p>
@@ -385,6 +431,15 @@ function AdminPlanning() {
             <p>{t("adminPlanning.need_login")}</p>
             <a className="btn btn-primary" href="#/admin">
               {t("adminPlanning.go_to_admin")}
+            </a>
+          </Card>
+        </section>
+      ) : !isAdmin ? (
+        <section className="section stack">
+          <Card title={t("adminAuth.not_authorized_title")}>
+            <p>{t("adminAuth.not_authorized_body")}</p>
+            <a className="btn btn-primary" href="#/admin">
+              {t("adminAuth.back_to_admin")}
             </a>
           </Card>
         </section>

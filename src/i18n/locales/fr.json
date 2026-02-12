@@ -825,5 +825,10 @@
   "not_found": {
     "message": "Cette page n'existe pas (ou plus).",
     "back_home": "Retour à l'accueil"
+  },
+  "adminAuth": {
+    "not_authorized_title": "Acces refuse",
+    "not_authorized_body": "Ton compte est connecte mais n'est pas autorise a gerer l'admin.",
+    "back_to_admin": "Retour a /admin"
   }
 }

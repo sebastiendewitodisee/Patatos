@@ -26,10 +26,14 @@ Si la base est deja initialisee, executer ensuite les migrations SQL versionnees
 3. Executer le script.
 4. Coller `supabase/migrations/002_comments_edge_submit.sql`.
 5. Executer le script.
+6. Coller `supabase/migrations/003_admin_whitelist.sql`.
+7. Executer le script.
 
 Cette migration ajoute `phase_id` (et `type`) pour `planning_items`.
 La migration `002` retire l'insert `anon` direct sur `comments` et ajoute la table
 `comment_rate_limits` pour le cooldown cote Edge Function.
+La migration `003` ajoute une whitelist admin (`public.app_admins`) pour restreindre
+l'acces admin aux users explicitement autorises.
 
 Exemple insert:
 
@@ -75,6 +79,23 @@ Les operations d'ecriture (`insert/update/delete`) sont reservees aux users `aut
 
 Note admin: un utilisateur `authenticated` peut aussi lire tous les drafts (`content_posts`)
 et tous les commentaires non approuves (`comments`) pour moderation.
+
+## Admin whitelist
+
+Avec la whitelist active, un user connecte n'est admin que s'il est ajoute dans
+`public.app_admins`.
+
+1. Creer un user dans `Supabase > Auth > Users`.
+2. Recuperer son UUID (`id`).
+3. Executer dans `SQL Editor`:
+
+```sql
+insert into public.app_admins (user_id)
+values ('UUID_DU_USER');
+```
+
+Recommande: desactiver les inscriptions publiques (`Enable email signups`) dans
+`Supabase > Authentication > Providers` pour limiter les comptes non souhaites.
 
 ## Variables d'environnement du site
 

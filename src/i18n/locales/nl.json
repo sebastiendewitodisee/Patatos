@@ -825,5 +825,10 @@
   "not_found": {
     "message": "Deze pagina bestaat niet (meer).",
     "back_home": "Terug naar start"
+  },
+  "adminAuth": {
+    "not_authorized_title": "Geen toegang",
+    "not_authorized_body": "Je account is aangemeld maar heeft geen rechten voor dit admingedeelte.",
+    "back_to_admin": "Terug naar /admin"
   }
 }

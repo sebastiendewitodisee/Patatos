@@ -28,12 +28,21 @@ function getAuthErrorKey(error) {
   return ERROR_KEYS.generic;
 }
 
+function getAdminCheckErrorKey(error) {
+  const message = String(error?.message || "").toLowerCase();
+  return message.includes("network") || message.includes("fetch")
+    ? ERROR_KEYS.network
+    : ERROR_KEYS.generic;
+}
+
 function Admin() {
   const { t } = useTranslation();
   const isSupabaseEnabled = isSupabaseConfigured && Boolean(supabase);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [session, setSession] = useState(null);
+  const [isAdmin, setIsAdmin] = useState(false);
+  const [isAdminLoading, setIsAdminLoading] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSessionLoading, setIsSessionLoading] = useState(isSupabaseEnabled);
   const [errorKey, setErrorKey] = useState("");
@@ -72,11 +81,55 @@ function Admin() {
     };
   }, [isSupabaseEnabled]);
 
+  useEffect(() => {
+    let isActive = true;
+
+    const checkAdmin = async () => {
+      if (!isSupabaseEnabled || !supabase || !session?.user?.id) {
+        if (isActive) {
+          setIsAdmin(false);
+          setIsAdminLoading(false);
+        }
+        return;
+      }
+
+      if (isActive) {
+        setIsAdminLoading(true);
+      }
+
+      const { data, error } = await supabase
+        .from("app_admins")
+        .select("id")
+        .eq("user_id", session.user.id)
+        .maybeSingle();
+
+      if (!isActive) {
+        return;
+      }
+
+      if (error) {
+        setIsAdmin(false);
+        setErrorKey(getAdminCheckErrorKey(error));
+        setIsAdminLoading(false);
+        return;
+      }
+
+      setIsAdmin(Boolean(data?.id));
+      setIsAdminLoading(false);
+    };
+
+    checkAdmin();
+
+    return () => {
+      isActive = false;
+    };
+  }, [isSupabaseEnabled, session?.user?.id]);
+
   const isAuthenticated = Boolean(session);
-  const isFormDisabled = !isSupabaseEnabled || isSubmitting || isSessionLoading;
+  const isFormDisabled = !isSupabaseEnabled || isSubmitting || isSessionLoading || isAdminLoading;
   const statusKey = !isSupabaseEnabled
     ? "admin.status_unconfigured"
-    : isSessionLoading
+    : isSessionLoading || isAdminLoading
       ? "admin.status_loading"
       : isAuthenticated
         ? "admin.status_connected"
@@ -147,23 +200,33 @@ function Admin() {
         <Card title={t("admin.form_title")}>
           {isAuthenticated ? (
             <div className="stack">
-              <p>{t("admin.logged_in_message")}</p>
-              <div className="chip-row">
-                <a className="btn btn-ghost" href="#/admin/planning">
-                  {t("adminNav.manage_planning")}
-                </a>
-                <a className="btn btn-ghost" href="#/admin/posts">
-                  {t("adminNav.manage_posts")}
-                </a>
-                <a className="btn btn-ghost" href="#/admin/comments">
-                  {t("adminNav.manage_comments")}
-                </a>
-              </div>
+              {isAdminLoading ? <p>{t("admin.status_loading")}</p> : null}
+              {!isAdminLoading && !isAdmin ? (
+                <Card title={t("adminAuth.not_authorized_title")}>
+                  <p>{t("adminAuth.not_authorized_body")}</p>
+                </Card>
+              ) : null}
+              {!isAdminLoading && isAdmin ? (
+                <>
+                  <p>{t("admin.logged_in_message")}</p>
+                  <div className="chip-row">
+                    <a className="btn btn-ghost" href="#/admin/planning">
+                      {t("adminNav.manage_planning")}
+                    </a>
+                    <a className="btn btn-ghost" href="#/admin/posts">
+                      {t("adminNav.manage_posts")}
+                    </a>
+                    <a className="btn btn-ghost" href="#/admin/comments">
+                      {t("adminNav.manage_comments")}
+                    </a>
+                  </div>
+                </>
+              ) : null}
               <button
                 type="button"
                 className="btn btn-primary"
                 onClick={handleLogout}
-                disabled={isSubmitting || isSessionLoading}
+                disabled={isSubmitting || isSessionLoading || isAdminLoading}
               >
                 {isSubmitting ? t("admin.logout_loading") : t("admin.logout")}
               </button>

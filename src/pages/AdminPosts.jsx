@@ -115,6 +115,8 @@ function AdminPosts() {
   const locale = currentLang === "nl" ? "nl-BE" : "fr-BE";
 
   const [session, setSession] = useState(null);
+  const [isAdmin, setIsAdmin] = useState(false);
+  const [isAdminLoading, setIsAdminLoading] = useState(false);
   const [isSessionLoading, setIsSessionLoading] = useState(isSupabaseEnabled);
   const [posts, setPosts] = useState([]);
   const [isPostsLoading, setIsPostsLoading] = useState(false);
@@ -162,7 +164,51 @@ function AdminPosts() {
   }, [isSupabaseEnabled]);
 
   useEffect(() => {
-    if (!isSupabaseEnabled || !supabase || !session) {
+    let isActive = true;
+
+    const checkAdmin = async () => {
+      if (!isSupabaseEnabled || !supabase || !session?.user?.id) {
+        if (isActive) {
+          setIsAdmin(false);
+          setIsAdminLoading(false);
+        }
+        return;
+      }
+
+      if (isActive) {
+        setIsAdminLoading(true);
+      }
+
+      const { data, error } = await supabase
+        .from("app_admins")
+        .select("id")
+        .eq("user_id", session.user.id)
+        .maybeSingle();
+
+      if (!isActive) {
+        return;
+      }
+
+      if (error) {
+        setIsAdmin(false);
+        setErrorKey(getRequestErrorKey(error));
+        setIsAdminLoading(false);
+        return;
+      }
+
+      setIsAdmin(Boolean(data?.id));
+      setIsAdminLoading(false);
+    };
+
+    checkAdmin();
+
+    return () => {
+      isActive = false;
+    };
+  }, [isSupabaseEnabled, session?.user?.id]);
+
+  useEffect(() => {
+    if (!isSupabaseEnabled || !supabase || !session || !isAdmin) {
       return undefined;
     }
 
@@ -204,7 +250,7 @@ function AdminPosts() {
     return () => {
       isActive = false;
     };
-  }, [currentLang, isSupabaseEnabled, session]);
+  }, [currentLang, isAdmin, isSupabaseEnabled, session]);
 
   const isAuthenticated = Boolean(session);
   const isBusy = useMemo(
@@ -346,7 +392,7 @@ function AdminPosts() {
             <p>{t("adminPosts.disabled_body")}</p>
           </Card>
         </section>
-      ) : isSessionLoading ? (
+      ) : isSessionLoading || isAdminLoading ? (
         <section className="section stack">
           <Card title={t("adminPosts.title")}>
             <p>{t("adminPosts.loading")}</p>
@@ -358,6 +404,15 @@ function AdminPosts() {
             <p>{t("adminPosts.need_login")}</p>
             <a className="btn btn-primary" href="#/admin">
               {t("adminPosts.go_to_admin")}
+            </a>
+          </Card>
+        </section>
+      ) : !isAdmin ? (
+        <section className="section stack">
+          <Card title={t("adminAuth.not_authorized_title")}>
+            <p>{t("adminAuth.not_authorized_body")}</p>
+            <a className="btn btn-primary" href="#/admin">
+              {t("adminAuth.back_to_admin")}
             </a>
           </Card>
         </section>
