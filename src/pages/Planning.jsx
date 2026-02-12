@@ -265,17 +265,6 @@ function Planning() {
     <div className="container page page-block planning-page">
       <section className="section section-tight stack">
         <h1 className="page-title">{t("planning.title")}</h1>
-        <p className="section-intro page-subtitle">{t("planning.intro")}</p>
-        <p className="section-subtitle muted-text">{t("planning.season")}</p>
-
-        <Card title={t("planning.rules_title")}>
-          <ul className="tips-list">
-            <li>{t("planning.rules.r1")}</li>
-            <li>{t("planning.rules.r2")}</li>
-            <li>{t("planning.rules.r3")}</li>
-            <li>{t("planning.rules.r4")}</li>
-          </ul>
-        </Card>
 
         <div className="grid three-columns summary-grid">
           <Card title={t("planning.summary.next")}>
