@@ -54,7 +54,26 @@ function getEventValidationText(event, t, validationFallback) {
   return event?.validationKey ? t(event.validationKey, { defaultValue: fallbackLabel }) : fallbackLabel;
 }
 
+function getResponsibleBadgeLabel(responsible, t) {
+  if (typeof responsible !== "string" || responsible.trim().length === 0) {
+    return "";
+  }
+
+  const normalizedResponsible =
+    responsible.trim() === RESPONSIBLE_TBD_TOKEN ? t("common.to_define") : responsible.trim();
+
+  return t("planning.responsible_with_value", {
+    value: normalizedResponsible,
+    defaultValue: `${t("planning.responsible_label")}: ${normalizedResponsible}`,
+  });
+}
+
 function getResponsiblesSearchText(event, t) {
+  const responsibleLabel = getResponsibleBadgeLabel(event?.responsible, t);
+  if (responsibleLabel) {
+    return responsibleLabel;
+  }
+
   if (event?.isTeam) {
     return t("planning.timeline.team_all");
   }
@@ -115,8 +134,9 @@ function mapRemotePlanningItem(item, index) {
     type: item?.type ?? "task",
     phaseId: normalizedPhaseId,
     phase: normalizedPhaseId,
+    responsible: item?.responsible ?? "",
     responsibles: [],
-    isTeam: true,
+    isTeam: false,
   };
 }
 
@@ -393,6 +413,9 @@ function Planning() {
                             <Badge tone={status.tone}>{getPlanningStatusLabel(phaseStatus.status, t)}</Badge>
                             {isEventIndicative(task) ? <Badge tone="neutral">{t("planning.timeline.indicative")}</Badge> : null}
                             {phaseStatus.isLate ? <Badge tone="late">{t("planning.late")}</Badge> : null}
+                            {getResponsibleBadgeLabel(task?.responsible, t) ? (
+                              <Badge tone="neutral">{getResponsibleBadgeLabel(task?.responsible, t)}</Badge>
+                            ) : null}
                           </div>
                           <p className="muted-text">
                             {t("common.period_with_value", {

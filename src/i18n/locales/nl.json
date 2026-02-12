@@ -123,6 +123,8 @@
       "in_progress": "Bezig",
       "done": "Klaar"
     },
+    "responsible_label": "Verantwoordelijke",
+    "responsible_with_value": "Verantwoordelijke: {{value}}",
     "late": "\u26A0 Te laat",
     "timeline": {
       "title": "Tijdlijn van gebeurtenissen",
@@ -690,6 +692,7 @@
     "loading": "Laden...",
     "empty": "Geen items voor deze taal.",
     "add": "Item toevoegen",
+    "responsible_placeholder": "Bijv: Denis",
     "save": "Opslaan",
     "saving": "Opslaan...",
     "delete": "Verwijderen",
@@ -703,6 +706,7 @@
       "title": "Titel",
       "description": "Beschrijving",
       "period": "Periode",
+      "responsible": "Verantwoordelijke",
       "sort_order": "Volgorde",
       "actions": "Acties"
     },

@@ -123,6 +123,8 @@
       "in_progress": "En cours",
       "done": "Fait"
     },
+    "responsible_label": "Responsable",
+    "responsible_with_value": "Responsable: {{value}}",
     "late": "\u26A0 En retard",
     "timeline": {
       "title": "Timeline des événements",
@@ -690,6 +692,7 @@
     "loading": "Chargement...",
     "empty": "Aucun item pour cette langue.",
     "add": "Ajouter un item",
+    "responsible_placeholder": "Ex: Denis",
     "save": "Enregistrer",
     "saving": "Enregistrement...",
     "delete": "Supprimer",
@@ -703,6 +706,7 @@
       "title": "Titre",
       "description": "Description",
       "period": "Periode",
+      "responsible": "Responsable",
       "sort_order": "Ordre",
       "actions": "Actions"
     },

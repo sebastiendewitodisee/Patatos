@@ -4,6 +4,8 @@ import Card from "../components/Card";
 import { PHASE_ORDER, TYPE_META } from "../data/planning";
 import { isSupabaseConfigured, supabase } from "../lib/supabaseClient";
 
+const PLANNING_SELECT_V3 =
+  "id, lang, phase_id, type, title, description, period, status, sort_order, updated_at, responsible";
 const PLANNING_SELECT_V2 =
   "id, lang, phase_id, type, title, description, period, status, sort_order, updated_at";
 const PLANNING_SELECT_V1 = "id, lang, title, description, period, status, sort_order, updated_at";
@@ -75,6 +77,7 @@ function mapRowToItem(row, index, defaultLang) {
     title: row?.title ?? "",
     description: row?.description ?? "",
     period: row?.period ?? "",
+    responsible: row?.responsible ?? "",
     status: normalizeStatus(row?.status),
     sort_order: nextSortOrder,
     updated_at: row?.updated_at ?? "",
@@ -90,6 +93,7 @@ function buildPayload(item, lang) {
     title: String(item?.title ?? "").trim(),
     description: String(item?.description ?? "").trim() || null,
     period: String(item?.period ?? "").trim() || null,
+    responsible: String(item?.responsible ?? "").trim() || null,
     status: normalizeStatus(item?.status),
     sort_order: normalizeSortOrder(item?.sort_order, 0),
   };
@@ -213,10 +217,19 @@ function AdminPlanning() {
 
       let response = await supabase
         .from("planning_items")
-        .select(PLANNING_SELECT_V2)
+        .select(PLANNING_SELECT_V3)
         .eq("lang", currentLang)
         .order("phase_id", { ascending: true })
         .order("sort_order", { ascending: true });
+
+      if (response.error && isMissingColumnError(response.error)) {
+        response = await supabase
+          .from("planning_items")
+          .select(PLANNING_SELECT_V2)
+          .eq("lang", currentLang)
+          .order("phase_id", { ascending: true })
+          .order("sort_order", { ascending: true });
+      }
 
       if (response.error && isMissingColumnError(response.error)) {
         response = await supabase
@@ -295,6 +308,7 @@ function AdminPlanning() {
       title: "",
       description: "",
       period: "",
+      responsible: "",
       status: "todo",
       sort_order: nextSortOrderFromItems(items),
       updated_at: "",
@@ -310,11 +324,29 @@ function AdminPlanning() {
       return;
     }
 
-    const payload = buildPayload(item, currentLang);
+    const payloadV3 = buildPayload(item, currentLang);
+    const payloadV2 = {
+      lang: payloadV3.lang,
+      phase_id: payloadV3.phase_id,
+      type: payloadV3.type,
+      title: payloadV3.title,
+      description: payloadV3.description,
+      period: payloadV3.period,
+      status: payloadV3.status,
+      sort_order: payloadV3.sort_order,
+    };
+    const payloadV1 = {
+      lang: payloadV3.lang,
+      title: payloadV3.title,
+      description: payloadV3.description,
+      period: payloadV3.period,
+      status: payloadV3.status,
+      sort_order: payloadV3.sort_order,
+    };
     setSavingById((previousState) => ({ ...previousState, [item.id]: true }));
     setErrorKey("");
 
-    if (!payload.title) {
+    if (!payloadV3.title) {
       setSavingById((previousState) => ({ ...previousState, [item.id]: false }));
       setErrorKey("adminPlanning.errors.generic");
       return;
@@ -323,41 +355,36 @@ function AdminPlanning() {
     let response;
 
     if (item.isNew) {
-      response = await supabase.from("planning_items").insert(payload).select(PLANNING_SELECT_V2).single();
+      response = await supabase.from("planning_items").insert(payloadV3).select(PLANNING_SELECT_V3).single();
 
       if (response.error && isMissingColumnError(response.error)) {
-        const fallbackPayload = {
-          lang: payload.lang,
-          title: payload.title,
-          description: payload.description,
-          period: payload.period,
-          status: payload.status,
-          sort_order: payload.sort_order,
-        };
+        response = await supabase.from("planning_items").insert(payloadV2).select(PLANNING_SELECT_V2).single();
+      }
 
-        response = await supabase.from("planning_items").insert(fallbackPayload).select(PLANNING_SELECT_V1).single();
+      if (response.error && isMissingColumnError(response.error)) {
+        response = await supabase.from("planning_items").insert(payloadV1).select(PLANNING_SELECT_V1).single();
       }
     } else {
       response = await supabase
         .from("planning_items")
-        .update(payload)
+        .update(payloadV3)
         .eq("id", item.id)
-        .select(PLANNING_SELECT_V2)
+        .select(PLANNING_SELECT_V3)
         .single();
 
       if (response.error && isMissingColumnError(response.error)) {
-        const fallbackPayload = {
-          lang: payload.lang,
-          title: payload.title,
-          description: payload.description,
-          period: payload.period,
-          status: payload.status,
-          sort_order: payload.sort_order,
-        };
-
         response = await supabase
           .from("planning_items")
-          .update(fallbackPayload)
+          .update(payloadV2)
+          .eq("id", item.id)
+          .select(PLANNING_SELECT_V2)
+          .single();
+      }
+
+      if (response.error && isMissingColumnError(response.error)) {
+        response = await supabase
+          .from("planning_items")
+          .update(payloadV1)
           .eq("id", item.id)
           .select(PLANNING_SELECT_V1)
           .single();
@@ -481,6 +508,7 @@ function AdminPlanning() {
                       <th>{t("adminPlanning.fields.title")}</th>
                       <th>{t("adminPlanning.fields.description")}</th>
                       <th>{t("adminPlanning.fields.period")}</th>
+                      <th>{t("adminPlanning.fields.responsible")}</th>
                       <th>{t("adminPlanning.fields.sort_order")}</th>
                       <th>{t("adminPlanning.fields.actions")}</th>
                     </tr>
@@ -575,6 +603,18 @@ function AdminPlanning() {
                               value={item.period}
                               onChange={(event) => handleFieldChange(item.id, "period", event.target.value)}
                               aria-label={t("adminPlanning.fields.period")}
+                              disabled={isDisabled}
+                            />
+                          </td>
+
+                          <td>
+                            <input
+                              type="text"
+                              className="input"
+                              value={item.responsible}
+                              onChange={(event) => handleFieldChange(item.id, "responsible", event.target.value)}
+                              aria-label={t("adminPlanning.fields.responsible")}
+                              placeholder={t("adminPlanning.responsible_placeholder")}
                               disabled={isDisabled}
                             />
                           </td>

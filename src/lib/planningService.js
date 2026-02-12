@@ -1,5 +1,7 @@
 import { isSupabaseConfigured, supabase } from "./supabaseClient";
 
+const PLANNING_SELECT_V3 =
+  "id, lang, title, description, period, status, sort_order, updated_at, phase_id, type, responsible";
 const PLANNING_SELECT_V2 = "id, lang, title, description, period, status, sort_order, updated_at, phase_id, type";
 const PLANNING_SELECT_V1 = "id, lang, title, description, period, status, sort_order, updated_at";
 
@@ -33,7 +35,11 @@ export async function fetchPlanningItemsFromSupabase(lang) {
 
   try {
     const resolvedLang = normalizeLang(lang);
-    let { data, error } = await selectPlanningItems(resolvedLang, PLANNING_SELECT_V2);
+    let { data, error } = await selectPlanningItems(resolvedLang, PLANNING_SELECT_V3);
+
+    if (error && isMissingColumnError(error)) {
+      ({ data, error } = await selectPlanningItems(resolvedLang, PLANNING_SELECT_V2));
+    }
 
     if (error && isMissingColumnError(error)) {
       ({ data, error } = await selectPlanningItems(resolvedLang, PLANNING_SELECT_V1));

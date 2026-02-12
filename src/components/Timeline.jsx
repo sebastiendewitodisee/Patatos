@@ -33,6 +33,20 @@ function getResponsibleLabel(responsible, t) {
   return responsible;
 }
 
+function getResponsibleBadgeLabel(responsible, t) {
+  if (typeof responsible !== "string" || responsible.trim().length === 0) {
+    return "";
+  }
+
+  const normalizedResponsible =
+    responsible.trim() === RESPONSIBLE_TBD_TOKEN ? t("common.to_define") : responsible.trim();
+
+  return t("planning.responsible_with_value", {
+    value: normalizedResponsible,
+    defaultValue: `${t("planning.responsible_label")}: ${normalizedResponsible}`,
+  });
+}
+
 function getEventText(event, keyName, fallbackKeyName, t) {
   const translationKey = event?.[keyName];
   const fallbackValue = fallbackKeyName ? event?.[fallbackKeyName] : "";
@@ -82,6 +96,7 @@ function Timeline({ events }) {
         const type = TYPE_META[event.type] ?? TYPE_META.preparation;
         const responsiblesDisplay = getResponsiblesDisplay(event);
         const isLate = phaseStatus.isLate;
+        const responsibleBadgeLabel = getResponsibleBadgeLabel(event?.responsible, t);
 
         return (
           <li key={event.id} className="timeline-item">
@@ -96,6 +111,7 @@ function Timeline({ events }) {
                 <div className="timeline-badges">
                   <Badge tone={status.tone}>{getPlanningStatusLabel(phaseStatus.status, t)}</Badge>
                   <Badge tone={type.tone}>{t(`planning.types.${event.type}`)}</Badge>
+                  {responsibleBadgeLabel ? <Badge tone="neutral">{responsibleBadgeLabel}</Badge> : null}
                   {isEventIndicative(event) ? <Badge tone="neutral">{t("planning.timeline.indicative")}</Badge> : null}
                   {isLate ? <Badge tone="late">{t("planning.late")}</Badge> : null}
                 </div>
