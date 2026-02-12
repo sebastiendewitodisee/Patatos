@@ -822,7 +822,14 @@
     "empty": "Nog geen gepubliceerde posts.",
     "unavailable_title": "Posts niet beschikbaar",
     "unavailable_body": "Supabase is niet geconfigureerd of tijdelijk niet bereikbaar.",
-    "read_more": "Post lezen"
+    "read_more": "Post lezen",
+    "search_placeholder": "Zoek op titel of samenvatting...",
+    "sort_label": "Sorteren op",
+    "sort": {
+      "updated_desc": "Laatste update (nieuw -> oud)",
+      "updated_asc": "Laatste update (oud -> nieuw)",
+      "title_asc": "Titel A->Z"
+    }
   },
   "post": {
     "back_to_list": "Terug naar de posts",

@@ -71,6 +71,10 @@ function Home() {
   const isDutch = i18n.resolvedLanguage?.startsWith("nl");
   const locale = isDutch ? "nl-BE" : "fr-BE";
   const currentLang = isDutch ? "nl" : "fr";
+  const hasLatestPosts = Array.isArray(latestPosts) && latestPosts.length > 0;
+  const featuredPost = hasLatestPosts ? latestPosts[0] : null;
+  const featuredPreview = featuredPost ? getPostPreviewText(featuredPost) : "";
+  const secondaryPosts = hasLatestPosts ? latestPosts.slice(1) : [];
 
   useEffect(() => {
     let cancelled = false;
@@ -183,21 +187,32 @@ function Home() {
           <p className="muted-text">{t("home.blog_empty")}</p>
         ) : null}
 
-        {!isLatestPostsLoading && Array.isArray(latestPosts) && latestPosts.length > 0 ? (
-          <div className="grid three-columns">
-            {latestPosts.map((post) => {
-              const previewText = getPostPreviewText(post);
+        {!isLatestPostsLoading && hasLatestPosts ? (
+          <>
+            <Card title={featuredPost?.title ?? ""}>
+              {featuredPreview ? <p>{featuredPreview}</p> : null}
+              <Link to={`/posts/${encodeURIComponent(featuredPost?.slug ?? "")}`} className="btn btn-primary">
+                {t("home.blog_read")}
+              </Link>
+            </Card>
 
-              return (
-                <Card key={post.id} title={post.title}>
-                  {previewText ? <p>{previewText}</p> : null}
-                  <Link to={`/posts/${post.slug}`} className="btn btn-ghost">
-                    {t("home.blog_read")}
-                  </Link>
-                </Card>
-              );
-            })}
-          </div>
+            {secondaryPosts.length > 0 ? (
+              <div className="grid two-columns">
+                {secondaryPosts.map((post) => {
+                  const previewText = getPostPreviewText(post);
+
+                  return (
+                    <Card key={post.id} title={post.title}>
+                      {previewText ? <p>{previewText}</p> : null}
+                      <Link to={`/posts/${encodeURIComponent(post.slug)}`} className="btn btn-ghost">
+                        {t("home.blog_read")}
+                      </Link>
+                    </Card>
+                  );
+                })}
+              </div>
+            ) : null}
+          </>
         ) : null}
 
         <div className="cta-row">

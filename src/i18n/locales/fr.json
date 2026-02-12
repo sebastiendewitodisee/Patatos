@@ -822,7 +822,14 @@
     "empty": "Aucun post publie pour le moment.",
     "unavailable_title": "Posts indisponibles",
     "unavailable_body": "Supabase n'est pas configure ou momentanement indisponible.",
-    "read_more": "Lire le post"
+    "read_more": "Lire le post",
+    "search_placeholder": "Rechercher un titre ou un resume...",
+    "sort_label": "Trier par",
+    "sort": {
+      "updated_desc": "Derniere mise a jour (recent -> ancien)",
+      "updated_asc": "Derniere mise a jour (ancien -> recent)",
+      "title_asc": "Titre A->Z"
+    }
   },
   "post": {
     "back_to_list": "Retour a la liste des posts",
