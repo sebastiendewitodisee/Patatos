@@ -88,3 +88,22 @@ En local, creer un fichier `.env.local` a la racine et y renseigner
 Apres modification des variables d'environnement, redemarrer `npm run dev`.
 
 Sans ces variables, la route `/admin` reste desactivee cote UI, sans casser le build.
+
+## Production (GitHub Pages)
+
+Le workflow GitHub Pages lit ces variables pendant `npm run build` via les
+GitHub Actions Secrets:
+
+- `VITE_SUPABASE_URL`
+- `VITE_SUPABASE_ANON_KEY`
+
+Configuration: `GitHub repository > Settings > Secrets and variables > Actions`.
+
+Important: ne jamais ajouter `SUPABASE_SERVICE_ROLE_KEY` dans GitHub.
+La service role key doit rester uniquement dans les secrets Supabase de l'Edge Function.
+
+## Checklist Edge Function (submit-comment)
+
+1. Deployer la function `submit-comment`.
+2. Definir les secrets Supabase de la function: `SUPABASE_URL` et `SUPABASE_SERVICE_ROLE_KEY`.
+3. Executer `supabase/migrations/002_comments_edge_submit.sql` dans `SQL Editor`.
