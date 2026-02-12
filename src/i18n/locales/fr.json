@@ -803,6 +803,8 @@
     "success": "Merci ! Ton commentaire est en attente de validation.",
     "errors": {
       "required": "Remplis les champs obligatoires avec des valeurs valides.",
+      "spam": "Validation refusee. Verifie les champs puis reessaie.",
+      "cooldown": "Merci de patienter {{seconds}}s avant un nouvel envoi.",
       "network": "Reseau indisponible. Reessaie dans un instant.",
       "generic": "Impossible d'envoyer le commentaire pour le moment."
     }

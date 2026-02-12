@@ -9,6 +9,9 @@ import {
 } from "../lib/postsService";
 import { isSupabaseConfigured, supabase } from "../lib/supabaseClient";
 
+const COOLDOWN_SECONDS = 60;
+const STORAGE_KEY = "patatos_comment_cooldown_until";
+
 function normalizeUiLang(lang) {
   if (typeof lang !== "string") {
     return "fr";
@@ -45,10 +48,12 @@ function Post() {
   const [isLoading, setIsLoading] = useState(isSupabaseEnabled);
   const [approvedComments, setApprovedComments] = useState(null);
   const [isCommentsLoading, setIsCommentsLoading] = useState(false);
+  const [honeypot, setHoneypot] = useState("");
   const [authorName, setAuthorName] = useState("");
   const [message, setMessage] = useState("");
   const [isSubmittingComment, setIsSubmittingComment] = useState(false);
   const [commentErrorKey, setCommentErrorKey] = useState("");
+  const [commentErrorSeconds, setCommentErrorSeconds] = useState(null);
   const [commentSuccessKey, setCommentSuccessKey] = useState("");
 
   useEffect(() => {
@@ -114,6 +119,34 @@ function Post() {
 
     if (!post?.id) {
       setCommentErrorKey("commentForm.errors.generic");
+      setCommentErrorSeconds(null);
+      setCommentSuccessKey("");
+      return;
+    }
+
+    if (honeypot.trim().length > 0) {
+      setCommentErrorKey("commentForm.errors.spam");
+      setCommentErrorSeconds(null);
+      setCommentSuccessKey("");
+      return;
+    }
+
+    let cooldownUntil = 0;
+
+    try {
+      const storedValue = localStorage.getItem(STORAGE_KEY);
+      const parsedValue = Number.parseInt(storedValue ?? "0", 10);
+      cooldownUntil = Number.isFinite(parsedValue) ? parsedValue : 0;
+    } catch {
+      cooldownUntil = 0;
+    }
+
+    const now = Date.now();
+
+    if (cooldownUntil > now) {
+      const secondsRemaining = Math.max(1, Math.ceil((cooldownUntil - now) / 1000));
+      setCommentErrorKey("commentForm.errors.cooldown");
+      setCommentErrorSeconds(secondsRemaining);
       setCommentSuccessKey("");
       return;
     }
@@ -123,12 +156,14 @@ function Post() {
 
     if (!trimmedAuthor || !trimmedMessage || trimmedAuthor.length > 120 || trimmedMessage.length > 2000) {
       setCommentErrorKey("commentForm.errors.required");
+      setCommentErrorSeconds(null);
       setCommentSuccessKey("");
       return;
     }
 
     setIsSubmittingComment(true);
     setCommentErrorKey("");
+    setCommentErrorSeconds(null);
     setCommentSuccessKey("");
 
     const result = await createComment({
@@ -143,12 +178,26 @@ function Post() {
 
     if (!result?.ok) {
       setCommentErrorKey(result?.errorKey ?? "commentForm.errors.generic");
+      setCommentErrorSeconds(null);
       return;
     }
 
+    try {
+      localStorage.setItem(STORAGE_KEY, String(Date.now() + COOLDOWN_SECONDS * 1000));
+    } catch {
+      // Ignore localStorage failures; submit already succeeded.
+    }
+
+    const refreshedComments = await fetchApprovedCommentsByPostId(post.id);
+    if (refreshedComments !== null) {
+      setApprovedComments(refreshedComments);
+    }
+
+    setHoneypot("");
     setAuthorName("");
     setMessage("");
     setCommentErrorKey("");
+    setCommentErrorSeconds(null);
     setCommentSuccessKey("commentForm.success");
   };
 
@@ -227,6 +276,17 @@ function Post() {
 
                 <Card>
                   <form className="contact-form" onSubmit={handleSubmitComment}>
+                    <input
+                      type="text"
+                      name="website"
+                      className="sr-only"
+                      autoComplete="off"
+                      tabIndex={-1}
+                      aria-hidden="true"
+                      value={honeypot}
+                      onChange={(event) => setHoneypot(event.target.value)}
+                    />
+
                     <label htmlFor="comment-author">{t("commentForm.author_label")}</label>
                     <input
                       id="comment-author"
@@ -267,7 +327,9 @@ function Post() {
                   {commentSuccessKey ? <p className="form-feedback">{t(commentSuccessKey)}</p> : null}
                   {commentErrorKey ? (
                     <p className="muted-text" role="alert">
-                      {t(commentErrorKey)}
+                      {t(commentErrorKey, {
+                        seconds: commentErrorSeconds ?? COOLDOWN_SECONDS,
+                      })}
                     </p>
                   ) : null}
                 </Card>

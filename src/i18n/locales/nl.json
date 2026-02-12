@@ -803,6 +803,8 @@
     "success": "Bedankt! Je reactie wacht op goedkeuring.",
     "errors": {
       "required": "Vul de verplichte velden in met geldige waarden.",
+      "spam": "Validatie geweigerd. Controleer de velden en probeer opnieuw.",
+      "cooldown": "Wacht {{seconds}}s voor je opnieuw verzendt.",
       "network": "Netwerk niet beschikbaar. Probeer het zo opnieuw.",
       "generic": "Kan de reactie nu niet verzenden."
     }
