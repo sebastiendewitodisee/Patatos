@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
+import Badge from "../components/Badge";
 import Card from "../components/Card";
 import { isSupabaseConfigured, supabase } from "../lib/supabaseClient";
 
@@ -80,6 +81,11 @@ function formatTimestamp(value, locale) {
   } catch {
     return "";
   }
+}
+
+function getPostLangBadgeLabel(lang, t) {
+  const normalizedLang = normalizeUiLang(lang);
+  return normalizedLang === "nl" ? t("nav.lang_nl") : t("nav.lang_fr");
 }
 
 function mapRowToPost(row, index, defaultLang) {
@@ -223,7 +229,6 @@ function AdminPosts() {
       const { data, error } = await supabase
         .from("content_posts")
         .select(POSTS_SELECT_COLUMNS)
-        .eq("lang", currentLang)
         .order("updated_at", { ascending: false });
 
       if (!isActive) {
@@ -238,7 +243,7 @@ function AdminPosts() {
       }
 
       const nextPosts = Array.isArray(data)
-        ? data.map((row, index) => mapRowToPost(row, index, currentLang))
+        ? data.map((row, index) => mapRowToPost(row, index, row?.lang ?? "fr"))
         : [];
 
       setPosts(nextPosts);
@@ -250,7 +255,7 @@ function AdminPosts() {
     return () => {
       isActive = false;
     };
-  }, [currentLang, isAdmin, isSupabaseEnabled, session]);
+  }, [isAdmin, isSupabaseEnabled, session]);
 
   const isAuthenticated = Boolean(session);
   const isBusy = useMemo(
@@ -453,6 +458,7 @@ function AdminPosts() {
                   const isDisabled = isSaving || isDeleting || isPostsLoading;
                   const createdAtLabel = formatTimestamp(post.created_at, locale);
                   const updatedAtLabel = formatTimestamp(post.updated_at, locale);
+                  const postLangBadgeLabel = getPostLangBadgeLabel(post.lang, t);
 
                   return (
                     <Card key={post.id} title={post.title || t("adminPosts.new_draft")}>
@@ -512,6 +518,7 @@ function AdminPosts() {
                         />
 
                         <div className="chip-row">
+                          <Badge tone="neutral">{postLangBadgeLabel}</Badge>
                           <input
                             id={`post-published-${post.id}`}
                             type="checkbox"
