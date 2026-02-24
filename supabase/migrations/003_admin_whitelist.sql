@@ -16,7 +16,6 @@ for select
 to authenticated
 using (user_id = auth.uid());
 
-drop function if exists public.is_admin();
 create or replace function public.is_admin()
 returns boolean
 language sql
