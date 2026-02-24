@@ -14,8 +14,11 @@ const corsHeaders = {
 
 type SubmitPayload = {
   post_id?: unknown;
+  slug?: unknown;
+  lang?: unknown;
   author_name?: unknown;
   message?: unknown;
+  content?: unknown;
   honeypot?: unknown;
 };
 
@@ -31,6 +34,28 @@ function jsonResponse(status: number, body: Record<string, unknown>) {
 
 function normalizeText(value: unknown) {
   return String(value ?? "").trim();
+}
+
+function normalizeLang(value: unknown) {
+  const normalizedValue = normalizeText(value).toLowerCase();
+  if (normalizedValue.startsWith("nl")) {
+    return "nl";
+  }
+
+  if (normalizedValue.startsWith("fr")) {
+    return "fr";
+  }
+
+  return "";
+}
+
+function sanitizeSlug(value: unknown) {
+  return normalizeText(value)
+    .toLowerCase()
+    .replace(/\s+/g, "-")
+    .replace(/[^a-z0-9-]/g, "-")
+    .replace(/-+/g, "-")
+    .replace(/^-+|-+$/g, "");
 }
 
 function getIpFromHeaders(headers: Headers) {
@@ -82,6 +107,63 @@ function createServiceClient() {
   });
 }
 
+type ResolvedPostIdResult =
+  | { ok: true; postId: string }
+  | { ok: false; error: "validation" | "lang_required" | "generic" };
+
+type SupabaseAdminClient = NonNullable<ReturnType<typeof createServiceClient>>;
+
+async function resolvePostIdFromPayload(
+  supabaseAdmin: SupabaseAdminClient,
+  payload: SubmitPayload
+): Promise<ResolvedPostIdResult> {
+  const rawPostId = normalizeText(payload.post_id);
+  if (UUID_PATTERN.test(rawPostId)) {
+    return { ok: true, postId: rawPostId };
+  }
+
+  const slug = sanitizeSlug(payload.slug);
+  if (!slug) {
+    return { ok: false, error: "validation" };
+  }
+
+  const lang = normalizeLang(payload.lang);
+
+  let query = supabaseAdmin
+    .from("content_posts")
+    .select("id, lang")
+    .eq("slug", slug)
+    .eq("published", true)
+    .limit(2);
+
+  if (lang) {
+    query = query.eq("lang", lang);
+  }
+
+  const { data, error } = await query;
+
+  if (error) {
+    return { ok: false, error: "generic" };
+  }
+
+  const rows = Array.isArray(data) ? data : [];
+  if (rows.length === 0) {
+    return { ok: false, error: "validation" };
+  }
+
+  if (!lang && rows.length > 1) {
+    return { ok: false, error: "lang_required" };
+  }
+
+  const resolvedRow = rows[0];
+  const resolvedId = normalizeText(resolvedRow?.id);
+  if (!UUID_PATTERN.test(resolvedId)) {
+    return { ok: false, error: "validation" };
+  }
+
+  return { ok: true, postId: resolvedId };
+}
+
 Deno.serve(async (request) => {
   if (request.method === "OPTIONS") {
     return new Response("ok", { headers: corsHeaders });
@@ -103,17 +185,12 @@ Deno.serve(async (request) => {
     return jsonResponse(400, { ok: false, error: "validation" });
   }
 
-  const postId = normalizeText(payload.post_id);
+  const message = normalizeText(payload.message ?? payload.content);
   const authorName = normalizeText(payload.author_name);
-  const message = normalizeText(payload.message);
   const honeypot = normalizeText(payload.honeypot);
 
   if (honeypot.length > 0) {
     return jsonResponse(400, { ok: false, error: "spam" });
-  }
-
-  if (!UUID_PATTERN.test(postId)) {
-    return jsonResponse(400, { ok: false, error: "validation" });
   }
 
   if (!authorName || !message) {
@@ -122,6 +199,11 @@ Deno.serve(async (request) => {
 
   if (authorName.length > AUTHOR_MAX_LENGTH || message.length > MESSAGE_MAX_LENGTH) {
     return jsonResponse(400, { ok: false, error: "validation" });
+  }
+
+  const resolvedPostId = await resolvePostIdFromPayload(supabaseAdmin, payload);
+  if (!resolvedPostId.ok) {
+    return jsonResponse(400, { ok: false, error: resolvedPostId.error });
   }
 
   const requestIp = getIpFromHeaders(request.headers);
@@ -162,7 +244,7 @@ Deno.serve(async (request) => {
   }
 
   const { error: insertCommentError } = await supabaseAdmin.from("comments").insert({
-    post_id: postId,
+    post_id: resolvedPostId.postId,
     author_name: authorName,
     message,
   });

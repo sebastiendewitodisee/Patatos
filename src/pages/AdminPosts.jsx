@@ -308,9 +308,12 @@ function AdminPosts() {
       return;
     }
 
-    const payload = buildPayload(post, currentLang);
+    const payload = buildPayload(post, post?.lang ?? currentLang);
     const hasLocalDuplicateSlug = posts.some(
-      (candidate) => candidate.id !== post.id && sanitizeSlug(candidate.slug) === payload.slug
+      (candidate) =>
+        candidate.id !== post.id &&
+        normalizeUiLang(candidate.lang) === payload.lang &&
+        sanitizeSlug(candidate.slug) === payload.slug
     );
 
     if (!payload.slug || !payload.title || !payload.body) {
@@ -346,7 +349,7 @@ function AdminPosts() {
       return;
     }
 
-    const savedPost = mapRowToPost(response.data ?? {}, 0, currentLang);
+    const savedPost = mapRowToPost(response.data ?? {}, 0, post?.lang ?? currentLang);
     setPosts((previousPosts) =>
       previousPosts.map((currentPost) =>
         currentPost.id === post.id ? { ...savedPost, isNew: false } : currentPost

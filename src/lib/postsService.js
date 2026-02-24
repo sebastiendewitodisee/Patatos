@@ -48,6 +48,15 @@ function resolveCooldownSeconds(value) {
 function getFunctionPayloadResult(payload, statusCode) {
   const payloadError = String(payload?.error ?? payload?.code ?? "").toLowerCase();
 
+  if (payloadError === "lang_required") {
+    return {
+      ok: false,
+      errorKey: "commentForm.errors.generic",
+      errorSeconds: null,
+      shouldFallbackToInsert: false,
+    };
+  }
+
   if (statusCode === 429 || payloadError === "cooldown") {
     return {
       ok: false,
@@ -182,11 +191,13 @@ async function fetchPublishedPostBySlugInLang(resolvedLang, resolvedSlug) {
   };
 }
 
-async function createCommentViaEdgeFunction({ postId, authorName, message, honeypot }) {
+async function createCommentViaEdgeFunction({ postId, lang, slug, authorName, message, honeypot }) {
   try {
     const { data, error } = await supabase.functions.invoke("submit-comment", {
       body: {
         post_id: postId,
+        lang: lang || undefined,
+        slug: slug || undefined,
         author_name: authorName,
         message,
         honeypot: String(honeypot ?? ""),
@@ -407,12 +418,10 @@ export async function createComment({ lang, slug, postId, authorName, message, h
       return { ok: false, errorKey: "commentForm.errors.required" };
     }
 
-    if (!resolvedLang || !resolvedSlug) {
-      return { ok: false, errorKey: "commentForm.errors.generic" };
-    }
-
     const functionResult = await createCommentViaEdgeFunction({
       postId: resolvedPostId,
+      lang: resolvedLang,
+      slug: resolvedSlug,
       authorName: resolvedAuthor,
       message: resolvedMessage,
       honeypot,

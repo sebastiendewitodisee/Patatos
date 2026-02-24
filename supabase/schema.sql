@@ -84,7 +84,7 @@ drop constraint if exists planning_items_type_check;
 alter table public.planning_items
 add constraint planning_items_type_check check (type in ('task', 'preparation', 'plantation', 'suivi', 'recolte', 'conservation'));
 
-create unique index if not exists idx_content_posts_slug on public.content_posts (slug);
+create unique index if not exists content_posts_lang_slug_key on public.content_posts (lang, slug);
 create index if not exists idx_content_posts_published on public.content_posts (published);
 create index if not exists idx_comments_post_id on public.comments (post_id);
 create index if not exists idx_comments_is_approved on public.comments (is_approved);
