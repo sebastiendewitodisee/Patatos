@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import Card from "../components/Card";
-import { fetchPublishedPosts } from "../lib/postsService";
+import { fetchPublishedPostsWithLangFallback } from "../lib/postsService";
 import { isSupabaseConfigured, supabase } from "../lib/supabaseClient";
 
 function normalizeUiLang(lang) {
@@ -11,6 +11,10 @@ function normalizeUiLang(lang) {
   }
 
   return lang.toLowerCase().startsWith("nl") ? "nl" : "fr";
+}
+
+function getLangLabel(lang, t) {
+  return normalizeUiLang(lang) === "nl" ? t("nav.lang_nl") : t("nav.lang_fr");
 }
 
 function Posts() {
@@ -22,6 +26,7 @@ function Posts() {
   const [sortMode, setSortMode] = useState("updated_desc");
   const [isLoading, setIsLoading] = useState(isSupabaseEnabled);
   const [isUnavailable, setIsUnavailable] = useState(false);
+  const [fallbackNotice, setFallbackNotice] = useState(null);
 
   useEffect(() => {
     if (!isSupabaseEnabled) {
@@ -36,7 +41,7 @@ function Posts() {
         setIsUnavailable(false);
       }
 
-      const result = await fetchPublishedPosts(currentLang);
+      const result = await fetchPublishedPostsWithLangFallback(currentLang);
 
       if (!isActive) {
         return;
@@ -44,12 +49,21 @@ function Posts() {
 
       if (result === null) {
         setPosts([]);
+        setFallbackNotice(null);
         setIsUnavailable(true);
         setIsLoading(false);
         return;
       }
 
-      setPosts(result);
+      setPosts(result.posts ?? []);
+      setFallbackNotice(
+        result.fallbackUsed
+          ? {
+              requestedLang: result.requestedLang,
+              displayedLang: result.displayedLang,
+            }
+          : null
+      );
       setIsUnavailable(false);
       setIsLoading(false);
     };
@@ -113,6 +127,14 @@ function Posts() {
         ) : (
           <div className="stack">
             <Card title={t("posts.title")}>
+              {fallbackNotice ? (
+                <p className="muted-text">
+                  {t("posts.fallback_notice", {
+                    lang: getLangLabel(fallbackNotice.requestedLang, t),
+                    fallback: getLangLabel(fallbackNotice.displayedLang, t),
+                  })}
+                </p>
+              ) : null}
               <div className="grid two-columns">
                 <div className="stack">
                   <label htmlFor="posts-search" className="sr-only">

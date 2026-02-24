@@ -22,6 +22,10 @@ function sanitizeSlug(value) {
     .replace(/^-+|-+$/g, "");
 }
 
+function getFallbackLang(lang) {
+  return normalizeUiLang(lang) === "nl" ? "fr" : "nl";
+}
+
 function getCreateCommentErrorKey(error) {
   const message = String(error?.message ?? "").toLowerCase();
 
@@ -140,6 +144,44 @@ async function createCommentViaDirectInsert({ postId, authorName, message }) {
   return { ok: true };
 }
 
+async function fetchPublishedPostsByLang(resolvedLang) {
+  const { data, error } = await supabase
+    .from("content_posts")
+    .select(POSTS_SELECT_COLUMNS)
+    .eq("lang", resolvedLang)
+    .eq("published", true)
+    .order("updated_at", { ascending: false });
+
+  if (error) {
+    return { ok: false, data: null };
+  }
+
+  return {
+    ok: true,
+    data: Array.isArray(data) ? data : [],
+  };
+}
+
+async function fetchPublishedPostBySlugInLang(resolvedLang, resolvedSlug) {
+  const { data, error } = await supabase
+    .from("content_posts")
+    .select(POSTS_SELECT_COLUMNS)
+    .eq("lang", resolvedLang)
+    .eq("slug", resolvedSlug)
+    .eq("published", true)
+    .limit(1)
+    .maybeSingle();
+
+  if (error) {
+    return { ok: false, data: null };
+  }
+
+  return {
+    ok: true,
+    data: data ?? null,
+  };
+}
+
 async function createCommentViaEdgeFunction({ postId, authorName, message, honeypot }) {
   try {
     const { data, error } = await supabase.functions.invoke("submit-comment", {
@@ -177,22 +219,56 @@ export async function fetchPublishedPosts(lang) {
 
   try {
     const resolvedLang = normalizeUiLang(lang);
-    const { data, error } = await supabase
-      .from("content_posts")
-      .select(POSTS_SELECT_COLUMNS)
-      .eq("lang", resolvedLang)
-      .eq("published", true)
-      .order("updated_at", { ascending: false });
+    const response = await fetchPublishedPostsByLang(resolvedLang);
 
-    if (error) {
+    if (!response.ok) {
       return null;
     }
 
-    if (!Array.isArray(data) || data.length === 0) {
+    if (response.data.length === 0) {
       return [];
     }
 
-    return data;
+    return response.data;
+  } catch {
+    return null;
+  }
+}
+
+export async function fetchPublishedPostsWithLangFallback(lang) {
+  if (!isSupabaseConfigured || !supabase) {
+    return null;
+  }
+
+  try {
+    const requestedLang = normalizeUiLang(lang);
+    const fallbackLang = getFallbackLang(requestedLang);
+
+    const primaryResponse = await fetchPublishedPostsByLang(requestedLang);
+    if (!primaryResponse.ok) {
+      return null;
+    }
+
+    if (primaryResponse.data.length > 0) {
+      return {
+        posts: primaryResponse.data,
+        requestedLang,
+        displayedLang: requestedLang,
+        fallbackUsed: false,
+      };
+    }
+
+    const fallbackResponse = await fetchPublishedPostsByLang(fallbackLang);
+    if (!fallbackResponse.ok) {
+      return null;
+    }
+
+    return {
+      posts: fallbackResponse.data,
+      requestedLang,
+      displayedLang: fallbackResponse.data.length > 0 ? fallbackLang : requestedLang,
+      fallbackUsed: fallbackResponse.data.length > 0,
+    };
   } catch {
     return null;
   }
@@ -242,20 +318,70 @@ export async function fetchPublishedPostBySlug(lang, slug) {
       return null;
     }
 
-    const { data, error } = await supabase
-      .from("content_posts")
-      .select(POSTS_SELECT_COLUMNS)
-      .eq("lang", resolvedLang)
-      .eq("slug", resolvedSlug)
-      .eq("published", true)
-      .limit(1)
-      .maybeSingle();
-
-    if (error) {
+    const response = await fetchPublishedPostBySlugInLang(resolvedLang, resolvedSlug);
+    if (!response.ok) {
       return null;
     }
 
-    return data ?? null;
+    return response.data ?? null;
+  } catch {
+    return null;
+  }
+}
+
+export async function fetchPublishedPostBySlugWithLangFallback(lang, slug) {
+  if (!isSupabaseConfigured || !supabase) {
+    return null;
+  }
+
+  try {
+    const requestedLang = normalizeUiLang(lang);
+    const fallbackLang = getFallbackLang(requestedLang);
+    const resolvedSlug = sanitizeSlug(slug);
+
+    if (!resolvedSlug) {
+      return {
+        post: null,
+        requestedLang,
+        displayedLang: requestedLang,
+        fallbackUsed: false,
+      };
+    }
+
+    const primaryResponse = await fetchPublishedPostBySlugInLang(requestedLang, resolvedSlug);
+    if (!primaryResponse.ok) {
+      return null;
+    }
+
+    if (primaryResponse.data) {
+      return {
+        post: primaryResponse.data,
+        requestedLang,
+        displayedLang: requestedLang,
+        fallbackUsed: false,
+      };
+    }
+
+    const fallbackResponse = await fetchPublishedPostBySlugInLang(fallbackLang, resolvedSlug);
+    if (!fallbackResponse.ok) {
+      return null;
+    }
+
+    if (fallbackResponse.data) {
+      return {
+        post: fallbackResponse.data,
+        requestedLang,
+        displayedLang: fallbackLang,
+        fallbackUsed: true,
+      };
+    }
+
+    return {
+      post: null,
+      requestedLang,
+      displayedLang: requestedLang,
+      fallbackUsed: false,
+    };
   } catch {
     return null;
   }

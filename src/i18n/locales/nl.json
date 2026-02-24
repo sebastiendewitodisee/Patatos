@@ -823,6 +823,7 @@
     "unavailable_title": "Posts niet beschikbaar",
     "unavailable_body": "Supabase is niet geconfigureerd of tijdelijk niet bereikbaar.",
     "read_more": "Post lezen",
+    "fallback_notice": "Geen artikels in {{lang}}. We tonen de {{fallback}}-versie.",
     "search_placeholder": "Zoek op titel of samenvatting...",
     "sort_label": "Sorteren op",
     "sort": {

@@ -823,6 +823,7 @@
     "unavailable_title": "Posts indisponibles",
     "unavailable_body": "Supabase n'est pas configure ou momentanement indisponible.",
     "read_more": "Lire le post",
+    "fallback_notice": "Aucun article en {{lang}}. Affichage de la version {{fallback}}.",
     "search_placeholder": "Rechercher un titre ou un resume...",
     "sort_label": "Trier par",
     "sort": {

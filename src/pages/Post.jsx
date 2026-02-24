@@ -5,7 +5,7 @@ import Card from "../components/Card";
 import {
   createComment,
   fetchApprovedCommentsByPostId,
-  fetchPublishedPostBySlug,
+  fetchPublishedPostBySlugWithLangFallback,
 } from "../lib/postsService";
 import { isSupabaseConfigured, supabase } from "../lib/supabaseClient";
 
@@ -18,6 +18,10 @@ function normalizeUiLang(lang) {
   }
 
   return lang.toLowerCase().startsWith("nl") ? "nl" : "fr";
+}
+
+function getLangLabel(lang, t) {
+  return normalizeUiLang(lang) === "nl" ? t("nav.lang_nl") : t("nav.lang_fr");
 }
 
 function formatDateLabel(value, locale) {
@@ -46,6 +50,7 @@ function Post() {
   const locale = currentLang === "nl" ? "nl-BE" : "fr-BE";
   const [post, setPost] = useState(null);
   const [isLoading, setIsLoading] = useState(isSupabaseEnabled);
+  const [fallbackNotice, setFallbackNotice] = useState(null);
   const [approvedComments, setApprovedComments] = useState(null);
   const [isCommentsLoading, setIsCommentsLoading] = useState(false);
   const [cooldownUntil, setCooldownUntil] = useState(0);
@@ -136,13 +141,21 @@ function Post() {
         setIsLoading(true);
       }
 
-      const result = await fetchPublishedPostBySlug(currentLang, slug);
+      const result = await fetchPublishedPostBySlugWithLangFallback(currentLang, slug);
 
       if (!isActive) {
         return;
       }
 
-      setPost(result);
+      setPost(result?.post ?? null);
+      setFallbackNotice(
+        result?.fallbackUsed
+          ? {
+              requestedLang: result.requestedLang,
+              displayedLang: result.displayedLang,
+            }
+          : null
+      );
       setIsLoading(false);
     };
 
@@ -295,6 +308,14 @@ function Post() {
           <section className="section section-tight stack">
             <h1 className="page-title">{post.title}</h1>
             {post.excerpt ? <p className="section-intro page-subtitle">{post.excerpt}</p> : null}
+            {fallbackNotice ? (
+              <p className="muted-text">
+                {t("posts.fallback_notice", {
+                  lang: getLangLabel(fallbackNotice.requestedLang, t),
+                  fallback: getLangLabel(fallbackNotice.displayedLang, t),
+                })}
+              </p>
+            ) : null}
             <Link className="btn btn-ghost" to="/posts">
               {t("post.back_to_list")}
             </Link>
