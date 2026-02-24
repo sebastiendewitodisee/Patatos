@@ -17,6 +17,21 @@ Le script cree 3 tables avec RLS:
 - `comments`: commentaires publics avec moderation (`is_approved`)
 - `planning_items`: elements de planning publics
 
+## Mises a jour / patches
+
+- Si `supabase/schema.sql` n'a pas encore ete execute: execute `supabase/schema.sql` (version actuelle), puis rien d'autre pour ce correctif.
+- Si une ancienne version de `supabase/schema.sql` a deja ete executee: execute `supabase/patches/001_rls_admin_fix.sql`.
+
+Ce patch rend le schema "admin-friendly" pour les requetes `authenticated`:
+- lecture de tous les `content_posts` (drafts inclus),
+- lecture de tous les `comments` pour moderation + insert `authenticated`,
+- lecture de tous les `planning_items`,
+- ajout du check `planning_items.lang in ('fr','nl')` + triggers `updated_at`.
+
+Pourquoi: une policy `anon` (ex: lecture publique filtree) n'implique pas automatiquement
+qu'un utilisateur `authenticated` a les memes droits. Il faut des policies explicites
+pour le role `authenticated`.
+
 ## Migrations
 
 Si la base est deja initialisee, executer ensuite les migrations SQL versionnees:
@@ -28,6 +43,9 @@ Si la base est deja initialisee, executer ensuite les migrations SQL versionnees
 5. Executer le script.
 6. Coller `supabase/migrations/003_admin_whitelist.sql`.
 7. Executer le script.
+
+Note: si vous utilisez la whitelist admin (`003_admin_whitelist.sql`), cette migration
+redefinit volontairement certaines policies `authenticated` pour les restreindre aux admins.
 
 Cette migration ajoute `phase_id` (et `type`) pour `planning_items`.
 La migration `002` retire l'insert `anon` direct sur `comments` et ajoute la table
