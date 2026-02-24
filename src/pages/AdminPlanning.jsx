@@ -1,5 +1,6 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
+import Badge from "../components/Badge";
 import Card from "../components/Card";
 import { PHASE_ORDER, TYPE_META } from "../data/planning";
 import { isSupabaseConfigured, supabase } from "../lib/supabaseClient";
@@ -65,6 +66,11 @@ function isMissingColumnError(error) {
   return code === "42703" || (message.includes("column") && message.includes("does not exist"));
 }
 
+function getItemLangBadgeLabel(lang, t) {
+  const normalizedLang = normalizeUiLang(lang);
+  return normalizedLang === "nl" ? t("nav.lang_nl") : t("nav.lang_fr");
+}
+
 function mapRowToItem(row, index, defaultLang) {
   const phaseId = normalizePhase(row?.phase_id);
   const nextSortOrder = normalizeSortOrder(row?.sort_order, index + 1);
@@ -119,6 +125,7 @@ function AdminPlanning() {
   const [savingById, setSavingById] = useState({});
   const [deletingById, setDeletingById] = useState({});
   const [errorKey, setErrorKey] = useState("");
+  const tempIdCounterRef = useRef(0);
 
   useEffect(() => {
     if (!isSupabaseEnabled || !supabase) {
@@ -218,7 +225,6 @@ function AdminPlanning() {
       let response = await supabase
         .from("planning_items")
         .select(PLANNING_SELECT_V3)
-        .eq("lang", currentLang)
         .order("phase_id", { ascending: true })
         .order("sort_order", { ascending: true });
 
@@ -226,7 +232,6 @@ function AdminPlanning() {
         response = await supabase
           .from("planning_items")
           .select(PLANNING_SELECT_V2)
-          .eq("lang", currentLang)
           .order("phase_id", { ascending: true })
           .order("sort_order", { ascending: true });
       }
@@ -235,7 +240,6 @@ function AdminPlanning() {
         response = await supabase
           .from("planning_items")
           .select(PLANNING_SELECT_V1)
-          .eq("lang", currentLang)
           .order("sort_order", { ascending: true });
       }
 
@@ -251,7 +255,7 @@ function AdminPlanning() {
       }
 
       const nextItems = Array.isArray(response.data)
-        ? response.data.map((row, index) => mapRowToItem(row, index, currentLang))
+        ? response.data.map((row, index) => mapRowToItem(row, index, row?.lang ?? "fr"))
         : [];
 
       setItems(nextItems);
@@ -263,7 +267,7 @@ function AdminPlanning() {
     return () => {
       isActive = false;
     };
-  }, [currentLang, isAdmin, isSupabaseEnabled, session]);
+  }, [isAdmin, isSupabaseEnabled, session]);
 
   const isAuthenticated = Boolean(session);
   const isBusy = useMemo(
@@ -299,7 +303,8 @@ function AdminPlanning() {
   };
 
   const handleAdd = () => {
-    const tempId = `new-${Date.now()}-${Math.random().toString(16).slice(2, 8)}`;
+    tempIdCounterRef.current += 1;
+    const tempId = `new-${tempIdCounterRef.current}`;
     const nextItem = {
       id: tempId,
       lang: currentLang,
@@ -324,7 +329,7 @@ function AdminPlanning() {
       return;
     }
 
-    const payloadV3 = buildPayload(item, currentLang);
+    const payloadV3 = buildPayload(item, item?.lang ?? currentLang);
     const payloadV2 = {
       lang: payloadV3.lang,
       phase_id: payloadV3.phase_id,
@@ -398,7 +403,7 @@ function AdminPlanning() {
       return;
     }
 
-    const savedRow = mapRowToItem(response.data ?? {}, 0, currentLang);
+    const savedRow = mapRowToItem(response.data ?? {}, 0, item?.lang ?? currentLang);
     setItems((previousItems) =>
       previousItems.map((currentItem) => (currentItem.id === item.id ? { ...savedRow, isNew: false } : currentItem))
     );
@@ -519,6 +524,7 @@ function AdminPlanning() {
                       const isSaving = Boolean(savingById[item.id]);
                       const isDeleting = Boolean(deletingById[item.id]);
                       const isDisabled = isSaving || isDeleting || isItemsLoading;
+                      const itemLangBadgeLabel = getItemLangBadgeLabel(item.lang, t);
 
                       return (
                         <tr key={item.id}>
@@ -575,6 +581,9 @@ function AdminPlanning() {
                           </td>
 
                           <td>
+                            <div className="chip-row">
+                              <Badge tone="neutral">{itemLangBadgeLabel}</Badge>
+                            </div>
                             <input
                               type="text"
                               className="input"
