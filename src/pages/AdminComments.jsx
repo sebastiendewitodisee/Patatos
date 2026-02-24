@@ -22,6 +22,26 @@ function normalizeUiLang(lang) {
   return lang.toLowerCase().startsWith("nl") ? "nl" : "fr";
 }
 
+function normalizePostLang(lang) {
+  if (typeof lang !== "string") {
+    return "";
+  }
+
+  return normalizeUiLang(lang);
+}
+
+function getPostLangBadgeLabel(lang, t) {
+  if (lang === "nl") {
+    return t("nav.lang_nl");
+  }
+
+  if (lang === "fr") {
+    return t("nav.lang_fr");
+  }
+
+  return "";
+}
+
 function extractRelatedPost(value) {
   if (!value) {
     return null;
@@ -61,7 +81,7 @@ function mapCommentRecord(row, relatedPost) {
     createdAt: String(row?.created_at ?? ""),
     postSlug: String(relatedPost?.slug ?? ""),
     postTitle: String(relatedPost?.title ?? ""),
-    postLang: normalizeUiLang(relatedPost?.lang ?? ""),
+    postLang: normalizePostLang(relatedPost?.lang),
   };
 }
 
@@ -210,8 +230,7 @@ function AdminComments() {
           .map((row) => {
             const relatedPost = extractRelatedPost(row.content_posts);
             return mapCommentRecord(row, relatedPost);
-          })
-          .filter((comment) => comment.postLang === currentLang);
+          });
       } else {
         const commentsResponse = await supabase
           .from("comments")
@@ -219,8 +238,7 @@ function AdminComments() {
           .order("created_at", { ascending: false });
         const postsResponse = await supabase
           .from("content_posts")
-          .select(POSTS_SELECT_FOR_MAP)
-          .eq("lang", currentLang);
+          .select(POSTS_SELECT_FOR_MAP);
 
         if (commentsResponse.error || postsResponse.error) {
           if (!isActive) {
@@ -249,8 +267,7 @@ function AdminComments() {
           .map((row) => {
             const relatedPost = postsMap.get(String(row?.post_id ?? "")) ?? null;
             return mapCommentRecord(row, relatedPost);
-          })
-          .filter((comment) => comment.postLang === currentLang);
+          });
       }
 
       if (!isActive) {
@@ -266,7 +283,7 @@ function AdminComments() {
     return () => {
       isActive = false;
     };
-  }, [currentLang, isAdmin, isSupabaseEnabled, session]);
+  }, [isAdmin, isSupabaseEnabled, session]);
 
   const isAuthenticated = Boolean(session);
   const filteredComments = useMemo(() => {
@@ -427,6 +444,7 @@ function AdminComments() {
                   const isActionDisabled = isApproving || isDeleting || isCommentsLoading;
                   const postDisplay = comment.postTitle || comment.postSlug || comment.postId;
                   const createdLabel = formatDateLabel(comment.createdAt, locale);
+                  const postLangBadgeLabel = getPostLangBadgeLabel(comment.postLang, t);
 
                   return (
                     <Card key={comment.id} title={comment.authorName || comment.id}>
@@ -436,6 +454,7 @@ function AdminComments() {
                             ? t("adminComments.status.approved")
                             : t("adminComments.status.pending")}
                         </Badge>
+                        {postLangBadgeLabel ? <Badge tone="neutral">{postLangBadgeLabel}</Badge> : null}
                         {createdLabel ? <span className="muted-text">{createdLabel}</span> : null}
                       </div>
 
